@@ -18,5 +18,6 @@ namespace PII_VIII
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
+        static List<string> ListaDepessoas;
     }
 }
