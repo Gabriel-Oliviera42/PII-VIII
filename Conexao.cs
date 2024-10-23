@@ -37,35 +37,22 @@ namespace PII_VIII
         public DataTable RetornaTabela(string sql)
         {
             DataTable dt = new DataTable();
-            try
-            {
-                Conectar(); 
-                SqlCommand cmd = new SqlCommand(sql, Conn);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(dt);
-            }
-            finally
-            {
-                Desconectar();
-            }
-            return dt;
-            
+            Conectar(); 
+            SqlCommand cmd = new SqlCommand(sql, Conn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);            
+            Desconectar();            
+            return dt;            
         }
 
         public DataSet RetornaBanco(string sql)
         {
-            DataSet ds = new DataSet();
-            try
-            {
-                Conectar();  
-                SqlCommand cmd = new SqlCommand(sql, Conn);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(ds);  
-            }
-            finally
-            {
-                Desconectar(); 
-            }
+            DataSet ds = new DataSet();            
+            Conectar();  
+            SqlCommand cmd = new SqlCommand(sql, Conn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(ds);              
+            Desconectar();             
             return ds;
         }
 

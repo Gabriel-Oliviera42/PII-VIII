@@ -39,5 +39,11 @@ namespace PII_VIII
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TesteConexaoNeo4j teste = new TesteConexaoNeo4j();
+            teste.ShowDialog();
+        }
     }
 }

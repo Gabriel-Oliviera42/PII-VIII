@@ -22,14 +22,8 @@ namespace PII_VIII
         public int IdObjetivo { get; set; }
         public int IdFaixa { get; set; }
 
-        private Conexao con;
+        private Conexao con = new Conexao();
 
-        public Usuario()
-        {
-            con = new Conexao();
-        }
-
-        // Método para inserir um novo usuário no banco de dados
         public void Inserir()
         {
             string query = $"INSERT INTO usuario (idobjetivo, idfaixaetariapeso, nome, email, telefone, datanascimento, sexo, altura, peso) " +
@@ -39,17 +33,13 @@ namespace PII_VIII
 
         public void Atualizar(int id)
         {
-            string query = $"UPDATE usuario SET nome = '{Nome}', email = '{Email}', telefone = '{Telefone}', " +
-                           $"datanascimento = '{DataNascimento.ToString("yyyy-MM-dd")}', sexo = '{Sexo}', altura = {Altura}, peso = {Peso} " +
-                           $"WHERE id = {id}";
-
+            string query = $"UPDATE usuario SET nome = '{Nome}', email = '{Email}', telefone = '{Telefone}', datanascimento = '{DataNascimento.ToString("yyyy-MM-dd")}', sexo = '{Sexo}', altura = {Altura}, peso = {Peso} WHERE id = {id}";
             con.Executar(query);            
         }
 
         public void Deletar(int id)
         {
-            string query = $"DELETE FROM usuario WHERE id = {id}";
-           
+            string query = $"DELETE FROM usuario WHERE id = {id}";           
             con.Executar(query);            
         }
 

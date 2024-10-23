@@ -31,6 +31,7 @@
             this.cboUsuarios = new System.Windows.Forms.ComboBox();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnCadastro = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cboUsuarios
@@ -62,11 +63,22 @@
             this.btnCadastro.UseVisualStyleBackColor = true;
             this.btnCadastro.Click += new System.EventHandler(this.btnCadastro_Click_1);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(48, 163);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // FrmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(472, 241);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnCadastro);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.cboUsuarios);
@@ -82,6 +94,7 @@
         private System.Windows.Forms.ComboBox cboUsuarios;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnCadastro;
+        private System.Windows.Forms.Button button1;
     }
 }
 
