@@ -16,7 +16,7 @@ namespace PII_VIII
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new FrmLogin());
         }
         static List<string> ListaDepessoas;
     }
