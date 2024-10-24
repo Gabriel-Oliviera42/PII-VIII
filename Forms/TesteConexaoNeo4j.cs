@@ -1,4 +1,5 @@
 ﻿using Neo4j.Driver;
+using PII_VIII.Classes;
 using System;
 using System.Data;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace PII_VIII
     public partial class TesteConexaoNeo4j : Form
     {
         AtividadeFisica af = new AtividadeFisica();
+        Regiao re = new Regiao();
         public TesteConexaoNeo4j()
         {
             InitializeComponent();
@@ -34,15 +36,27 @@ namespace PII_VIII
         {
             
             DataTable dt = new DataTable();
-            dt = af.BuscarTodos();       
-            dataGridViewResultados.DataSource = dt;
-            
+            dt = await af.BuscarTodosAsync();       
+            dataGridViewResultados.DataSource = dt;            
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             Treino treino = new Treino();
             dgvAtividades.DataSource = treino.BuscarTodos();
+        }
+
+        private async void TesteConexaoNeo4j_Load(object sender, EventArgs e)
+        {            
+            comboBoxAtividades.ValueMember = "id";
+            comboBoxAtividades.DisplayMember = "Atividade";
+            comboBoxAtividades.DataSource = await af.BuscarTodosAsync();
+        }
+
+        private async void btnbuscarregioes_Click(object sender, EventArgs e)
+        {            
+            int atividade = comboBoxAtividades.SelectedIndex; 
+            dataGridViewregiao.DataSource = await re.BuscarRegioesAtvidade(atividade);
         }
     }
 }

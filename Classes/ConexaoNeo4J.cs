@@ -32,8 +32,7 @@ namespace PII_VIII
             Conectar();
             var session = _driver.AsyncSession();            
             var result = await session.RunAsync(query);
-            return result;        
-            Dispose();
+            return result; 
         }
 
         public async Task<DataTable> DTConsulta(string query)
@@ -42,7 +41,13 @@ namespace PII_VIII
             var result = await ExecutarConsultaAsync(query); 
 
             var records = await result.ToListAsync();
-            
+
+            if (records == null || records.Count == 0)
+            {
+                // Retorna o DataTable vazio
+                return dt;
+            }
+
             foreach (var key in records[0].Keys)
             {
                 dt.Columns.Add(key);
