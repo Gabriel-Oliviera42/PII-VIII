@@ -77,6 +77,10 @@
     <Compile Include="AtividadeFisica.cs" />
     <Compile Include="Conexao.cs" />
     <Compile Include="ConexaoNeo4J.cs" />
+    <Compile Include="Elementos Visuais\Cores_Fontes.cs" />
+    <Compile Include="Elementos Visuais\Elementos.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FrmCadastroUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +92,9 @@
     </Compile>
     <Compile Include="FrmLogin.Designer.cs">
       <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,6 +112,9 @@
     <EmbeddedResource Include="FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -113,6 +123,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="TesteConexaoNeo4j.resx">
       <DependentUpon>TesteConexaoNeo4j.cs</DependentUpon>
@@ -130,6 +141,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icones_PNG.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
