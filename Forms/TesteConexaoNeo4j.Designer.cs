@@ -120,7 +120,7 @@
             // 
             // btnbuscarregioes
             // 
-            this.btnbuscarregioes.Location = new System.Drawing.Point(1111, 131);
+            this.btnbuscarregioes.Location = new System.Drawing.Point(1115, 131);
             this.btnbuscarregioes.Name = "btnbuscarregioes";
             this.btnbuscarregioes.Size = new System.Drawing.Size(75, 23);
             this.btnbuscarregioes.TabIndex = 8;
