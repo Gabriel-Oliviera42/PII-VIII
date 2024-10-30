@@ -78,6 +78,7 @@
     <Compile Include="Classes\Conexao.cs" />
     <Compile Include="Classes\ConexaoNeo4J.cs" />
     <Compile Include="Classes\Historico.cs" />
+    <Compile Include="Classes\Objetivo.cs" />
     <Compile Include="Classes\Regiao.cs" />
     <Compile Include="Forms\FrmCadastroUsuario.cs">
       <SubType>Form</SubType>
