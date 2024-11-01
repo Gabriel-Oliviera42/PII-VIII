@@ -78,7 +78,11 @@ namespace PII_VIII
             return idFaixaEtariaPeso; 
         }
 
-
+        public void MudarObjetivo(int idObjetivo)
+        {
+            string query = $"Update from usuario set idobjetivo={idObjetivo}";
+            con.Executar(query);
+        }
 
     }
 

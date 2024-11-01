@@ -43,6 +43,7 @@ namespace PII_VIII
             usuario.Sexo = comboBoxSexo.Text;
             usuario.Altura = float.Parse(textBoxAltura.Text);
             usuario.Peso= float.Parse(textBoxPeso.Text);
+            usuario.IdObjetivo = (int)comboBoxObjetivo.SelectedIndex;
             usuario.Inserir();
 
             MessageBox.Show("Usuario inserido com sucesso");
@@ -58,7 +59,7 @@ namespace PII_VIII
 
         private void comboBoxObjetivo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            usuario.IdObjetivo = comboBoxObjetivo.SelectedIndex;
+
         }
 
        
