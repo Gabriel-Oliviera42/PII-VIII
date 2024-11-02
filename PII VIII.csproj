@@ -81,6 +81,9 @@
     <Compile Include="Elementos Visuais\Elementos.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Elementos Visuais\Modulos.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FrmCadastroUsuario.cs">
       <SubType>Form</SubType>
     </Compile>

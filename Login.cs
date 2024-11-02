@@ -51,8 +51,8 @@ namespace PII_VIII
             //Espaço para Formulário
             Panel EspForm = new Panel();
             EspForm.Dock = DockStyle.Left;
-            EspForm.Width = 1060;
-            EspForm.Padding = new Padding(140);
+            EspForm.Width = 1250;
+            EspForm.Padding = new Padding(140, 220, 140, 220);
 
             this.Controls.Add(EspForm);
 
@@ -76,7 +76,7 @@ namespace PII_VIII
             //Primeira colunas de Perguntas
             Panel Col01 = new Panel();
             Col01.Dock = DockStyle.Left;
-            Col01.Width = 400;
+            Col01.Width = (EspForm.Width- (140*2)-20)/2;
        
 
             
@@ -93,11 +93,11 @@ namespace PII_VIII
             //Segunda colunas de Perguntas
             Panel Col02 = new Panel();
             Col02.Dock = DockStyle.Left;
-            Col02.Width = 400;
+            Col02.Width = Col01.Width;
 
 
 
-            Col02.Controls.Add(retornaCampo(new TextBox(), "Objetivo de Treino"));
+            Col02.Controls.Add(retornaCampo_Select(new TextBox(), "Objetivo de Treino"));
             Col02.Controls.Add(RetornaEspaco(16));
             Col02.Controls.Add(retornaCampo(Altura_TextBox, "Altura:"));
             Col02.Controls.Add(RetornaEspaco(16));
@@ -140,10 +140,10 @@ namespace PII_VIII
 
             PanelArredonado fundoTxt = new  PanelArredonado();
             fundoTxt.Dock = DockStyle.Top;
-            fundoTxt.Height = 40;
+            fundoTxt.Height = 55;
             fundoTxt.BackColor = chave.CinzaClaro;
             fundoTxt.Radius = 20;
-            fundoTxt.Padding = new Padding(10);
+            fundoTxt.Padding = new Padding(18);
 
             tx.Font = chave.TextoPequeno;
             tx.Dock = DockStyle.Fill;
@@ -151,6 +151,46 @@ namespace PII_VIII
             tx.BackColor = chave.CinzaClaro;
             tx.ForeColor = chave.RoxoEscuro;
             fundoTxt.Controls.Add(tx);
+
+            Label Texto = new Label();
+            Texto.Dock = DockStyle.Top;
+            Texto.AutoSize = true;
+            Texto.Text = nome;
+
+            Texto.Dock = DockStyle.Top;
+            Texto.Font = chave.TextoPequeno;
+            Texto.ForeColor = chave.Preto;
+            
+
+            Fundo.Controls.Add(fundoTxt);
+            Fundo.Controls.Add(RetornaEspaco(8));
+            Fundo.Controls.Add(Texto);
+            Fundo.AutoSize = true;
+
+
+            return Fundo;
+        }
+
+         private Panel retornaCampo_Select(TextBox tx, string nome)
+        {
+            Panel Fundo = new Panel();
+            Fundo.Dock = DockStyle.Top;
+            // Fundo.Height = 120;
+
+
+            selecao fundoTxt = new selecao();
+            fundoTxt.Dock = DockStyle.Top;
+            fundoTxt.Height = 55;
+            fundoTxt.BackColor = chave.CinzaClaro;
+            fundoTxt.Radius = 20;
+           // fundoTxt.Padding = new Padding(18);
+
+            //tx.Font = chave.TextoPequeno;
+            //tx.Dock = DockStyle.Fill;
+            //tx.BorderStyle = BorderStyle.None;
+            //tx.BackColor = chave.CinzaClaro;
+            //tx.ForeColor = chave.RoxoEscuro;
+            //fundoTxt.Controls.Add(tx);
 
             Label Texto = new Label();
             Texto.Dock = DockStyle.Top;
