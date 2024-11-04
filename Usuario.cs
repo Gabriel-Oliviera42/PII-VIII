@@ -27,7 +27,7 @@ namespace PII_VIII
         public void Inserir()
         {
             string query = $"INSERT INTO usuario (idobjetivo, idfaixaetariapeso, nome, email, telefone, datanascimento, sexo, altura, peso) " +
-                           $"VALUES ('{IdObjetivo}', '{IdFaixa}', '{Nome}', '{Email}', '{Telefone}', '{DataNascimento.ToString("yyyy-MM-dd")}', '{Sexo}', {Altura}, {Peso})";
+                           $"VALUES ('{IdObjetivo}', '{IdFaixa}' , '{Nome}', '{Email}', '{Telefone}', '{DataNascimento.ToString("yyyy-MM-dd")}', '{Sexo}', '{Altura}', '{Peso}')";
             con.Executar(query);            
         }
 
