@@ -54,5 +54,11 @@ namespace PII_VIII
            TesteHistorico historico = new TesteHistorico();
             historico.ShowDialog();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            TesteObjetivo testeObjetivo = new TesteObjetivo();
+            testeObjetivo.ShowDialog();
+        }
     }
 }

@@ -22,5 +22,6 @@ namespace PII_VIII.Classes
             dt = con.RetornaTabela(query);
             return dt;
         }
+      
     }
 }
