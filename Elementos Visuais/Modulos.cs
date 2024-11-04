@@ -30,11 +30,27 @@ namespace PII_VIII.Elementos_Visuais
             set{ text.Font = value; }
         }
 
-
-        int op = 0;
+        
+        private int op = 0;
+        public int ItemSelecionado { get { return op+1; } }
         List<string> itens = new List<string>();
 
         public List<string> Items { get{ return itens; } set { itens = value; atualiza(); } }
+        public DataTable DT
+        {
+            set
+            {
+                itens.Clear();
+                foreach (DataRow x in value.Rows)
+                {
+                    itens.Add(x[1].ToString());
+                }
+                atualiza();
+            } 
+        }
+
+
+    
 
 
         private void atualiza()
@@ -50,7 +66,7 @@ namespace PII_VIII.Elementos_Visuais
             
             text.Text = "Sem itens";
             this.Padding = new Padding(5);
-            text.Font = chave.Botao;
+            text.Font = chave.TextoPequeno;
             text.ForeColor = chave.RoxoEscuro;
             text.Dock = DockStyle.Fill;
             text.TextAlign = ContentAlignment.MiddleCenter;
@@ -59,7 +75,7 @@ namespace PII_VIII.Elementos_Visuais
            
 
             next.Dock = DockStyle.Right;
-            next.Width = 80;
+            next.Width = 60;
             next.Font = chave.Botao;
             next.Text = ">";
             this.Controls.Add(next);
@@ -70,15 +86,43 @@ namespace PII_VIII.Elementos_Visuais
             next.BackColor = chave.RoxoFluorescente;
 
             ant.Dock = DockStyle.Left;
-            ant.Width = 80;
+            ant.Width = 60;
             ant.Font = chave.Botao;
-            ant.Text = ">";
+            ant.Text = "<";
             this.Controls.Add(ant);
             ant.Radius = 20;
             ant.FlatAppearance.BorderSize = 0;
             ant.FlatStyle = FlatStyle.Flat;
             ant.ForeColor = chave.Branco;
             ant.BackColor = chave.RoxoFluorescente;
+
+
+            next.Click += (s, e) =>
+            {
+                if (op < itens.Count - 1)
+                {
+                    op++;
+                    text.Text = itens[op];
+                }
+                else if (op == itens.Count - 1)
+                {
+                    op = 0;
+                    text.Text = itens[op];
+                }
+            };
+            ant.Click += (s, e) =>
+            {
+                if (op > 0)
+                {
+                    op--;
+                    text.Text = itens[op];
+                }
+                else if (op == 0)
+                {
+                    op = itens.Count-1;
+                    text.Text = itens[op];
+                }
+            };
 
 
         }

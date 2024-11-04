@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 namespace PII_VIII
 {
     using System.Data;
+    using System.Globalization;
 
     public class Usuario
     {        
         public string Nome { get; set; }
         public string Email { get; set; }
-        public string Telefone { get; set; }
+
         public DateTime DataNascimento { get; set; }
-        public string Sexo { get; set; }
+
         public float Altura { get; set; }
         public float Peso { get; set; }
 
@@ -26,15 +27,15 @@ namespace PII_VIII
 
         public void Inserir()
         {
-            string query = $"INSERT INTO usuario (idobjetivo, idfaixaetariapeso, nome, email, telefone, datanascimento, sexo, altura, peso) " +
-                           $"VALUES ('{IdObjetivo}', '{IdFaixa}' , '{Nome}', '{Email}', '{Telefone}', '{DataNascimento.ToString("yyyy-MM-dd")}', '{Sexo}', '{Altura}', '{Peso}')";
-            con.Executar(query);            
+           string query = $"INSERT INTO usuario (nome, email, datanascimento, altura, peso, id_objetivo, id_faixaetariapeso)" +
+                $"VALUES ('{Nome}','{Email}','{DataNascimento.ToString("yyyy-MM-dd")}', {Altura.ToString("0.00", CultureInfo.InvariantCulture)}, {Peso.ToString("0.00", CultureInfo.InvariantCulture)}, {IdObjetivo}, {IdFaixa})";
+            con.Executar(query);
         }
 
         public void Atualizar(int id)
         {
-            string query = $"UPDATE usuario SET nome = '{Nome}', email = '{Email}', telefone = '{Telefone}', datanascimento = '{DataNascimento.ToString("yyyy-MM-dd")}', sexo = '{Sexo}', altura = {Altura}, peso = {Peso} WHERE id = {id}";
-            con.Executar(query);            
+           string query = $"UPDATE usuario SET nome = '{Nome}', email = '{Email}', datanascimento = '{DataNascimento.ToString("yyyy-MM-dd")}', altura ={Altura.ToString("0.00", CultureInfo.InvariantCulture)}, peso =  {Peso.ToString("0.00", CultureInfo.InvariantCulture)} WHERE id = {id}";
+           con.Executar(query);            
         }
 
         public void Deletar(int id)
@@ -72,7 +73,7 @@ namespace PII_VIII
                 float pesoMax = Convert.ToSingle(row["pesomax"]);
                 if (idade >= idadeMin && idade <= idadeMax && peso >= pesoMin && peso <= pesoMax)
                 {
-                    idFaixaEtariaPeso = Convert.ToInt32(row["idfaixaetariapeso"]); 
+                    idFaixaEtariaPeso = Convert.ToInt32(row["id_faixaetariapeso"]); 
                     break; 
                 }
             }
