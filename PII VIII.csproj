@@ -74,49 +74,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AtividadeFisica.cs" />
-    <Compile Include="Conexao.cs" />
-    <Compile Include="ConexaoNeo4J.cs" />
-    <Compile Include="Elementos Visuais\Cores_Fontes.cs" />
-    <Compile Include="Elementos Visuais\Elementos.cs">
+    <Compile Include="BancoDeDados\AtividadeFisica.cs" />
+    <Compile Include="BancoDeDados\Conexao.cs" />
+    <Compile Include="BancoDeDados\ConexaoNeo4J.cs" />
+    <Compile Include="ElementosVisuais\Cores_Fontes.cs" />
+    <Compile Include="ElementosVisuais\Elementos.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Elementos Visuais\Modulos.cs">
+    <Compile Include="ElementosVisuais\Modulos.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="FrmCadastroUsuario.cs">
+    <Compile Include="Forms\Teste\FrmCadastroUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmCadastroUsuario.Designer.cs">
+    <Compile Include="Forms\Teste\FrmCadastroUsuario.Designer.cs">
       <DependentUpon>FrmCadastroUsuario.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmLogin.cs">
+    <Compile Include="Forms\Teste\FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmLogin.Designer.cs">
+    <Compile Include="Forms\Teste\FrmLogin.Designer.cs">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="Login.cs">
+    <Compile Include="Forms\Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Objetivo.cs" />
+    <Compile Include="BancoDeDados\Objetivo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TesteConexaoNeo4j.cs">
+    <Compile Include="Forms\Teste\TesteConexaoNeo4j.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TesteConexaoNeo4j.Designer.cs">
+    <Compile Include="Forms\Teste\TesteConexaoNeo4j.Designer.cs">
       <DependentUpon>TesteConexaoNeo4j.cs</DependentUpon>
     </Compile>
-    <Compile Include="Treino.cs" />
-    <Compile Include="Usuario.cs" />
-    <EmbeddedResource Include="FrmCadastroUsuario.resx">
+    <Compile Include="BancoDeDados\Treino.cs" />
+    <Compile Include="BancoDeDados\Usuario.cs" />
+    <EmbeddedResource Include="Forms\Teste\FrmCadastroUsuario.resx">
       <DependentUpon>FrmCadastroUsuario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmLogin.resx">
+    <EmbeddedResource Include="Forms\Teste\FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Login.resx">
+    <EmbeddedResource Include="Forms\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -129,7 +129,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="TesteConexaoNeo4j.resx">
+    <EmbeddedResource Include="Forms\Teste\TesteConexaoNeo4j.resx">
       <DependentUpon>TesteConexaoNeo4j.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />

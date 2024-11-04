@@ -16,10 +16,14 @@ namespace PII_VIII
 {
     public partial class Login : Form
     {
+
+        //OBS: Ainda tenho que criar a parte de LOGIN e levar para outra tela após Cadastro ou Login
+
+        //CLASSES E VARIÁVEIS ↓
         private Chave chave = new Chave();
         private int PD01 = 40, PD02 = 20;
 
-        // Criando Text Box
+        //TextBoxs
         private TextBox Nome_TextBox = new TextBox();
         private TextBox Altura_TextBox = new TextBox();
         private TextBox Peso_TextBox = new TextBox();
@@ -27,9 +31,11 @@ namespace PII_VIII
         private TextBox Aniversario_TextBox = new TextBox();
         private selecao objetivo = new selecao();
 
-
+        //Panel da coluna roxa a direita da Tela
         private PanelArredonado FundoRoxo;
 
+
+        //Configurações iniciais do FORM
         private void InitializeComponent()
         {
             
@@ -41,6 +47,7 @@ namespace PII_VIII
 
         }
 
+
         public Login()
         {
 
@@ -49,6 +56,11 @@ namespace PII_VIII
             AdicionaFormulario();
         }
 
+
+
+        //FUNÇÕES PRINCIPAIS ↓
+
+        //Adicionar Campos
         private void AdicionaFormulario()
         {
             //Espaço para Formulário
@@ -150,175 +162,7 @@ namespace PII_VIII
             EspForm.Controls.Add(Tit);
         }
 
-        //Função que cadastra Usuário
-        private void Cadastra()
-        {
-            if (Aniversario_TextBox.Text.Length > 9 && Nome_TextBox.Text.Length > 0 && Email_TextBox.Text.Length > 0 && Peso_TextBox.Text.Length > 0 && Altura_TextBox.Text.Length > 0)
-            {
-                Usuario us = new Usuario();
-                us.Nome = Nome_TextBox.Text;
-                us.Email = Email_TextBox.Text;
-                us.Peso = float.Parse(Peso_TextBox.Text);
-                us.Altura = float.Parse(Altura_TextBox.Text);
-
-                int dia, mes, ano;
-
-                dia = int.Parse(Aniversario_TextBox.Text.Substring(0, 2));
-                mes = int.Parse(Aniversario_TextBox.Text.Substring(3, 2));
-                ano = int.Parse(Aniversario_TextBox.Text.Substring(6, 4));
-
-                us.DataNascimento = new DateTime(ano, mes, dia);
-                int anoAtual = DateTime.Now.Year;
-                int idade = anoAtual - ano;
-                us.IdObjetivo = objetivo.ItemSelecionado;
-                us.IdFaixa = us.VerificaFaixaEtariaPeso(us.Peso, idade);
-
-                us.Inserir();
-
-            }
-            else
-            {
-                MessageBox.Show("Algum dos campos está incompleto");
-            }
-
-        }
-
-        private Panel retornaCampo(TextBox tx, string nome)
-        {
-            Panel Fundo = new Panel();
-            Fundo.Dock = DockStyle.Top;
-           // Fundo.Height = 120;
-            
-
-            PanelArredonado fundoTxt = new  PanelArredonado();
-            fundoTxt.Dock = DockStyle.Top;
-            fundoTxt.Height = 55;
-            fundoTxt.BackColor = chave.CinzaClaro;
-            fundoTxt.Radius = 20;
-            fundoTxt.Padding = new Padding(18);
-
-            tx.Font = chave.TextoPequeno;
-            tx.Dock = DockStyle.Fill;
-            tx.BorderStyle = BorderStyle.None;
-            tx.BackColor = chave.CinzaClaro;
-            tx.ForeColor = chave.RoxoEscuro;
-            fundoTxt.Controls.Add(tx);
-
-            Label Texto = new Label();
-            Texto.Dock = DockStyle.Top;
-            Texto.AutoSize = true;
-            Texto.Text = nome;
-
-            Texto.Dock = DockStyle.Top;
-            Texto.Font = chave.TextoPequeno;
-            Texto.ForeColor = chave.Preto;
-            
-
-            Fundo.Controls.Add(fundoTxt);
-            Fundo.Controls.Add(RetornaEspaco(8));
-            Fundo.Controls.Add(Texto);
-            Fundo.AutoSize = true;
-
-
-            return Fundo;
-        }
-
-         private Panel retornaCampo_Select(TextBox tx, string nome)
-        {
-            Panel Fundo = new Panel();
-            Fundo.Dock = DockStyle.Top;
-            // Fundo.Height = 120;
-
-
-            //selecao objetivo = new selecao();
-            objetivo.Dock = DockStyle.Top;
-            objetivo.Height = 55;
-            objetivo.BackColor = chave.CinzaClaro;
-            objetivo.Radius = 20;
-            // objetivo.Padding = new Padding(18);
-
-            //tx.Font = chave.TextoPequeno;
-            //tx.Dock = DockStyle.Fill;
-            //tx.BorderStyle = BorderStyle.None;
-            //tx.BackColor = chave.CinzaClaro;
-            //tx.ForeColor = chave.RoxoEscuro;
-            //objetivo.Controls.Add(tx);
-
-            Objetivo ob = new Objetivo();
-            objetivo.DT = ob.BuscarTodosobjetivos();
-
-            Label Texto = new Label();
-            Texto.Dock = DockStyle.Top;
-            Texto.AutoSize = true;
-            Texto.Text = nome;
-
-            Texto.Dock = DockStyle.Top;
-            Texto.Font = chave.TextoPequeno;
-            Texto.ForeColor = chave.Preto;
-            
-
-            Fundo.Controls.Add(objetivo);
-            Fundo.Controls.Add(RetornaEspaco(8));
-            Fundo.Controls.Add(Texto);
-            Fundo.AutoSize = true;
-
-
-            return Fundo;
-        }
-
-
-        private Panel RetornaEspaco(int tam)
-        {
-            Panel esp = new Panel();
-            esp.Dock = DockStyle.Top;
-            esp.Height = tam;
-            return esp;
-
-        }
-        private void FormataTextBox(TextBox textBox) //formata Text Box para que receba só números
-        {
-            textBox.KeyPress += (s, e) =>
-            {
-                //if (!char.IsDigit(e.KeyChar))
-                //{
-                //    e.Handled = true;
-                //}
-            };
-
-        }
-
-        private void FormatDateTextBox(TextBox textBox)
-        {
-            // Remove todos os caracteres não numéricos para facilitar o controle
-            string text = new string(textBox.Text.Where(char.IsDigit).ToArray());
-
-            if (text.Length >= 2)
-            {
-                text = text.Insert(2, "/");
-            }
-            if (text.Length >= 5)
-            {
-                text = text.Insert(5, "/");
-            }
-
-            // Limita o texto ao formato DD/MM/YYYY
-            if (text.Length > 10)
-            {
-                text = text.Substring(0, 10);
-            }
-
-            // Limita o texto ao comprimento máximo de 9 dígitos (DDMMYYYY)
-            if (text.Length > 9)
-            {
-                text = text.Substring(0, 8);
-            }
-            // Atualiza o texto do TextBox sem mover o cursor para o final
-            int currentSelectionStart = textBox.SelectionStart;
-            textBox.Text = text;
-            textBox.SelectionStart = currentSelectionStart;
-            textBox.SelectionStart = textBox.Text.Length;
-            textBox.SelectionLength = 0;
-        }
+        //Adiciona Barra Roxa do lado Direito da Tela
         private void AdicionaBarraRoxa()
         {
             FundoRoxo = new PanelArredonado();
@@ -337,7 +181,7 @@ namespace PII_VIII
 
             Label Texto01 = new Label();
             Texto01.Text = "Gestão\nde Saúde";
-            Texto01.Text = Texto01.Text.ToUpper() ;
+            Texto01.Text = Texto01.Text.ToUpper();
             Texto01.Font = chave.H1_Font;
             Texto01.ForeColor = chave.Branco;
             Texto01.Dock = DockStyle.Top;
@@ -380,7 +224,209 @@ namespace PII_VIII
             this.Controls.Add(FundoRoxo);
 
         }
+
+
+        //Função que cadastra Usuário - (CHAMA APÓS CLICAR NO BOTÃO CONCLUIR)
+        private void Cadastra()
+        {
+            if (Aniversario_TextBox.Text.Length > 9 && Nome_TextBox.Text.Length > 0 && Email_TextBox.Text.Length > 0 && Peso_TextBox.Text.Length > 0 && Altura_TextBox.Text.Length > 0)
+            {
+                Usuario us = new Usuario
+                {
+                    Nome = Nome_TextBox.Text,
+                    Email = Email_TextBox.Text
+                };
+
+                // Validação e conversão para peso e altura
+                if (float.TryParse(Peso_TextBox.Text, out float peso) && float.TryParse(Altura_TextBox.Text, out float altura))
+                {
+                    us.Peso = peso;
+                    us.Altura = altura;
+                }
+                else
+                {
+                    MessageBox.Show("Peso ou Altura em formato inválido.");
+                    return;
+                }
+
+                // Extração e verificação da data de nascimento
+                try
+                {
+                    int dia = int.Parse(Aniversario_TextBox.Text.Substring(0, 2));
+                    int mes = int.Parse(Aniversario_TextBox.Text.Substring(3, 2));
+                    int ano = int.Parse(Aniversario_TextBox.Text.Substring(6, 4));
+
+                    us.DataNascimento = new DateTime(ano, mes, dia);
+
+                    // Cálculo da idade
+                    int anoAtual = DateTime.Now.Year;
+                    int idade = anoAtual - ano;
+
+                    // População dos demais campos
+                    us.IdObjetivo = objetivo.ItemSelecionado;
+                    us.IdFaixa = us.VerificaFaixaEtariaPeso(us.Peso, idade);
+
+                    // Inserção no banco de dados
+                    us.Inserir();
+
+                    MessageBox.Show("Usuário cadastrado com sucesso!");
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("Data de nascimento em formato inválido. Use o formato DD/MM/AAAA.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Algum dos campos está incompleto. Complete com as informações necessárias!");
+            }
+
+        }
+
+
+        //FUNÇÕES SECUNDARIAS ↓
+
+        // Retorna campor de texto
+        private Panel retornaCampo(TextBox tx, string nome)
+        {
+            Panel Fundo = new Panel();
+            Fundo.Dock = DockStyle.Top;
+           // Fundo.Height = 120;
+            
+
+            PanelArredonado fundoTxt = new  PanelArredonado();
+            fundoTxt.Dock = DockStyle.Top;
+            fundoTxt.Height = 55;
+            fundoTxt.BackColor = chave.CinzaClaro;
+            fundoTxt.Radius = 20;
+            fundoTxt.Padding = new Padding(18);
+
+            tx.Font = chave.TextoPequeno;
+            tx.Dock = DockStyle.Fill;
+            tx.BorderStyle = BorderStyle.None;
+            tx.BackColor = chave.CinzaClaro;
+            tx.ForeColor = chave.RoxoEscuro;
+            fundoTxt.Controls.Add(tx);
+
+            Label Texto = new Label();
+            Texto.Dock = DockStyle.Top;
+            Texto.AutoSize = true;
+            Texto.Text = nome;
+
+            Texto.Dock = DockStyle.Top;
+            Texto.Font = chave.TextoPequeno;
+            Texto.ForeColor = chave.Preto;
+            
+
+            Fundo.Controls.Add(fundoTxt);
+            Fundo.Controls.Add(RetornaEspaco(8));
+            Fundo.Controls.Add(Texto);
+            Fundo.AutoSize = true;
+
+
+            return Fundo;
+        }
+
+        //retorna campo de seleção de objetivo
+        private Panel retornaCampo_Select(TextBox tx, string nome)
+        {
+            Panel Fundo = new Panel();
+            Fundo.Dock = DockStyle.Top;
+            // Fundo.Height = 120;
+
+
+            //selecao objetivo = new selecao();
+            objetivo.Dock = DockStyle.Top;
+            objetivo.Height = 55;
+            objetivo.BackColor = chave.CinzaClaro;
+            objetivo.Radius = 20;
+            // objetivo.Padding = new Padding(18);
+
+            //tx.Font = chave.TextoPequeno;
+            //tx.Dock = DockStyle.Fill;
+            //tx.BorderStyle = BorderStyle.None;
+            //tx.BackColor = chave.CinzaClaro;
+            //tx.ForeColor = chave.RoxoEscuro;
+            //objetivo.Controls.Add(tx);
+
+            Objetivo ob = new Objetivo();
+            objetivo.DT = ob.BuscarTodosobjetivos();
+
+            Label Texto = new Label();
+            Texto.Dock = DockStyle.Top;
+            Texto.AutoSize = true;
+            Texto.Text = nome;
+
+            Texto.Dock = DockStyle.Top;
+            Texto.Font = chave.TextoPequeno;
+            Texto.ForeColor = chave.Preto;
+            
+
+            Fundo.Controls.Add(objetivo);
+            Fundo.Controls.Add(RetornaEspaco(8));
+            Fundo.Controls.Add(Texto);
+            Fundo.AutoSize = true;
+
+
+            return Fundo;
+        }
+
+        private Panel RetornaEspaco(int tam)
+        {
+            Panel esp = new Panel();
+            esp.Dock = DockStyle.Top;
+            esp.Height = tam;
+            return esp;
+
+        }
+        //Formata Text Box para Receber apenas Números - AJUSTAR
+        private void FormataTextBox(TextBox textBox)
+        {
+            textBox.KeyPress += (s, e) =>
+            {
+                //if (!char.IsDigit(e.KeyChar))
+                //{
+                //    e.Handled = true;
+                //}
+            };
+
+        }
+
+        //Formata Text Box para receber apenas Data DD/MM/YYYY
+        private void FormatDateTextBox(TextBox textBox)
+        {
+            // Remove todos os caracteres não numéricos para facilitar o controle
+            string text = new string(textBox.Text.Where(char.IsDigit).ToArray());
+
+            if (text.Length >= 2)
+            {
+                text = text.Insert(2, "/");
+            }
+            if (text.Length >= 5)
+            {
+                text = text.Insert(5, "/");
+            }
+
+            // Limita o texto ao formato DD/MM/YYYY
+            if (text.Length > 10)
+            {
+                text = text.Substring(0, 10);
+            }
+
+            // Limita o texto ao comprimento máximo de 9 dígitos (DDMMYYYY)
+            if (text.Length > 9)
+            {
+                text = text.Substring(0, 8);
+            }
+            // Atualiza o texto do TextBox sem mover o cursor para o final
+            int currentSelectionStart = textBox.SelectionStart;
+            textBox.Text = text;
+            textBox.SelectionStart = currentSelectionStart;
+            textBox.SelectionStart = textBox.Text.Length;
+            textBox.SelectionLength = 0;
+        }
         
+       
 
 
 
