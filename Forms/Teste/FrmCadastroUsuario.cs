@@ -38,9 +38,9 @@ namespace PII_VIII
 
             usuario.Nome= textBoxNome.Text;
             usuario.Email= textBoxEmail.Text;
-            usuario.Telefone= textBoxTelefone.Text;
+          //  usuario.Telefone= textBoxTelefone.Text;
             usuario.DataNascimento = dateTimePickerDN.Value;
-            usuario.Sexo = comboBoxSexo.Text;
+           // usuario.Sexo = comboBoxSexo.Text;
             usuario.Altura = float.Parse(textBoxAltura.Text);
             usuario.Peso= float.Parse(textBoxPeso.Text);
             usuario.Inserir();

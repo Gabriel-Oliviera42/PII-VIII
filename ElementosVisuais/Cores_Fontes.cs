@@ -39,7 +39,7 @@ namespace PII_VIII
 
         public Font TextoPequeno { get { return new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0); } }
 
-        public Font Botao { get { return new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
+        public Font Botao { get { return new Font("Arial", 16F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
     }
 
 }

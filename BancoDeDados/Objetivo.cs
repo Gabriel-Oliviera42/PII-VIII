@@ -17,7 +17,7 @@ namespace PII_VIII
         public DataTable BuscarTodosobjetivos()
         {
             DataTable dt = new DataTable();
-            string query = "SELECT * FROM objetivo";
+            string query = "USE GestaoSaude_II\nSELECT * FROM objetivo";
             dt = con.RetornaTabela(query);
             return dt;
         }
