@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PII_VIII
 {
@@ -38,8 +39,48 @@ namespace PII_VIII
 
 
         public Font TextoPequeno { get { return new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0); } }
+        public Font Textoicone { get { return new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
 
         public Font Botao { get { return new Font("Arial", 16F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
+
+
+        public Panel RetornaEspacoTop(int tam)
+        {
+            Panel esp = new Panel();
+            esp.Dock = DockStyle.Top;
+            esp.Height = tam;
+            return esp;
+
+        }
+
+        public Panel RetornaEspacoRight(int tam)
+        {
+            Panel esp = new Panel();
+            esp.Dock = DockStyle.Right;
+            esp.Height = tam;
+            return esp;
+
+        }
+
+        public Panel RetornaEspacoLeft(int tam)
+        {
+            Panel esp = new Panel();
+            esp.Dock = DockStyle.Left;
+            esp.Height = tam;
+            return esp;
+
+        }
+
+        public Panel RetornaEspacoBottom(int tam)
+        {
+            Panel esp = new Panel();
+            esp.Dock = DockStyle.Bottom;
+            esp.Height = tam;
+            return esp;
+
+        }
+
+
     }
 
 }

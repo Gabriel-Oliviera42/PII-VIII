@@ -31,7 +31,11 @@ namespace PII_VIII.Elementos_Visuais
         private int _radius = 1;
         public PanelArredonado()
         {
-           // DoubleBufferedPanel();
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.UpdateStyles();
         }
 
         public int Radius

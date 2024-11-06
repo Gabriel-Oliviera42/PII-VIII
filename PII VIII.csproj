@@ -81,8 +81,14 @@
     <Compile Include="ElementosVisuais\Elementos.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ElementosVisuais\Menu_Principal.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ElementosVisuais\Modulos.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Home.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Teste\FrmCadastroUsuario.cs">
       <SubType>Form</SubType>
@@ -148,6 +154,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Icones_PNG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\home_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Sair.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Perfil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Meta.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\historico.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Treino.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Home.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

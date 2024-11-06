@@ -332,22 +332,11 @@ namespace PII_VIII
         {
             Panel Fundo = new Panel();
             Fundo.Dock = DockStyle.Top;
-            // Fundo.Height = 120;
 
-
-            //selecao objetivo = new selecao();
             objetivo.Dock = DockStyle.Top;
             objetivo.Height = 55;
             objetivo.BackColor = chave.CinzaClaro;
             objetivo.Radius = 20;
-            // objetivo.Padding = new Padding(18);
-
-            //tx.Font = chave.TextoPequeno;
-            //tx.Dock = DockStyle.Fill;
-            //tx.BorderStyle = BorderStyle.None;
-            //tx.BackColor = chave.CinzaClaro;
-            //tx.ForeColor = chave.RoxoEscuro;
-            //objetivo.Controls.Add(tx);
 
             Objetivo ob = new Objetivo();
             objetivo.DT = ob.BuscarTodosobjetivos();
