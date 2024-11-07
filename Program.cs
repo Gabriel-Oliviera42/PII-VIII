@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PII_VIII.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,9 @@ namespace PII_VIII
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmLogin());
+            //Application.Run(new FrmLogin());
+           // Application.Run(new Login());
+            Application.Run(new Home());
         }
     }
 }
