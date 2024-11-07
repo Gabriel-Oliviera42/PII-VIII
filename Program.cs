@@ -21,6 +21,5 @@ namespace PII_VIII
            // Application.Run(new Login());
             Application.Run(new Home());
         }
-        static List<string> ListaDepessoas;
     }
 }
