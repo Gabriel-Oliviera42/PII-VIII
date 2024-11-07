@@ -9,6 +9,7 @@ namespace PII_VIII
 {
     internal class Treino
     {
+        public int idTreino {  get; set; }
         public string NomeTreino {  get; set; }
         public string Descricao { get; set; }
         public int IdObjetivo { get; set; }

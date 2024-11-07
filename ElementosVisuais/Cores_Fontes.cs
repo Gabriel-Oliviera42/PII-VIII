@@ -23,6 +23,14 @@ namespace PII_VIII
         public Color Azul = Color.FromArgb(6, 112, 210);
         public Color RoxoFluorescente = Color.FromArgb(64, 44, 188);
 
+        //Cores SubComplementares
+        public Color Sub_Verde = Color.FromArgb(11, 118, 2);
+        public Color Sub_vermelho = Color.FromArgb(219, 92, 92);
+        public Color Sub_Azul = Color.FromArgb(220, 220, 245);
+       //public Color RoxoFluorescente = Color.FromArgb(64, 44, 188);
+
+
+
         //Cores de Texto e fundo
         public Color Preto = Color.FromArgb(35, 35, 35);
         public Color CinzaClaro = Color.FromArgb(233, 233, 237);
@@ -30,18 +38,23 @@ namespace PII_VIII
 
 
         //Fontes
-        public Font H1_Font { get { return new Font("Arial", 40F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
-        public Font Sub_H1_Font { get { return new Font("Arial", 20F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
+        public Font H1_Font { get { return new Font("Roboto", 40F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
+        public Font Sub_H1_Font { get { return new Font("Roboto", 20F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
 
-        public Font H2_Font { get { return new Font("Arial", 34F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
-        public Font Sub_H2_Font { get { return new Font("Arial", 20F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
+        public Font H2_Font { get { return new Font("Roboto", 34F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
+        public Font Sub_H2_Font { get { return new Font("Roboto", 20F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
+
+        public Font H3_Font { get { return new Font("Roboto", 24F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
+        public Font Sub_H3_Font { get { return new Font("Roboto", 20F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
 
 
+        public Font tituloCard_Font { get { return new Font("Roboto", 18F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
+        public Font SubtiruloCard_Font { get { return new Font("Roboto", 14F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
 
-        public Font TextoPequeno { get { return new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0); } }
-        public Font Textoicone { get { return new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
+        public Font TextoPequeno { get { return new Font("Roboto", 12F, FontStyle.Regular, GraphicsUnit.Point, 0); } }
+        public Font Textoicone { get { return new Font("Roboto", 9F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
 
-        public Font Botao { get { return new Font("Arial", 16F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
+        public Font Botao { get { return new Font("Roboto", 16F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
 
 
         public Panel RetornaEspacoTop(int tam)
@@ -57,7 +70,7 @@ namespace PII_VIII
         {
             Panel esp = new Panel();
             esp.Dock = DockStyle.Right;
-            esp.Height = tam;
+            esp.Width = tam;
             return esp;
 
         }
@@ -66,7 +79,7 @@ namespace PII_VIII
         {
             Panel esp = new Panel();
             esp.Dock = DockStyle.Left;
-            esp.Height = tam;
+            esp.Width = tam;
             return esp;
 
         }

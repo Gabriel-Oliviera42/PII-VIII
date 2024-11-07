@@ -16,7 +16,7 @@ namespace PII_VIII.ElementosVisuais
         //Criando Menu
         public Menu_Principal()
         {
-            this.Radius = 20;
+            this.Radius = 40;
             this.BackColor = chave.RoxoClaro;
             this.Dock = System.Windows.Forms.DockStyle.Left;
             this.Width = 135;
