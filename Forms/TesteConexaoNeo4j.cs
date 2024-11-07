@@ -11,6 +11,7 @@ namespace PII_VIII
     {
         AtividadeFisica af = new AtividadeFisica();
         Regiao re = new Regiao();
+        Objetivo ob =  new Objetivo();
         public TesteConexaoNeo4j()
         {
             InitializeComponent();
@@ -51,12 +52,21 @@ namespace PII_VIII
             comboBoxAtividades.ValueMember = "id";
             comboBoxAtividades.DisplayMember = "Atividade";
             comboBoxAtividades.DataSource = await af.BuscarTodosAsync();
+
+            comboBoxobjetivo.ValueMember = "id";
+            comboBoxobjetivo.DisplayMember = "descricao";
+            comboBoxobjetivo.DataSource = ob.BuscarTodosobjetivos();
         }
 
         private async void btnbuscarregioes_Click(object sender, EventArgs e)
         {            
             int atividade = comboBoxAtividades.SelectedIndex; 
             dataGridViewregiao.DataSource = await re.BuscarRegioesAtvidade(atividade);
+        }
+
+        private void comboBoxobjetivo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

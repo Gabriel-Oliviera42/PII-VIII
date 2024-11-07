@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PII_VIII.Classes;
+using PII_VIII.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PII_VIII
 {
@@ -44,6 +47,18 @@ namespace PII_VIII
         {
             TesteConexaoNeo4j teste = new TesteConexaoNeo4j();
             teste.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+           TesteHistorico historico = new TesteHistorico();
+            historico.ShowDialog();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            TesteObjetivo testeObjetivo = new TesteObjetivo();
+            testeObjetivo.ShowDialog();
         }
     }
 }

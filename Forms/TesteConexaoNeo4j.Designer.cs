@@ -37,6 +37,7 @@
             this.dataGridViewregiao = new System.Windows.Forms.DataGridView();
             this.comboBoxAtividades = new System.Windows.Forms.ComboBox();
             this.btnbuscarregioes = new System.Windows.Forms.Button();
+            this.comboBoxobjetivo = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultados)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAtividades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewregiao)).BeginInit();
@@ -120,7 +121,7 @@
             // 
             // btnbuscarregioes
             // 
-            this.btnbuscarregioes.Location = new System.Drawing.Point(1111, 131);
+            this.btnbuscarregioes.Location = new System.Drawing.Point(1115, 131);
             this.btnbuscarregioes.Name = "btnbuscarregioes";
             this.btnbuscarregioes.Size = new System.Drawing.Size(75, 23);
             this.btnbuscarregioes.TabIndex = 8;
@@ -128,11 +129,21 @@
             this.btnbuscarregioes.UseVisualStyleBackColor = true;
             this.btnbuscarregioes.Click += new System.EventHandler(this.btnbuscarregioes_Click);
             // 
+            // comboBoxobjetivo
+            // 
+            this.comboBoxobjetivo.FormattingEnabled = true;
+            this.comboBoxobjetivo.Location = new System.Drawing.Point(751, 657);
+            this.comboBoxobjetivo.Name = "comboBoxobjetivo";
+            this.comboBoxobjetivo.Size = new System.Drawing.Size(201, 24);
+            this.comboBoxobjetivo.TabIndex = 9;
+            this.comboBoxobjetivo.SelectedIndexChanged += new System.EventHandler(this.comboBoxobjetivo_SelectedIndexChanged);
+            // 
             // TesteConexaoNeo4j
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1322, 728);
+            this.Controls.Add(this.comboBoxobjetivo);
             this.Controls.Add(this.btnbuscarregioes);
             this.Controls.Add(this.comboBoxAtividades);
             this.Controls.Add(this.dataGridViewregiao);
@@ -163,5 +174,6 @@
         private System.Windows.Forms.DataGridView dataGridViewregiao;
         private System.Windows.Forms.ComboBox comboBoxAtividades;
         private System.Windows.Forms.Button btnbuscarregioes;
+        private System.Windows.Forms.ComboBox comboBoxobjetivo;
     }
 }

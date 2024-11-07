@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
+using System.Runtime.InteropServices.ComTypes;
+using System.Windows.Forms;
 
 namespace PII_VIII.Classes
 {
@@ -42,19 +44,35 @@ namespace PII_VIII.Classes
         public DataTable BuscarPorUsuario(int idUsuario)
         {
             string query = $"SELECT * FROM historico WHERE idusuario = {idUsuario}";
-            return conexao.RetornaTabela(query);             
+            return conexao.RetornaTabela(query);
         }
 
-        // Método para buscar o histórico por intervalo de datas retornando um DataSet
-        public DataSet BuscarPorIntervaloDatas(DateTime dataInicio, DateTime dataFim)
+        public DataTable BuscarPorIntervaloDatass(DateTime dataInicio, DateTime dataFim)
         {
-            string query = "SELECT * FROM historico WHERE DataInicial >= @DataInicio AND DataFinal <= @DataFim";
-            var parameters = new SqlParameter[]
+            string query = "Select * from historico where Datainicial between @Datainicio " +
+                "and @Datafim and Datafinal between @Datainicio and @Datafim";
+
+
+
+            using (SqlConnection conexao = this.conexao.Conectar())
             {
-            new SqlParameter("@DataInicio", dataInicio),
-            new SqlParameter("@DataFim", dataFim)
-            };
-            return conexao.ExecuteQueryDataSet(query, parameters); // Método que retorna um DataSet
+                {
+                    using (SqlCommand comando = new SqlCommand(query, conexao))
+                    {
+                        comando.Parameters.Add(new SqlParameter("@DataInicio", dataInicio));
+                        comando.Parameters.Add(new SqlParameter("@DataFim", dataFim));
+
+                        using (SqlDataAdapter adaptador = new SqlDataAdapter(comando))
+                        {
+                            DataTable dataTable = new DataTable();
+                            adaptador.Fill(dataTable);
+                            return dataTable;
+                        }
+                    }   
+                }
+            }
         }
     }
 }
+
+    

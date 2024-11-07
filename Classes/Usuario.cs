@@ -18,7 +18,6 @@ namespace PII_VIII
         public string Sexo { get; set; }
         public float Altura { get; set; }
         public float Peso { get; set; }
-
         public int IdObjetivo { get; set; }
         public int IdFaixa { get; set; }
 
@@ -79,7 +78,11 @@ namespace PII_VIII
             return idFaixaEtariaPeso; 
         }
 
-
+        public void MudarObjetivo(int idObjetivo)
+        {
+            string query = $"Update from usuario set idobjetivo={idObjetivo}";
+            con.Executar(query);
+        }
 
     }
 
