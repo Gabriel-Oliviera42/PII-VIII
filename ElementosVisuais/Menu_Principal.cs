@@ -91,9 +91,11 @@ namespace PII_VIII.ElementosVisuais
 
 
         //Click dos Botões
+
         private void Home_click()
         {
             MessageBox.Show("Home");
+            
         }
         private void Treinos_click()
         {

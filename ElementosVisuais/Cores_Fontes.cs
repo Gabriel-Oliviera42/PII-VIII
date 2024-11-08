@@ -35,6 +35,7 @@ namespace PII_VIII
         public Color Preto = Color.FromArgb(35, 35, 35);
         public Color CinzaClaro = Color.FromArgb(233, 233, 237);
         public Color Branco = Color.FromArgb(255, 255, 255);
+        public Color RoxoCinza = Color.FromArgb(144, 142, 170);
 
 
         //Fontes
