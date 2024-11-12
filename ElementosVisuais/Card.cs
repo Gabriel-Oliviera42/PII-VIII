@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,6 +20,8 @@ namespace PII_VIII.ElementosVisuais
         private Label descCard = new Label();
         private Treino _treino = new Treino();
 
+        private Form formPai = new Form();
+
         public Treino treino
         {
             set
@@ -26,6 +29,15 @@ namespace PII_VIII.ElementosVisuais
                 _treino = value;
                 atualizaDados();
                 
+            }
+        }
+
+
+        public Form Form_Pai
+        {
+            set
+            {
+                formPai = value;
             }
         }
 
@@ -137,6 +149,7 @@ namespace PII_VIII.ElementosVisuais
             iconeCard.Width = 40;
             iconeCard.BackgroundImage = Properties.Resources.LupaAzul;
             iconeCard.BackgroundImageLayout = ImageLayout.Center;
+            iconeCard.Click += (s, e) => new Card_Modal() ;
 
             //adicionando elementos no card 
             CardDesc.Controls.Add(iconeCard);
@@ -150,5 +163,8 @@ namespace PII_VIII.ElementosVisuais
 
 
         }
+
+
+
     }
 }
