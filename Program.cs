@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PII_VIII.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,10 @@ namespace PII_VIII
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            
+            Application.Run(new Login());
+            //Application.Run(new Home());
         }
+        static List<string> ListaDepessoas;
     }
 }
