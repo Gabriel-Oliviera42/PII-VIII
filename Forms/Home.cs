@@ -36,7 +36,8 @@ namespace PII_VIII.Forms
         public Home(int idUsuarioLogado)
         {
             this.userId = idUsuarioLogado;
-            InitializeComponent();
+            InitializeComponent();          
+            AddBarraUsuario();
             AddElementos();
             AddMenu();
         }
@@ -45,6 +46,14 @@ namespace PII_VIII.Forms
         {
             this.Controls.Add(chave.RetornaEspacoLeft(20));
             this.Controls.Add(menu);
+        }
+
+        private void AddBarraUsuario()
+        {
+            Barra_Usuario barra_usuario = new Barra_Usuario();
+
+            this.Controls.Add(chave.RetornaEspacoLeft(20));
+            this.Controls.Add(barra_usuario);
         }
 
 
