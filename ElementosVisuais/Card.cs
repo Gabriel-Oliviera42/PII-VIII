@@ -43,21 +43,17 @@ namespace PII_VIII.ElementosVisuais
 
         private void atualizaDados()
         {
+            // Atribui o nome e descrição do treino aos respectivos rótulos
             titulo.Text = _treino.NomeTreino;
             subtitulo.Text = _treino.Descricao;
-            //AtividadeFisica AF = new AtividadeFisica();
 
-            //string desc = "";
-            //int count = 0;
-            //foreach (DataRow x in AF.BuscarAtividadeTreino(_treino.idTreino).Rows)
-            //{
-            //    desc += x[1]+", ";
-            //    count ++;
-            //}
-            //tituloCard.Text = count + " Atividades Físicas"; ;
+            // Obtém e exibe o número de atividades associadas ao treino
+            int quantidadeAtividades = _treino.QuantidadeAtividadeTreino(_treino.IdTreino);
+            tituloCard.Text = quantidadeAtividades + " Atividades Físicas";
+
+            // Se desejar, ajuste o descCard para mostrar outros detalhes
+            // descCard.Text = "Tipos de Treino";
             //descCard.Text = desc;
-
-
         }
 
 

@@ -14,7 +14,7 @@ namespace PII_VIII
 {
     internal class Treino
     {
-        public int idTreino {  get; set; }
+        public int IdTreino {  get; set; }
         public string NomeTreino {  get; set; }
         public string Descricao { get; set; }
         public int IdObjetivo { get; set; }
@@ -27,7 +27,14 @@ namespace PII_VIII
             DataTable dt = conexao.RetornaTabela(sql);
             return dt;
         }
-        
+        public int QuantidadeAtividadeTreino(int idTreino)
+        {
+            string query = $"SELECT COUNT(id_treino) from atividadefisica_treino where id_treino = {idTreino}";
+            object quant = conexao.RetornaEscalar(query);
+            int quantTreinos = quant != null ? Convert.ToInt32(quant) : 0;
+            return quantTreinos;
+        }
+
 
 
 

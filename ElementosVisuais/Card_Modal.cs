@@ -39,7 +39,7 @@ namespace PII_VIII.ElementosVisuais
 
             string desc = "";
             int count = 0;
-            foreach (DataRow x in AF.BuscarAtividadeTreino(_treino.idTreino).Rows)
+            foreach (DataRow x in AF.BuscarAtividadeTreino(_treino.IdTreino).Rows)
             {
                 desc += x[1] + ", ";
                 count++;

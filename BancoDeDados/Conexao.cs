@@ -56,6 +56,18 @@ namespace PII_VIII
             return ds;
         }
 
+        public object RetornaEscalar(string sql)
+        {
+            object resultado;
+            Conectar();
+            SqlCommand cmd = new SqlCommand(sql, Conn);
+            // Executa a consulta e obtém o valor escalar
+            resultado = cmd.ExecuteScalar();
+            Desconectar();
+            return resultado;
+        }
+
+
         // novo metodo que estou chamano na parte de login, mas especificamente no metodo Fazer_Login()
         // lembrando que issa é para o banco de dados SQL_GestaoSaude
         public int? ValidarLoginERetornarId(string email, string senha)

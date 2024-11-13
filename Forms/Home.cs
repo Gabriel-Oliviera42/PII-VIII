@@ -93,7 +93,7 @@ namespace PII_VIII.Forms
                 Treino treino = new Treino();
                 treino.NomeTreino = row["nometreino"].ToString();
                 treino.Descricao = row["descricao"].ToString();
-
+                treino.IdTreino = int.Parse(row["id_treino"].ToString());
                 Card card = new Card();
                 card.treino = treino; 
                 Slide.Controls.Add(card);
