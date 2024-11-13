@@ -414,7 +414,7 @@ namespace PII_VIII
                 if (loginValido)
                 {
                     // Se o login for válido, abre a tela Home
-                    Thread init = new Thread(() =>
+                    Tread init = new Thread(() =>
                     {
                         Home aux = new Home();
                         aux.ShowDialog();

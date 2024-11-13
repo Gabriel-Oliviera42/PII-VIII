@@ -83,6 +83,7 @@ namespace PII_VIII.ElementosVisuais
 
         private void AddAtFisica()
         {
+            Panel AtiviEsp = new Panel();
             AtiviEsp.AutoSize = true;
             AtiviEsp.Dock = DockStyle.Top;
             this.Controls.Add(AtiviEsp);
@@ -104,7 +105,7 @@ namespace PII_VIII.ElementosVisuais
             AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
             AtiviEsp.Controls.Add(RetornaAtvFis(at));
 
-           
+
 
 
         }
