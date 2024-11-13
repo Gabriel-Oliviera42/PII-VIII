@@ -87,6 +87,13 @@ namespace PII_VIII.Forms
 
 
             Card cardTeste = new Card();
+
+            //DataTable teste = new Treino().BuscarTodos(Program.user.IdUsuario);
+            //foreach()
+            Slide.Controls.Add(new Card());
+            Slide.Controls.Add(new Card());
+            Slide.Controls.Add(new Card());
+            Slide.Controls.Add(new Card());
             Slide.Controls.Add(new Card());
 
             SeusTreinos.Controls.Add(Slide);

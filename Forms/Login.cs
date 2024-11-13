@@ -1,4 +1,5 @@
 ﻿using PII_VIII.Elementos_Visuais;
+using PII_VIII.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -400,8 +401,40 @@ namespace PII_VIII
         //Função que cadastra Usuário - (CHAMA APÓS CLICAR NO BOTÃO CONCLUIR)
         private void Fazer_Login()
         {
+            string email = Email_TextBox.Text;
+            string senha = Senha_TextBox.Text;
 
+            // Criar uma instância da classe Conexao
+            Conexao conexao = new Conexao();
+
+            try
+            {
+                // Validar se o email e a senha estão corretos
+                bool loginValido = conexao.ValidarLogin(email, senha);
+
+                if (loginValido)
+                {
+                    // Se o login for válido, abre a tela Home
+                    Thread init = new Thread(() =>
+                    {
+                        Home aux = new Home();
+                        aux.ShowDialog();
+                    });
+                    init.Start();
+                    this.Close();
+                }
+                else
+                {
+                    // Se o login falhar
+                    MessageBox.Show("Email ou senha inválidos. Tente novamente.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao tentar realizar o login: " + ex.Message);
+            }
         }
+    
 
 
         //FUNÇÕES SECUNDARIAS ↓

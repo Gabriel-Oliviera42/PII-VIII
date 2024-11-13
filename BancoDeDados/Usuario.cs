@@ -11,7 +11,8 @@ namespace PII_VIII
     using System.Globalization;
 
     public class Usuario
-    {        
+    {
+        public int IdUsuario { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
 
@@ -43,6 +44,8 @@ namespace PII_VIII
             string query = $"DELETE FROM usuario WHERE id = {id}";           
             con.Executar(query);            
         }
+
+
 
         public DataTable BuscarPorId(int id)
         {
