@@ -380,6 +380,7 @@ namespace PII_VIII
                     // População dos demais campos
                     us.IdObjetivo = objetivo.ItemSelecionado;
                     us.IdFaixa = us.VerificaFaixaEtariaPeso(us.Peso, idade);
+                    us.
 
                     // Inserção no banco de dados
                     try
@@ -389,6 +390,7 @@ namespace PII_VIII
                     }catch(Exception ex)
                     {
                         MessageBox.Show("não foi possivel cadastrar" + ex.Message);
+                        return;
                     }
 
                     MessageBox.Show("Usuário cadastrado com sucesso!");
