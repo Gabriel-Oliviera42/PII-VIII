@@ -14,18 +14,22 @@ namespace PII_VIII
         /// </summary>
         /// 
         public static Usuario user = new Usuario();
-
+        
         [STAThread]
 
        
         static void Main()
         {
+            user.IdUsuario = 0;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             
-            Application.Run(new Login());
-            //Application.Run(new Home());
+            //Application.Run(new Login());
+
+            Application.Run(new Home());
+
         }
+
         static List<string> ListaDepessoas;
         
     }
