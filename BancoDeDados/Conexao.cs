@@ -18,7 +18,7 @@ namespace PII_VIII
 
         public void Conectar()
         {
-            string aux2 = "SERVER=.\\SQLEXPRESS;Integrated Security = True";
+            string aux = "SERVER=.\\SQLEXPRESS;Integrated Security = True";
             Conn.ConnectionString = aux;
             Conn.Open();
         }

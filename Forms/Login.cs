@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -414,7 +415,7 @@ namespace PII_VIII
                 if (loginValido)
                 {
                     // Se o login for válido, abre a tela Home
-                    Tread init = new Thread(() =>
+                    Thread init = new Thread(() =>
                     {
                         Home aux = new Home();
                         aux.ShowDialog();
