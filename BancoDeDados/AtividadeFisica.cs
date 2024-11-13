@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PII_VIII
+
+    //Criar uma função que recebe um id da atividade Física e preenche com os dados restantes na atual classe
 {
     internal class AtividadeFisica
     {

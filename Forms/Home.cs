@@ -9,7 +9,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
-
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -83,7 +83,8 @@ namespace PII_VIII.Forms
 
             Flow Slide = new Flow();
             Slide.Dock = DockStyle.Top;
-            Slide.Height = 600;
+            
+            
 
 
             Card cardTeste = new Card();
@@ -96,6 +97,10 @@ namespace PII_VIII.Forms
             Slide.Controls.Add(new Card());
             Slide.Controls.Add(new Card());
 
+            
+
+            
+            Slide.Height = ((Slide.Controls.Count/2)+1) * new Card().Height;
             SeusTreinos.Controls.Add(Slide);
             SeusTreinos.Controls.Add(chave.RetornaEspacoTop(10));
             SeusTreinos.Controls.Add(seusTreinos_Label);
