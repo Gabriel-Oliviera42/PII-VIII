@@ -20,6 +20,7 @@ namespace PII_VIII.Forms
     {
         Menu_Principal menu = new Menu_Principal();
         Chave chave = new Chave();
+        private int userId;
 
         private void InitializeComponent()
         {
@@ -32,8 +33,9 @@ namespace PII_VIII.Forms
 
         }
 
-        public Home()
+        public Home(int idUsuarioLogado)
         {
+            this.userId = idUsuarioLogado;
             InitializeComponent();
             AddElementos();
             AddMenu();
@@ -72,7 +74,7 @@ namespace PII_VIII.Forms
             SeusTreinos.AutoSize = true;
 
             Label seusTreinos_Label = new Label();
-            seusTreinos_Label.Text = "Seus Treinos:";
+            seusTreinos_Label.Text = "Treinos relacionado para você:";
             seusTreinos_Label.ForeColor = chave.Preto;
             seusTreinos_Label.Font = chave.H3_Font;
             seusTreinos_Label.AutoSize = true;
@@ -82,22 +84,21 @@ namespace PII_VIII.Forms
 
             Flow Slide = new Flow();
             Slide.Dock = DockStyle.Top;
-            
 
 
-            Card cardTeste = new Card();
+            DataTable teste = new Usuario().TreinosIndicadosUsuario(userId);
 
-            //DataTable teste = new Treino().BuscarTodos(Program.user.IdUsuario);
-            //foreach()
-            Slide.Controls.Add(new Card());
-            Slide.Controls.Add(new Card());
-            Slide.Controls.Add(new Card());
-            Slide.Controls.Add(new Card());
-            Slide.Controls.Add(new Card());
+            foreach (DataRow row in teste.Rows)
+            {
+                Treino treino = new Treino();
+                treino.NomeTreino = row["nometreino"].ToString();
+                treino.Descricao = row["descricao"].ToString();
 
-            
+                Card card = new Card();
+                card.treino = treino; 
+                Slide.Controls.Add(card);
+            }
 
-            
             Slide.Height = ((Slide.Controls.Count/2)+1) * new Card().Height;
             SeusTreinos.Controls.Add(Slide);
             SeusTreinos.Controls.Add(chave.RetornaEspacoTop(10));

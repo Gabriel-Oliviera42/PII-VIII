@@ -58,11 +58,11 @@ namespace PII_VIII
 
         // novo metodo que estou chamano na parte de login, mas especificamente no metodo Fazer_Login()
         // lembrando que issa é para o banco de dados SQL_GestaoSaude
-        public bool ValidarLogin(string email, string senha)
+        public int? ValidarLoginERetornarId(string email, string senha)
         {
             try
             {
-                string sql = "SELECT COUNT(*) FROM usuario WHERE email = @Email AND senha = @Senha";
+                string sql = "SELECT id_usuario FROM usuario WHERE email = @Email AND senha = @Senha";
                 Cmd.Connection = Conn;
                 Cmd.CommandText = sql;
                 Cmd.Parameters.Clear();  // limpa antes de adicionar novos
@@ -70,17 +70,25 @@ namespace PII_VIII
                 Cmd.Parameters.AddWithValue("@Senha", senha);
 
                 Conectar(); // conecta ao banco de dados
-                int userCount = (int)Cmd.ExecuteScalar(); // executa a consulta e pega o valor
-                Desconectar(); // desconectar depois de terminar
+                object result = Cmd.ExecuteScalar(); // executa a consulta e pega o valor
+                Desconectar(); // desconecta depois de terminar
 
-                return userCount > 0; // retorna verdadeiro se o login for válido
+                // Verifica se encontrou um usuário com as credenciais informadas
+                if (result != null && int.TryParse(result.ToString(), out int userId))
+                {
+                    return userId; // retorna o ID do usuário caso o login seja válido
+                }
+                else
+                {
+                    return null; // retorna null caso o login seja inválido
+                }
             }
             catch (Exception ex)
             {
-                // se der erro, pode adicionar um tratamento, como uma mensagem de erro
                 throw new Exception("Erro ao validar login: " + ex.Message);
             }
         }
+
 
     }
 }

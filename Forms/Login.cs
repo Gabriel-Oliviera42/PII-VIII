@@ -46,7 +46,6 @@ namespace PII_VIII
             this.WindowState = FormWindowState.Maximized;
             this.Name = "Login";
             this.ResumeLayout(false);
-            this.Padding = new Padding(PD01);
 
         }
 
@@ -427,15 +426,15 @@ namespace PII_VIII
 
             try
             {
-                // Validar se o email e a senha estão corretos
-                bool loginValido = conexao.ValidarLogin(email, senha);
+                // Valida o login e obtém o ID do usuário
+                int? userId = conexao.ValidarLoginERetornarId(email, senha);
 
-                if (loginValido)
+                if (userId.HasValue)
                 {
-                    // Se o login for válido, abre a tela Home
+                    // Se o login for válido e o ID estiver presente, abre a tela Home
                     Thread init = new Thread(() =>
                     {
-                        Home aux = new Home();
+                        Home aux = new Home(userId.Value); // Passa o ID do usuário para o formulário Home
                         aux.ShowDialog();
                     });
                     init.Start();
@@ -446,6 +445,7 @@ namespace PII_VIII
                     // Se o login falhar
                     MessageBox.Show("Email ou senha inválidos. Tente novamente.");
                 }
+
             }
             catch (Exception ex)
             {

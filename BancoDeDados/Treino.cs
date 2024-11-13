@@ -27,13 +27,7 @@ namespace PII_VIII
             DataTable dt = conexao.RetornaTabela(sql);
             return dt;
         }
-
-        public DataTable BuscarTreinosUsuario(int idTreino)
-        {
-            string query = $"MATCH (a:AtividadeFisica)-[r:INCLUSA_EM_TREINO]->(t:Treino) where t.id ={idTreino} RETURN a.nomeatividade AS Atividade, a.descricao AS Descrição ,a.dificuldade AS Dificuldade, a.repeticoes AS Repetições";
-            DataTable dt = conexao.RetornaTabela(query);
-            return dt;
-        }
+        
 
 
 

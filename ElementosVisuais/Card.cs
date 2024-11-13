@@ -45,17 +45,17 @@ namespace PII_VIII.ElementosVisuais
         {
             titulo.Text = _treino.NomeTreino;
             subtitulo.Text = _treino.Descricao;
-            AtividadeFisica AF = new AtividadeFisica();
+            //AtividadeFisica AF = new AtividadeFisica();
 
-            string desc = "";
-            int count = 0;
-            foreach (DataRow x in AF.BuscarAtividadeTreino(_treino.idTreino).Rows)
-            {
-                desc += x[1]+", ";
-                count ++;
-            }
-            tituloCard.Text = count + " Atividades Físicas"; ;
-            descCard.Text = desc;
+            //string desc = "";
+            //int count = 0;
+            //foreach (DataRow x in AF.BuscarAtividadeTreino(_treino.idTreino).Rows)
+            //{
+            //    desc += x[1]+", ";
+            //    count ++;
+            //}
+            //tituloCard.Text = count + " Atividades Físicas"; ;
+            //descCard.Text = desc;
 
 
         }
