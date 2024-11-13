@@ -382,7 +382,14 @@ namespace PII_VIII
                     us.IdFaixa = us.VerificaFaixaEtariaPeso(us.Peso, idade);
 
                     // Inserção no banco de dados
-                    us.Inserir();
+                    try
+                    {
+
+                        us.Inserir();
+                    }catch(Exception ex)
+                    {
+                        MessageBox.Show("não foi possivel cadastrar" + ex.Message);
+                    }
 
                     MessageBox.Show("Usuário cadastrado com sucesso!");
                 }
