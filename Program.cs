@@ -12,7 +12,12 @@ namespace PII_VIII
         /// <summary>
         /// Ponto de entrada principal para o aplicativo.
         /// </summary>
+        /// 
+        public static Usuario user = new Usuario();
+
         [STAThread]
+
+       
         static void Main()
         {
             Application.EnableVisualStyles();
@@ -21,6 +26,5 @@ namespace PII_VIII
             Application.Run(new Login());
             //Application.Run(new Home());
         }
-        static List<string> ListaDepessoas;
     }
 }

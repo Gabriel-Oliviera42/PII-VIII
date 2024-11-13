@@ -10,8 +10,11 @@ namespace PII_VIII
     using System.Data;
     using System.Globalization;
 
+    //Criar uma função que recebe o Id de um usuário e preenche com os dados restantes na atual classe
+
     public class Usuario
-    {        
+    {
+        public int IdUsuario { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
 
@@ -43,6 +46,8 @@ namespace PII_VIII
             string query = $"DELETE FROM usuario WHERE id = {id}";           
             con.Executar(query);            
         }
+
+
 
         public DataTable BuscarPorId(int id)
         {

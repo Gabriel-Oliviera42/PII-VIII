@@ -18,7 +18,6 @@ namespace PII_VIII
 
         public void Conectar()
         {
-            string aux = "Server=.\\SQLEXPRESS;Database=GestaoSaude_II;UID=sa;PWD=123";
             string aux2 = "SERVER=.\\SQLEXPRESS;Integrated Security = True";
             Conn.ConnectionString = aux;
             Conn.Open();
@@ -55,6 +54,32 @@ namespace PII_VIII
             da.Fill(ds);              
             Desconectar();             
             return ds;
+        }
+
+        // novo metodo que estou chamano na parte de login, mas especificamente no metodo Fazer_Login()
+        // lembrando que issa é para o banco de dados SQL_GestaoSaude
+        public bool ValidarLogin(string email, string senha)
+        {
+            try
+            {
+                string sql = "SELECT COUNT(*) FROM usuario WHERE email = @Email AND senha = @Senha";
+                Cmd.Connection = Conn;
+                Cmd.CommandText = sql;
+                Cmd.Parameters.Clear();  // limpa antes de adicionar novos
+                Cmd.Parameters.AddWithValue("@Email", email);
+                Cmd.Parameters.AddWithValue("@Senha", senha);
+
+                Conectar(); // conecta ao banco de dados
+                int userCount = (int)Cmd.ExecuteScalar(); // executa a consulta e pega o valor
+                Desconectar(); // desconectar depois de terminar
+
+                return userCount > 0; // retorna verdadeiro se o login for válido
+            }
+            catch (Exception ex)
+            {
+                // se der erro, pode adicionar um tratamento, como uma mensagem de erro
+                throw new Exception("Erro ao validar login: " + ex.Message);
+            }
         }
 
     }
