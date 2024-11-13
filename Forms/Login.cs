@@ -394,6 +394,9 @@ namespace PII_VIII
                     }
 
                     MessageBox.Show("Usuário cadastrado com sucesso!");
+                    RetornarParaLogin(); // Chamando método para retornar ao login
+
+
                 }
                 catch (FormatException)
                 {
@@ -405,6 +408,12 @@ namespace PII_VIII
                 MessageBox.Show("Algum dos campos está incompleto. Complete com as informações necessárias!");
             }
 
+        }
+        // Método para retornar ao painel de login
+        private void RetornarParaLogin()
+        {
+            EspForm.Controls.Clear(); // Limpa o conteúdo do painel
+            AdicionaFormulario_Login(); // Retorna ao formulário de login
         }
 
         //Função que cadastra Usuário - (CHAMA APÓS CLICAR NO BOTÃO CONCLUIR)
