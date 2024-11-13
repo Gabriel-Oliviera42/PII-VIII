@@ -380,7 +380,7 @@ namespace PII_VIII
                     // População dos demais campos
                     us.IdObjetivo = objetivo.ItemSelecionado;
                     us.IdFaixa = us.VerificaFaixaEtariaPeso(us.Peso, idade);
-                    us.
+                    us.Senha = Senha_TextBox.Text;
 
                     // Inserção no banco de dados
                     try

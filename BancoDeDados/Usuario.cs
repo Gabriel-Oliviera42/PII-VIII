@@ -25,13 +25,14 @@ namespace PII_VIII
 
         public int IdObjetivo { get; set; }
         public int IdFaixa { get; set; }
+        public string Senha { get; set; }
 
         private Conexao con = new Conexao();
 
         public void Inserir()
         {
-           string query = $"INSERT INTO usuario (nome, email, datanascimento, altura, peso, id_objetivo, id_faixaetariapeso)" +
-                $"VALUES ('{Nome}','{Email}','{DataNascimento.ToString("yyyy-MM-dd")}', {Altura.ToString("0.00", CultureInfo.InvariantCulture)}, {Peso.ToString("0.00", CultureInfo.InvariantCulture)}, {IdObjetivo}, {IdFaixa})";
+           string query = $"INSERT INTO usuario (nome, email, datanascimento, altura, peso, id_objetivo, id_faixaetariapeso, senha)" +
+                $"VALUES ('{Nome}','{Email}','{DataNascimento.ToString("yyyy-MM-dd")}', {Altura.ToString("0.00", CultureInfo.InvariantCulture)}, {Peso.ToString("0.00", CultureInfo.InvariantCulture)}, {IdObjetivo}, {IdFaixa}, '{Senha}')";
             con.Executar(query);
         }
 
