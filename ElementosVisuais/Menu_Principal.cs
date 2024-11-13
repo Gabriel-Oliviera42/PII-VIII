@@ -21,11 +21,9 @@ namespace PII_VIII.ElementosVisuais
             this.Dock = System.Windows.Forms.DockStyle.Left;
             this.Width = 135;
             this.Padding = new Padding(38);
-
-            Panel home = CriaBotao("Home", chave.RoxoFluorescente, Properties.Resources.Home);
+            
             Panel treinos = CriaBotao("Treinos", chave.RoxoFluorescente, Properties.Resources.Treino);
             Panel historico = CriaBotao("Historico", chave.RoxoFluorescente, Properties.Resources.historico);
-            Panel Metas = CriaBotao("Metas", chave.RoxoFluorescente, Properties.Resources.Meta);
             Panel Perfil = CriaBotao("Perfil", chave.RoxoFluorescente, Properties.Resources.Perfil);
             Panel Sair = CriaBotao("Sair", chave.vermelho, Properties.Resources.Sair);
 
@@ -33,21 +31,15 @@ namespace PII_VIII.ElementosVisuais
             int pd = 20;
 
             this.Controls.Add(Perfil);
-            this.Controls.Add(chave.RetornaEspacoTop(pd));
-            this.Controls.Add(Metas);
-            this.Controls.Add(chave.RetornaEspacoTop(pd));
+            this.Controls.Add(chave.RetornaEspacoTop(pd));           
             this.Controls.Add(historico);
             this.Controls.Add(chave.RetornaEspacoTop(pd));
             this.Controls.Add(treinos);
-            this.Controls.Add(chave.RetornaEspacoTop(pd));
-            this.Controls.Add(home);
+            this.Controls.Add(chave.RetornaEspacoTop(pd));            
             this.Controls.Add(Sair);
 
-
-            home.Controls["icone"].Click += (s, e) => Home_click();
             treinos.Controls["icone"].Click += (s, e) => Treinos_click();
             historico.Controls["icone"].Click += (s, e) =>  Historico_click();
-            Metas.Controls["icone"].Click += (s, e) => Metas_click();
             Perfil.Controls["icone"].Click += (s, e) => Perfil_click();
             Sair.Controls["icone"].Click += (s, e) => Sair_click();
        }
@@ -91,12 +83,7 @@ namespace PII_VIII.ElementosVisuais
 
 
         //Click dos Botões
-
-        private void Home_click()
-        {
-            MessageBox.Show("Home");
-            
-        }
+        
         private void Treinos_click()
         {
             MessageBox.Show("Treinos");
@@ -104,18 +91,14 @@ namespace PII_VIII.ElementosVisuais
         private void Historico_click()
         {
             MessageBox.Show("Historico");
-        }
-        private void Metas_click()
-        {
-            MessageBox.Show("Metas");
-        }
+        }        
         private void Perfil_click()
         {
             MessageBox.Show("Perfil");
         }
         private void Sair_click()
         {
-            MessageBox.Show("Sair");
+            MessageBox.Show("Sair");            
         }
     }
 }
