@@ -344,77 +344,75 @@ namespace PII_VIII
         //Função que cadastra Usuário - (CHAMA APÓS CLICAR NO BOTÃO CONCLUIR)
         private void Cadastra()
         {
-            if (Aniversario_TextBox.Text.Length > 9 && Nome_TextBox.Text.Length > 0 && Email_TextBox.Text.Length > 0 && Peso_TextBox.Text.Length > 0 && Altura_TextBox.Text.Length > 0)
+            if (Aniversario_TextBox.Text.Length <= 9 || Nome_TextBox.Text.Length == 0 ||
+                Email_TextBox.Text.Length == 0 || Peso_TextBox.Text.Length == 0 || Altura_TextBox.Text.Length == 0 ||
+                Senha_TextBox.Text.Length == 0)
             {
-                Usuario us = new Usuario
-                {
-                    Nome = Nome_TextBox.Text,
-                    Email = Email_TextBox.Text
-                };
+                MessageBox.Show("Algum dos campos está incompleto. Complete com as informações necessárias!");
+                return;
+            }
 
-                // Validação e conversão para peso e altura
-                if (float.TryParse(Peso_TextBox.Text, out float peso) && float.TryParse(Altura_TextBox.Text, out float altura))
-                {
-                    us.Peso = peso;
-                    us.Altura = altura;
-                }
-                else
-                {
-                    MessageBox.Show("Peso ou Altura em formato inválido.");
-                    return;
-                }
+            Usuario us = new Usuario
 
-                // Extração e verificação da data de nascimento
-                try
-                {
-                    int dia = int.Parse(Aniversario_TextBox.Text.Substring(0, 2));
-                    int mes = int.Parse(Aniversario_TextBox.Text.Substring(3, 2));
-                    int ano = int.Parse(Aniversario_TextBox.Text.Substring(6, 4));
+            {
+                Nome = Nome_TextBox.Text,
+                Email = Email_TextBox.Text,
+                Senha = Senha_TextBox.Text 
+            };
 
-                    us.DataNascimento = new DateTime(ano, mes, dia);
-
-                    // Cálculo da idade
-                    int anoAtual = DateTime.Now.Year;
-                    int idade = anoAtual - ano;
-
-                    // População dos demais campos
-                    us.IdObjetivo = objetivo.ItemSelecionado;
-                    us.IdFaixa = us.VerificaFaixaEtariaPeso(us.Peso, idade);
-
-                    // Inserção no banco de dados
-                    us.Inserir();
-
-                    MessageBox.Show("Usuário cadastrado com sucesso!");
-                }
-                catch (FormatException)
-                {
-                    MessageBox.Show("Data de nascimento em formato inválido. Use o formato DD/MM/AAAA.");
-                }
+            if (float.TryParse(Peso_TextBox.Text, out float peso) && float.TryParse(Altura_TextBox.Text, out float altura))
+            {
+                us.Peso = peso;
+                us.Altura = altura;
             }
             else
             {
-                MessageBox.Show("Algum dos campos está incompleto. Complete com as informações necessárias!");
+                MessageBox.Show("Peso ou Altura em formato inválido.");
+                return;
             }
 
+            try
+            {
+                int dia = int.Parse(Aniversario_TextBox.Text.Substring(0, 2));
+                int mes = int.Parse(Aniversario_TextBox.Text.Substring(3, 2));
+                int ano = int.Parse(Aniversario_TextBox.Text.Substring(6, 4));
+
+                us.DataNascimento = new DateTime(ano, mes, dia);
+                int idade = DateTime.Now.Year - ano;
+
+                us.IdObjetivo = objetivo.ItemSelecionado;
+                us.IdFaixa = us.VerificaFaixaEtariaPeso(us.Peso, idade);
+
+                us.Inserir();
+                MessageBox.Show("Usuário cadastrado com sucesso!");
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Data de nascimento em formato inválido. Use o formato DD/MM/AAAA.");
+            }
         }
+    
+
 
         //Função que cadastra Usuário - (CHAMA APÓS CLICAR NO BOTÃO CONCLUIR)
         private void Fazer_Login()
         {
+            // pega oque o usuario escreveu
+
             string email = Email_TextBox.Text;
             string senha = Senha_TextBox.Text;
 
-            // Criar uma instância da classe Conexao
+            // cria uma instância da classe Conexao
             Conexao conexao = new Conexao();
 
             try
             {
-                // Validar se o email e a senha estão corretos
+                // uso o método em Conexao para ver ser está certo a senha e email
                 bool loginValido = conexao.ValidarLogin(email, senha);
 
                 if (loginValido)
                 {
-                    // Se o login for válido, abre a tela Home
+                    // se o login for válido, abre a tela Home
                     Thread init = new Thread(() =>
                     {
                         Home aux = new Home();
@@ -425,7 +423,7 @@ namespace PII_VIII
                 }
                 else
                 {
-                    // Se o login falhar
+                    // Se não
                     MessageBox.Show("Email ou senha inválidos. Tente novamente.");
                 }
             }
@@ -434,8 +432,6 @@ namespace PII_VIII
                 MessageBox.Show("Erro ao tentar realizar o login: " + ex.Message);
             }
         }
-    
-
 
         //FUNÇÕES SECUNDARIAS ↓
 
