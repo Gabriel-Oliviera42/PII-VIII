@@ -1,9 +1,11 @@
 ﻿using PII_VIII.Elementos_Visuais;
+using PII_VIII.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,9 +14,10 @@ namespace PII_VIII.ElementosVisuais
     internal class Menu_Principal:PanelArredonado
     {
         Chave chave = new Chave();
+        private Form formPai;
 
         //Criando Menu
-        public Menu_Principal()
+        public Menu_Principal(Form f)
         {
             this.Radius = 40;
             this.BackColor = chave.RoxoClaro;
@@ -31,6 +34,8 @@ namespace PII_VIII.ElementosVisuais
 
             Sair.Dock = DockStyle.Bottom;
             int pd = 20;
+
+            formPai = f;
 
             this.Controls.Add(Perfil);
             this.Controls.Add(chave.RetornaEspacoTop(pd));
@@ -94,7 +99,14 @@ namespace PII_VIII.ElementosVisuais
 
         private void Home_click()
         {
-            MessageBox.Show("Home");
+            Thread abreHome = new Thread(() =>
+            {
+                Home home = new Home();
+                home.ShowDialog();
+            });
+            abreHome.Start();
+            formPai.Close();
+            
             
         }
         private void Treinos_click()

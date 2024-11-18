@@ -83,7 +83,7 @@ namespace PII_VIII.ElementosVisuais
 
         private void AddAtFisica()
         {
-            Flow AtiviEsp = new Flow();
+            Panel AtiviEsp = new Panel();
             AtiviEsp.AutoSize = true;
             AtiviEsp.Dock = DockStyle.Top;
             this.Controls.Add(AtiviEsp);
@@ -92,22 +92,29 @@ namespace PII_VIII.ElementosVisuais
             at.Nome = "Teste de Nome";
             at.Descricao = "Teste de Descrição";
 
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
 
-           
+            //ADICIONANDO ATIVIDADES FÍSICAS
 
-
+            AtiviEsp.Controls.Add(RetornaAtvFis(at));
+            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
+            AtiviEsp.Controls.Add(RetornaAtvFis(at));
+            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
+            AtiviEsp.Controls.Add(RetornaAtvFis(at));
+            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
+            AtiviEsp.Controls.Add(RetornaAtvFis(at));
+            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
+            AtiviEsp.Controls.Add(RetornaAtvFis(at));
         }
 
         PanelArredonado RetornaAtvFis(AtividadeFisica at)
         {
             PanelArredonado fundo = new PanelArredonado();
-            fundo.Width = 290;
-            fundo.Height = 140;
+            // fundo.Width = 290;
+            //fundo.Height = 140;
+
+            fundo.AutoSize = true;
+            fundo.Dock = DockStyle.Top;
+            
             fundo.BackColor = chave.CinzaClaro;
             fundo.Radius = 20;
             fundo.Padding = new Padding(20);
@@ -119,10 +126,23 @@ namespace PII_VIII.ElementosVisuais
             tit.ForeColor = chave.Azul;
 
 
+
+            Label desc = new Label();
+            desc.AutoSize = true;
+            desc.Dock = DockStyle.Top;
+            desc.Font = chave.SubtiruloCard_Font;
+            desc.ForeColor = chave.RoxoCinza;
+
+
+
+
             //Ajusta Conteúdo
+            desc.Text = at.Descricao;
             tit.Text = at.Nome;
             
 
+            fundo.Controls.Add(desc);
+            fundo.Controls.Add(chave.RetornaEspacoTop(10));
             fundo.Controls.Add(tit);
 
             

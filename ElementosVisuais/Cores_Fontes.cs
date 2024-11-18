@@ -27,7 +27,7 @@ namespace PII_VIII
         public Color Sub_Verde = Color.FromArgb(11, 118, 2);
         public Color Sub_vermelho = Color.FromArgb(219, 92, 92);
         public Color Sub_Azul = Color.FromArgb(220, 220, 245);
-       //public Color RoxoFluorescente = Color.FromArgb(64, 44, 188);
+        public Color SubRoxo = Color.FromArgb(220, 220, 245);
 
 
 

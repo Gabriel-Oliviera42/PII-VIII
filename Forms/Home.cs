@@ -9,7 +9,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
-
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -19,7 +19,7 @@ namespace PII_VIII.Forms
 {
     internal class Home:Form
     {
-        Menu_Principal menu = new Menu_Principal();
+        Menu_Principal menu;
         Chave chave = new Chave();
 
         private void InitializeComponent()
@@ -36,14 +36,24 @@ namespace PII_VIII.Forms
         public Home()
         {
             InitializeComponent();
+            AddBarraUsuario();
             AddElementos();
             AddMenu();
         }
 
         private void AddMenu()
         {
+            menu = new Menu_Principal(this);
             this.Controls.Add(chave.RetornaEspacoLeft(20));
             this.Controls.Add(menu);
+        }
+
+        private void AddBarraUsuario()
+        {
+            Barra_Usuario barra_usuario = new Barra_Usuario();
+
+            this.Controls.Add(chave.RetornaEspacoLeft(20));
+            this.Controls.Add(barra_usuario);
         }
 
 
@@ -83,19 +93,20 @@ namespace PII_VIII.Forms
 
             Flow Slide = new Flow();
             Slide.Dock = DockStyle.Top;
-            Slide.Height = 600;
-
+            
+            
+            //Teste de ForEach
 
             Card cardTeste = new Card();
-
-            //DataTable teste = new Treino().BuscarTodos(Program.user.IdUsuario);
-            //foreach()
             Slide.Controls.Add(new Card());
             Slide.Controls.Add(new Card());
             Slide.Controls.Add(new Card());
             Slide.Controls.Add(new Card());
             Slide.Controls.Add(new Card());
 
+            //Final do teste
+            
+            Slide.Height = ((Slide.Controls.Count/2)+1) * new Card().Height;
             SeusTreinos.Controls.Add(Slide);
             SeusTreinos.Controls.Add(chave.RetornaEspacoTop(10));
             SeusTreinos.Controls.Add(seusTreinos_Label);
