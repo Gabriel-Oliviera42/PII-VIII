@@ -28,7 +28,7 @@ namespace PII_VIII.Elementos_Visuais
     //Formata o Panel Permitindo que ele seja arredondado
     public class PanelArredonado : Panel
     {
-        private int _radius = 1;
+       
         public PanelArredonado()
         {
             this.DoubleBuffered = true;
@@ -37,7 +37,7 @@ namespace PII_VIII.Elementos_Visuais
             this.SetStyle(ControlStyles.UserPaint, true);
             this.UpdateStyles();
         }
-
+        private int _radius = 1;
         public int Radius
         {
             get
@@ -139,17 +139,43 @@ namespace PII_VIII.Elementos_Visuais
             this.Paint += new PaintEventHandler(DesenharBordasArredondadas);
         }
 
+         private int _radius = 1;
+        public int Radius
+        {
+            get
+            { return _radius; }
+            set
+            {
+                if (value > this.Height || value > this.Width)
+                {
+                    if (this.Height / 2 < this.Width / 2)
+                    {
+                        _radius = this.Height / 2;
+                    }
+                    else
+                    {
+                        _radius -= this.Width / 2;
+                    }
+                }
+                else
+                {
+                    _radius = value;
+                }
+               // DoubleBufferedPanel();
+            }
+        }
+
         private void DesenharBordasArredondadas(object sender, PaintEventArgs e)
         {
             Graphics graphics = e.Graphics;
             Rectangle bounds = this.ClientRectangle;
-            int radius = 50;
+            
             using (GraphicsPath path = new GraphicsPath())
             {
-                path.AddArc(bounds.X, bounds.Y, radius, radius, 180, 90); // Canto superior esquerdo
-                path.AddArc(bounds.X + bounds.Width - radius, bounds.Y, radius, radius, 270, 90); // Canto superior direito
-                path.AddArc(bounds.X + bounds.Width - radius, bounds.Y + bounds.Height - radius, radius, radius, 0, 90); // Canto inferior direito
-                path.AddArc(bounds.X, bounds.Y + bounds.Height - radius, radius, radius, 90, 90); // Canto inferior esquerdo
+                path.AddArc(bounds.X, bounds.Y, _radius, _radius, 180, 90); // Canto superior esquerdo
+                path.AddArc(bounds.X + bounds.Width - _radius, bounds.Y, _radius, _radius, 270, 90); // Canto superior direito
+                path.AddArc(bounds.X + bounds.Width - _radius, bounds.Y + bounds.Height - _radius, _radius, _radius, 0, 90); // Canto inferior direito
+                path.AddArc(bounds.X, bounds.Y + bounds.Height - _radius, _radius, _radius, 90, 90); // Canto inferior esquerdo
                 path.CloseFigure();
 
                 // Preenche o formulário com cadastrarBotao cor de fundo

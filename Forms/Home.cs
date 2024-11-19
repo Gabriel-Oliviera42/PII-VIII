@@ -9,7 +9,6 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
-
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -21,6 +20,7 @@ namespace PII_VIII.Forms
     {
         Menu_Principal menu = new Menu_Principal();
         Chave chave = new Chave();
+        private int userId;
 
         private void InitializeComponent()
         {
@@ -33,9 +33,11 @@ namespace PII_VIII.Forms
 
         }
 
-        public Home()
+        public Home(int idUsuarioLogado)
         {
-            InitializeComponent();
+            this.userId = idUsuarioLogado;
+            InitializeComponent();          
+            AddBarraUsuario();
             AddElementos();
             AddMenu();
         }
@@ -81,7 +83,7 @@ namespace PII_VIII.Forms
             SeusTreinos.AutoSize = true;
 
             Label seusTreinos_Label = new Label();
-            seusTreinos_Label.Text = "Seus Treinos:";
+            seusTreinos_Label.Text = "Treinos relacionado para você:";
             seusTreinos_Label.ForeColor = chave.Preto;
             seusTreinos_Label.Font = chave.H3_Font;
             seusTreinos_Label.AutoSize = true;
@@ -91,12 +93,22 @@ namespace PII_VIII.Forms
 
             Flow Slide = new Flow();
             Slide.Dock = DockStyle.Top;
-            Slide.Height = 600;
 
 
-            Card cardTeste = new Card();
-            Slide.Controls.Add(new Card());
+            DataTable teste = new Usuario().TreinosIndicadosUsuario(userId);
 
+            foreach (DataRow row in teste.Rows)
+            {
+                Treino treino = new Treino();
+                treino.NomeTreino = row["nometreino"].ToString();
+                treino.Descricao = row["descricao"].ToString();
+                treino.IdTreino = int.Parse(row["id_treino"].ToString());
+                Card card = new Card();
+                card.treino = treino; 
+                Slide.Controls.Add(card);
+            }
+
+            Slide.Height = ((Slide.Controls.Count/2)+1) * new Card().Height;
             SeusTreinos.Controls.Add(Slide);
             SeusTreinos.Controls.Add(chave.RetornaEspacoTop(10));
             SeusTreinos.Controls.Add(seusTreinos_Label);

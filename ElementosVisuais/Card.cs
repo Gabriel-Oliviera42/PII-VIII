@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,6 +20,8 @@ namespace PII_VIII.ElementosVisuais
         private Label descCard = new Label();
         private Treino _treino = new Treino();
 
+        private Form formPai = new Form();
+
         public Treino treino
         {
             set
@@ -29,23 +32,28 @@ namespace PII_VIII.ElementosVisuais
             }
         }
 
+
+        public Form Form_Pai
+        {
+            set
+            {
+                formPai = value;
+            }
+        }
+
         private void atualizaDados()
         {
+            // Atribui o nome e descrição do treino aos respectivos rótulos
             titulo.Text = _treino.NomeTreino;
             subtitulo.Text = _treino.Descricao;
-            AtividadeFisica AF = new AtividadeFisica();
 
-            string desc = "";
-            int count = 0;
-            foreach (DataRow x in AF.BuscarAtividadeTreino(_treino.idTreino).Rows)
-            {
-                desc += x[1]+", ";
-                count ++;
-            }
-            tituloCard.Text = count + " Atividades Físicas"; ;
-            descCard.Text = desc;
+            // Obtém e exibe o número de atividades associadas ao treino
+            int quantidadeAtividades = _treino.QuantidadeAtividadeTreino(_treino.IdTreino);
+            tituloCard.Text = quantidadeAtividades + " Atividades Físicas";
 
-
+            // Se desejar, ajuste o descCard para mostrar outros detalhes
+            // descCard.Text = "Tipos de Treino";
+            //descCard.Text = desc;
         }
 
 
@@ -137,6 +145,7 @@ namespace PII_VIII.ElementosVisuais
             iconeCard.Width = 40;
             iconeCard.BackgroundImage = Properties.Resources.LupaAzul;
             iconeCard.BackgroundImageLayout = ImageLayout.Center;
+            iconeCard.Click += (s, e) => new Card_Modal() ;
 
             //adicionando elementos no card 
             CardDesc.Controls.Add(iconeCard);
@@ -150,5 +159,8 @@ namespace PII_VIII.ElementosVisuais
 
 
         }
+
+
+
     }
 }

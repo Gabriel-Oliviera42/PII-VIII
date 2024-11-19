@@ -77,8 +77,14 @@
     <Compile Include="BancoDeDados\AtividadeFisica.cs" />
     <Compile Include="BancoDeDados\Conexao.cs" />
     <Compile Include="BancoDeDados\ConexaoNeo4J.cs" />
+    <Compile Include="ElementosVisuais\Barra_Usuario.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ElementosVisuais\Card.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ElementosVisuais\Card_Modal.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="ElementosVisuais\Cores_Fontes.cs" />
     <Compile Include="ElementosVisuais\Elementos.cs">
@@ -171,9 +177,6 @@
     <None Include="Resources\Meta.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\historico.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Treino.png" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +190,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Star.png" />
-  </ItemGroup>  
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\historico.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
 ﻿using PII_VIII.Elementos_Visuais;
+using PII_VIII.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -29,11 +30,13 @@ namespace PII_VIII
         private TextBox Peso_TextBox = new TextBox();
         private TextBox Email_TextBox = new TextBox();
         private TextBox Aniversario_TextBox = new TextBox();
+        private TextBox Senha_TextBox = new TextBox();
         private selecao objetivo = new selecao();
+        
 
         //Panel da coluna roxa a direita da Tela
         private PanelArredonado FundoRoxo;
-
+        private Panel EspForm = new Panel();
 
         //Configurações iniciais do FORM
         private void InitializeComponent()
@@ -43,7 +46,6 @@ namespace PII_VIII
             this.WindowState = FormWindowState.Maximized;
             this.Name = "Login";
             this.ResumeLayout(false);
-            this.Padding = new Padding(PD01);
 
         }
 
@@ -53,28 +55,112 @@ namespace PII_VIII
 
             InitializeComponent();
             AdicionaBarraRoxa();
-            AdicionaFormulario();
+
+            Adiciona_Espaco_Formulario();
+            AdicionaFormulario_Login();
         }
 
 
 
         //FUNÇÕES PRINCIPAIS ↓
 
-        //Adicionar Campos
-        private void AdicionaFormulario()
+        private void Adiciona_Espaco_Formulario()
         {
             //Espaço para Formulário
-            Panel EspForm = new Panel();
+
             EspForm.Dock = DockStyle.Left;
             EspForm.Width = 1250;
-            EspForm.Padding = new Padding(140, 220, 140, 220);
+            EspForm.Padding = new Padding(140, 180, 140, 180);
 
             this.Controls.Add(EspForm);
 
+        }
 
+
+        //Adicionar Campos
+        private void AdicionaFormulario_Login()
+        {
+            EspForm.Controls.Clear();
+           
             //Título
             Label Tit = new Label();
-            Tit.Text = "Dados do Usuário:";
+            Tit.Text = "Entre na sua conta:";
+            Tit.AutoSize = true;
+            Tit.Dock = DockStyle.Top;
+            Tit.Font = chave.H2_Font;
+            Tit.ForeColor = chave.Preto;
+            //Primeira colunas de Perguntas
+            Panel Col01 = new Panel();
+            Col01.AutoSize = true;
+            Col01.Dock = DockStyle.Top;
+
+            Col01.Controls.Add(retornaCampo(Senha_TextBox, "Senha:"));
+            Col01.Controls.Add(RetornaEspaco(16));
+            Col01.Controls.Add(retornaCampo(Email_TextBox, "E-mail"));
+
+
+            //Cadastrar:
+            Panel espaco_tr = new Panel();  
+            espaco_tr.Dock = DockStyle.Top;
+            // espaco_tr.AutoSize = true;
+            espaco_tr.Height = 40;
+
+
+            Label C01 = new Label();
+            C01.AutoSize = true;
+            C01.Dock = DockStyle.Left;
+            C01.Font = chave.SubtiruloCard_Font;
+            C01.ForeColor = chave.Preto;
+            C01.Text = "Não possui um conta? ";
+
+            Label C02 = new Label();    
+            C02 .AutoSize = true;
+            C02.Dock = DockStyle.Left;
+            C02.Font = chave.SubtiruloCard_Font;
+            C02.ForeColor = chave.RoxoClaro;
+            C02.Text = "Criar uma conta!";
+
+            C02.Click += (s, e) =>
+            {
+                AdicionaFormulario_Cadastro();
+            };
+
+            espaco_tr.Padding = new Padding(5);
+            espaco_tr.Controls.Add(C02);
+            espaco_tr.Controls.Add(C01);
+            
+           
+
+            //Botão conclui
+            BotaoArredondado Entra = new BotaoArredondado();
+            Entra.BackColor = chave.Magenta;
+            Entra.ForeColor = chave.Branco;
+            Entra.Radius = PD02;
+            Entra.Text = "Entrar";
+            Entra.Font = chave.Botao;
+            Entra.Height = 70;
+            Entra.Dock = DockStyle.Top;
+            Entra.FlatAppearance.BorderSize = 0;
+            Entra.FlatStyle = FlatStyle.Flat;
+            Entra.Click += (s, e) => Fazer_Login();
+
+
+
+            EspForm.Controls.Add(Entra);
+            EspForm.Controls.Add(RetornaEspaco(40));
+            EspForm.Controls.Add(Col01);
+            EspForm.Controls.Add(RetornaEspaco(40));
+            EspForm.Controls.Add(espaco_tr);
+            EspForm.Controls.Add(Tit);
+        }//Adicionar Campos
+
+        private void AdicionaFormulario_Cadastro()
+        {
+            EspForm.Controls.Clear();
+            
+            //Título
+            Label Tit = new Label();
+            Tit.Text = "Cadastro de Usuário:";
             Tit.AutoSize = true;
             Tit.Dock = DockStyle.Top;
             Tit.Font = chave.H2_Font;
@@ -84,9 +170,8 @@ namespace PII_VIII
             //Espaço para perguntas
             Panel perg = new Panel();
             perg.Dock = DockStyle.Top;
-            perg .Height = 1100;
+            perg .Height = 400;
 
-           
 
             //Primeira colunas de Perguntas
             Panel Col01 = new Panel();
@@ -94,9 +179,9 @@ namespace PII_VIII
             Col01.Width = (EspForm.Width- (140*2)-20)/2;
        
 
-            
-          //  Col01.Controls.Add(retornaCampo(new TextBox(), "Sexo:"));
             //Col01.Controls.Add(RetornaEspaco(16));
+            Col01.Controls.Add(retornaCampo(Senha_TextBox, "Senha"));
+            Col01.Controls.Add(RetornaEspaco(16));
             Col01.Controls.Add(retornaCampo(Email_TextBox, "E-mail"));
             Col01.Controls.Add(RetornaEspaco(16));
             Col01.Controls.Add(retornaCampo(Aniversario_TextBox, "Data de Nascimento:")); //ajustar ainda
@@ -118,9 +203,6 @@ namespace PII_VIII
             Col02.Controls.Add(RetornaEspaco(16));
             Col02.Controls.Add(retornaCampo(Peso_TextBox, "Peso(kg):"));
 
-            FormataTextBox(Altura_TextBox);
-            FormataTextBox(Peso_TextBox);
-            FormataTextBox(Aniversario_TextBox);
             Aniversario_TextBox.KeyPress += (s, e) =>
             {
                 if (!char.IsControl(e.KeyChar))
@@ -140,25 +222,58 @@ namespace PII_VIII
             perg.Controls.Add(esp);
             perg.Controls.Add(Col01);
 
-            BotaoArredondado Conclui = new BotaoArredondado();
-            Conclui.BackColor = chave.Magenta;
-            Conclui.ForeColor = chave.Branco;
-            Conclui.Radius = PD02;
-            Conclui.Text = "Concluir";
-            Conclui.Font = chave.Botao;
-            Conclui.Height = 70;
-            Conclui.Dock = DockStyle.Bottom;
-            Conclui.FlatAppearance.BorderSize = 0;
-            Conclui.FlatStyle = FlatStyle.Flat;
+            BotaoArredondado Cadastra = new BotaoArredondado();
+            Cadastra.BackColor = chave.Magenta;
+            Cadastra.ForeColor = chave.Branco;
+            Cadastra.Radius = PD02;
+            Cadastra.Text = "Cadastrar";
+            Cadastra.Font = chave.Botao;
+            Cadastra.Height = 70;
+            Cadastra.Dock = DockStyle.Top;
+            Cadastra.FlatAppearance.BorderSize = 0;
+            Cadastra.FlatStyle = FlatStyle.Flat;
 
-            Conclui.Click += (s, e) => Cadastra();
+            Cadastra.Click += (s, e) => this.Cadastra();
+
+            //Login
+            Panel espaco_tr = new Panel();
+            espaco_tr.Dock = DockStyle.Top;
+            espaco_tr.Height = 40;
+
+
+            Label C01 = new Label();
+            C01.AutoSize = true;
+            C01.Dock = DockStyle.Left;
+            C01.Font = chave.SubtiruloCard_Font;
+            C01.ForeColor = chave.Preto;
+            C01.Text = "Já possui um conta? ";
+
+            Label C02 = new Label();
+            C02.AutoSize = true;
+            C02.Dock = DockStyle.Left;
+            C02.Font = chave.SubtiruloCard_Font;
+            C02.ForeColor = chave.RoxoClaro;
+            C02.Text = "Entrar na sua conta!";
+
+            C02.Click += (s, e) =>
+            {
+                AdicionaFormulario_Login();
+            };
+
+            espaco_tr.Padding = new Padding(5);
+            espaco_tr.Controls.Add(C02);
+            espaco_tr.Controls.Add(C01);
 
 
 
-            EspForm.Controls.Add(Conclui);
+            //Adicionando elementos
+
+
+            EspForm.Controls.Add(Cadastra);
             EspForm.Controls.Add(RetornaEspaco(20));
             EspForm.Controls.Add(perg);
             EspForm.Controls.Add(RetornaEspaco(20));
+            EspForm.Controls.Add(espaco_tr);
             EspForm.Controls.Add(Tit);
         }
 
@@ -225,7 +340,6 @@ namespace PII_VIII
 
         }
 
-
         //Função que cadastra Usuário - (CHAMA APÓS CLICAR NO BOTÃO CONCLUIR)
         private void Cadastra()
         {
@@ -265,11 +379,23 @@ namespace PII_VIII
                     // População dos demais campos
                     us.IdObjetivo = objetivo.ItemSelecionado;
                     us.IdFaixa = us.VerificaFaixaEtariaPeso(us.Peso, idade);
+                    us.Senha = Senha_TextBox.Text;
 
                     // Inserção no banco de dados
-                    us.Inserir();
+                    try
+                    {
+
+                        us.Inserir();
+                    }catch(Exception ex)
+                    {
+                        MessageBox.Show("não foi possivel cadastrar" + ex.Message);
+                        return;
+                    }
 
                     MessageBox.Show("Usuário cadastrado com sucesso!");
+                    RetornarParaLogin(); // Chamando método para retornar ao login
+
+
                 }
                 catch (FormatException)
                 {
@@ -282,6 +408,51 @@ namespace PII_VIII
             }
 
         }
+        // Método para retornar ao painel de login
+        private void RetornarParaLogin()
+        {
+            EspForm.Controls.Clear(); // Limpa o conteúdo do painel
+            AdicionaFormulario_Login(); // Retorna ao formulário de login
+        }
+
+        //Função que cadastra Usuário - (CHAMA APÓS CLICAR NO BOTÃO CONCLUIR)
+        private void Fazer_Login()
+        {
+            string email = Email_TextBox.Text;
+            string senha = Senha_TextBox.Text;
+
+            // Criar uma instância da classe Conexao
+            Conexao conexao = new Conexao();
+
+            try
+            {
+                // Valida o login e obtém o ID do usuário
+                int? userId = conexao.ValidarLoginERetornarId(email, senha);
+
+                if (userId.HasValue)
+                {
+                    // Se o login for válido e o ID estiver presente, abre a tela Home
+                    Thread init = new Thread(() =>
+                    {
+                        Home aux = new Home(userId.Value); // Passa o ID do usuário para o formulário Home
+                        aux.ShowDialog();
+                    });
+                    init.Start();
+                    this.Close();
+                }
+                else
+                {
+                    // Se o login falhar
+                    MessageBox.Show("Email ou senha inválidos. Tente novamente.");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao tentar realizar o login: " + ex.Message);
+            }
+        }
+    
 
 
         //FUNÇÕES SECUNDARIAS ↓
@@ -368,18 +539,6 @@ namespace PII_VIII
             return esp;
 
         }
-        //Formata Text Box para Receber apenas Números - AJUSTAR
-        private void FormataTextBox(TextBox textBox)
-        {
-            textBox.KeyPress += (s, e) =>
-            {
-                //if (!char.IsDigit(e.KeyChar))
-                //{
-                //    e.Handled = true;
-                //}
-            };
-
-        }
 
         //Formata Text Box para receber apenas Data DD/MM/YYYY
         private void FormatDateTextBox(TextBox textBox)
@@ -415,7 +574,6 @@ namespace PII_VIII
             textBox.SelectionLength = 0;
         }
         
-       
 
 
 

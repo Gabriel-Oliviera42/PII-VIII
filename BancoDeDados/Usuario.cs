@@ -10,8 +10,11 @@ namespace PII_VIII
     using System.Data;
     using System.Globalization;
 
+    //Criar uma função que recebe o Id de um usuário e preenche com os dados restantes na atual classe
+
     public class Usuario
-    {        
+    {
+        public int IdUsuario { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
 
@@ -22,13 +25,14 @@ namespace PII_VIII
 
         public int IdObjetivo { get; set; }
         public int IdFaixa { get; set; }
+        public string Senha { get; set; }
 
         private Conexao con = new Conexao();
 
         public void Inserir()
         {
-           string query = $"INSERT INTO usuario (nome, email, datanascimento, altura, peso, id_objetivo, id_faixaetariapeso)" +
-                $"VALUES ('{Nome}','{Email}','{DataNascimento.ToString("yyyy-MM-dd")}', {Altura.ToString("0.00", CultureInfo.InvariantCulture)}, {Peso.ToString("0.00", CultureInfo.InvariantCulture)}, {IdObjetivo}, {IdFaixa})";
+           string query = $"INSERT INTO usuario (nome, email, datanascimento, altura, peso, id_objetivo, id_faixaetariapeso, senha)" +
+                $"VALUES ('{Nome}','{Email}','{DataNascimento.ToString("yyyy-MM-dd")}', {Altura.ToString("0.00", CultureInfo.InvariantCulture)}, {Peso.ToString("0.00", CultureInfo.InvariantCulture)}, {IdObjetivo}, {IdFaixa}, '{Senha}')";
             con.Executar(query);
         }
 
@@ -43,6 +47,8 @@ namespace PII_VIII
             string query = $"DELETE FROM usuario WHERE id = {id}";           
             con.Executar(query);            
         }
+
+
 
         public DataTable BuscarPorId(int id)
         {
@@ -78,6 +84,19 @@ namespace PII_VIII
                 }
             }
             return idFaixaEtariaPeso; 
+        }
+
+        public DataTable TreinosIndicadosUsuario(int idFaixaEtariaUser)
+        {             
+            string sql = $"SELECT * from treino_faixaetariapeso tf inner join treino t on tf.id_treino = t.id_treino where id_faixaetariapeso = {idFaixaEtariaUser}";
+            DataTable dt = con.RetornaTabela(sql);
+            return dt;
+        }
+        public DataTable BuscarTreinosUsuario(int iduser)
+        {
+            string query = $"select * from treino_usuario";
+            DataTable dt = con.RetornaTabela(query);
+            return dt;
         }
 
 
