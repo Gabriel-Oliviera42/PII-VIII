@@ -19,9 +19,7 @@ namespace PII_VIII.Forms
     internal class Home:Form
     {
         Menu_Principal menu = new Menu_Principal();
-        Chave chave = new Chave();
-        private int userId;
-
+        Chave chave = new Chave();        
         private void InitializeComponent()
         {
 
@@ -35,7 +33,7 @@ namespace PII_VIII.Forms
 
         public Home(int idUsuarioLogado)
         {
-            this.userId = idUsuarioLogado;
+            Program.user.IdUsuario = idUsuarioLogado;
             InitializeComponent();          
             AddBarraUsuario();
             AddElementos();
@@ -95,7 +93,7 @@ namespace PII_VIII.Forms
             Slide.Dock = DockStyle.Top;
 
 
-            DataTable teste = new Usuario().TreinosIndicadosUsuario(userId);
+            DataTable teste = new Usuario().TreinosIndicadosUsuario(Program.user.IdUsuario);
 
             foreach (DataRow row in teste.Rows)
             {

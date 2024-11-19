@@ -86,9 +86,9 @@ namespace PII_VIII
             return idFaixaEtariaPeso; 
         }
 
-        public DataTable TreinosIndicadosUsuario(int idFaixaEtariaUser)
+        public DataTable TreinosIndicadosUsuario(int iduser)
         {             
-            string sql = $"SELECT * from treino_faixaetariapeso tf inner join treino t on tf.id_treino = t.id_treino where id_faixaetariapeso = {idFaixaEtariaUser}";
+            string sql = $"SELECT t.* FROM treino_faixaetariapeso tf INNER JOIN treino t ON tf.id_treino = t.id_treino INNER JOIN faixaetariapeso fep ON tf.id_faixaetariapeso = fep.id_faixaetariapeso INNER JOIN usuario u ON fep.id_faixaetariapeso = u.id_faixaetariapeso WHERE u.id_usuario = {iduser}";
             DataTable dt = con.RetornaTabela(sql);
             return dt;
         }
