@@ -69,85 +69,132 @@ namespace PII_VIII.Forms
         private void AddElementos()
         {
             Panel espaco = new Panel();
-
-
             espaco.Width = 1220 + 10;
             espaco.Dock = DockStyle.Left;
-            //espaco.BackColor = chave.RoxoClaro;
 
-
-            //Adicionando Banner
+            // Adicionando Banner
             PanelArredonado banner = new PanelArredonado();
             banner.Height = 340;
             banner.BackColor = chave.CinzaClaro;
             banner.Dock = DockStyle.Top;
             banner.Radius = 40;
             banner.BackgroundImage = Properties.Resources.Banner;
-            banner.BackgroundImageLayout = ImageLayout.Stretch;
+            banner.BackgroundImageLayout = ImageLayout.Stretch;            
+                        
 
+            // Criar painel principal para os treinos
+            Panel TodosTreinos = new Panel();
+            TodosTreinos.Dock = DockStyle.Top;
+            TodosTreinos.AutoSize = true;
 
-            //Adcicionando card
-            Panel SeusTreinos = new Panel();
-            SeusTreinos.Dock = DockStyle.Top;
-            SeusTreinos.AutoSize = true;
-
+            // Adicionar cabeçalho "Seus Treinos"
             Label seusTreinos_Label = new Label();
-            seusTreinos_Label.Text = "Treinos relacionado para você:";
+            seusTreinos_Label.Text = "Seus Treinos:";
             seusTreinos_Label.ForeColor = chave.Preto;
             seusTreinos_Label.Font = chave.H3_Font;
             seusTreinos_Label.AutoSize = true;
             seusTreinos_Label.Dock = DockStyle.Top;
-            Flow Slide = new Flow();
-            Slide.Dock = DockStyle.Top;
 
+            FlowLayoutPanel slideSeusTreinos = new FlowLayoutPanel();
+            slideSeusTreinos.Dock = DockStyle.Top;
 
-            //--Carrega os CARD's com os treinos relacinados ao usuario--//
-          
-
-            //Treinos do usuário 
+            // Treinos do usuário
             DataTable treinos = new Usuario().BuscarTreinosUsuario(userId);
-
-            foreach (DataRow row in treinos.Rows)
+            if(treinos == null || treinos.Rows.Count == 0)
             {
-              
-                Treino treino = new Treino();
-                treino.NomeTreino = row["nometreino"].ToString();
-                treino.Descricao = row["descricao"].ToString();
-                treino.IdTreino = int.Parse(row["id_treino"].ToString());
-                Card card = new Card();
-                card.treino = treino;
-                Slide.Controls.Add(card);
-                
+                // Caso não haja treinos indicados
+                Label semTreinos_Label = new Label
+                {
+                    Text = "Você ainda não tem treinos.",
+                    ForeColor = chave.Preto,
+                    Font = chave.H3_Font,
+                    AutoSize = true,
+                    Dock = DockStyle.Top
+                };
+                slideSeusTreinos.Controls.Add(semTreinos_Label);
             }
-            //Treino indicados para o usuário
-            DataTable indicados = new Usuario().VerificarTreino(userId);
-            foreach (DataRow row in indicados.Rows)
+            else
             {
+                foreach (DataRow row in treinos.Rows)
+                {
+                    Treino treino = new Treino
+                    {
+                        NomeTreino = row["nometreino"].ToString(),
+                        Descricao = row["descricao"].ToString(),
+                        IdTreino = int.Parse(row["id_treino"].ToString())
+                    };
 
-                Treino indicado = new Treino();
-                indicado.NomeTreino = row["nometreino"].ToString();
-                indicado.Descricao = row["descricao"].ToString();
-                indicado.IdTreino = int.Parse(row["id_treino"].ToString());
-                Card card = new Card();
-                card.treino = indicado;
-                Slide.Controls.Add(card);
+                    Card card = new Card { treino = treino };
+                    slideSeusTreinos.Controls.Add(card);
+                }
+            }
+            
 
+            // Adicionar cabeçalho "Outros Treinos Para Você"
+            Label outrosTreinos_Label = new Label();
+            outrosTreinos_Label.Text = "Outros Treinos Para Você:";
+            outrosTreinos_Label.ForeColor = chave.Preto;
+            outrosTreinos_Label.Font = chave.H3_Font;
+            outrosTreinos_Label.AutoSize = true;
+            outrosTreinos_Label.Dock = DockStyle.Top;
+
+            FlowLayoutPanel slideOutrosTreinos = new FlowLayoutPanel();
+            slideOutrosTreinos.Dock = DockStyle.Top;
+
+            // Treinos indicados para o usuário
+            DataTable indicados = new Usuario().TreinosIndicadosUsuario(userId);
+
+            if (indicados == null || indicados.Rows.Count == 0)
+            {
+                // Caso não haja treinos indicados
+                Label semTreinos_Label = new Label
+                {
+                    Text = "Você ainda não tem treinos indicados.",
+                    ForeColor = chave.Preto,
+                    Font = chave.H3_Font,
+                    AutoSize = true,
+                    Dock = DockStyle.Top
+                };
+                slideOutrosTreinos.Controls.Add(semTreinos_Label);
+            }
+            else
+            {
+                // Adicionar os cards dos treinos indicados
+                foreach (DataRow row in indicados.Rows)
+                {
+                    Treino indicado = new Treino
+                    {
+                        NomeTreino = row["nometreino"].ToString(),
+                        Descricao = row["descricao"].ToString(),
+                        IdTreino = int.Parse(row["id_treino"].ToString())
+                    };
+
+                    Card card = new Card { treino = indicado };
+                    slideOutrosTreinos.Controls.Add(card);
+                }
             }
 
+            // Ajustar altura dos slides e adicionar no painel principal
+            slideSeusTreinos.Height = (int)Math.Ceiling(slideSeusTreinos.Controls.Count / 2.0) * new Card().Height;
+            slideOutrosTreinos.Height = (int)Math.Ceiling(slideOutrosTreinos.Controls.Count / 2.0) * new Card().Height;
 
-            Slide.Height = ((Slide.Controls.Count / 2) + 1) * new Card().Height;
-            SeusTreinos.Controls.Add(Slide);
-            SeusTreinos.Controls.Add(chave.RetornaEspacoTop(10));
-            SeusTreinos.Controls.Add(seusTreinos_Label);
 
+            TodosTreinos.Controls.Add(slideOutrosTreinos);
+            TodosTreinos.Controls.Add(chave.RetornaEspacoTop(40));
+            TodosTreinos.Controls.Add(outrosTreinos_Label);
+            TodosTreinos.Controls.Add(chave.RetornaEspacoTop(40));
+            TodosTreinos.Controls.Add(slideSeusTreinos);
+            TodosTreinos.Controls.Add(chave.RetornaEspacoTop(40));
+            TodosTreinos.Controls.Add(seusTreinos_Label);
+
+            // Adicionar ao espaço principal
             espaco.AutoScroll = true;
-            espaco.Controls.Add(SeusTreinos);
+            espaco.Controls.Add(TodosTreinos);
             espaco.Controls.Add(chave.RetornaEspacoTop(40));
             espaco.Controls.Add(banner);
-
-
             this.Controls.Add(espaco);
         }
+
 
         private void Home_Load(object sender, EventArgs e)
         {

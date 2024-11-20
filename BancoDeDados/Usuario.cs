@@ -18,12 +18,9 @@ namespace PII_VIII
         public int IdUsuario { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
-
         public DateTime DataNascimento { get; set; }
-
         public float Altura { get; set; }
         public float Peso { get; set; }
-
         public int IdObjetivo { get; set; }
         public int IdFaixa { get; set; }
         public string Senha { get; set; }
@@ -51,13 +48,31 @@ namespace PII_VIII
 
 
 
-        public DataTable BuscarPorId(int id)
+        public void PreencherDados(int idUsuario)
         {
             DataTable dt = new DataTable();
-            string query = $"SELECT * FROM usuario WHERE idusuario = {id}";
-            dt = con.RetornaTabela(query); 
-            return dt;
-        }        
+            string query = $"SELECT * FROM usuario WHERE id_usuario = {idUsuario}";
+            dt = con.RetornaTabela(query);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+
+                Program.user.IdUsuario = idUsuario;
+                Program.user.Nome = row["nome"].ToString();
+                Program.user.Email = row["email"].ToString();
+                Program.user.DataNascimento = Convert.ToDateTime(row["datanascimento"]);
+                Program.user.Altura = float.Parse(row["altura"].ToString());
+                Program.user.Peso = float.Parse(row["peso"].ToString());
+                Program.user.IdObjetivo = int.Parse(row["id_objetivo"].ToString());
+                Program.user.IdFaixa = int.Parse(row["id_faixaetariapeso"].ToString());
+            }
+            else
+            {
+                throw new Exception("Usuário não encontrado.");
+            }
+        }
+
         public DataTable BuscarTodos()
         {
             DataTable dt = new DataTable();
@@ -88,11 +103,19 @@ namespace PII_VIII
         }
 
         public DataTable TreinosIndicadosUsuario(int iduser)
-        {             
-            string sql = $"SELECT t.* FROM treino_faixaetariapeso tf INNER JOIN treino t ON tf.id_treino = t.id_treino INNER JOIN faixaetariapeso fep ON tf.id_faixaetariapeso = fep.id_faixaetariapeso INNER JOIN usuario u ON fep.id_faixaetariapeso = u.id_faixaetariapeso WHERE u.id_usuario = {iduser}";
+        {
+            string sql = $"SELECT t.id_treino,t.nometreino, t.descricao,f.id_faixaetariapeso,f.descricao AS descricao_faixa,o.id_objetivo,     o.descricao AS descricao_objetivo " +
+                $"FROM treino t INNER JOIN " +
+                $"treino_faixaetariapeso tf  ON t.id_treino = tf.id_treino " +
+                $"INNER JOIN faixaetariapeso f ON f.id_faixaetariapeso = tf.id_faixaetariapeso " +
+                $"INNER JOIN objetivo o ON o.id_objetivo = t.id_objetivo " +
+                $"INNER JOIN usuario u ON u.id_faixaetariapeso = tf.id_faixaetariapeso AND u.id_objetivo = t.id_objetivo " +
+                $"LEFT JOIN treino_usuario tu ON t.id_treino = tu.id_treino AND tu.id_usuario = u.id_usuario " +
+                $"WHERE u.id_usuario = {iduser} AND tu.id_treino IS NULL;";                        
             DataTable dt = con.RetornaTabela(sql);
             return dt;
         }
+
         public DataTable BuscarTreinosUsuario(int iduser)
         {
             string query = $"select * from treino_usuario tu inner join treino t on tu.id_treino= t.id_treino where tu.id_usuario={iduser} ";
@@ -102,10 +125,7 @@ namespace PII_VIII
 
         public DataTable VerificarTreino(int iduser)
         {
-            string query = $"select t.* from treino_faixaetariapeso tf inner join treino t on tf.id_treino = t.id_treino " +
-                $"inner join usuario u on t.id_objetivo = u.id_objetivo " +
-                $"and tf.id_faixaetariapeso = u.id_faixaetariapeso  " +
-                $"and tf.id_treino not in (select tu.id_treino from treino_usuario tu where tu.id_usuario = u.id_usuario ) and u.id_usuario ={iduser} ";
+            string query = $"";
             DataTable dt = con.RetornaTabela(query);
             return dt;
 

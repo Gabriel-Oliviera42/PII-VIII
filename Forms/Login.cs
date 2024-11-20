@@ -434,6 +434,7 @@ namespace PII_VIII
                     // Se o login for válido e o ID estiver presente, abre a tela Home
                     Thread init = new Thread(() =>
                     {
+                        Program.user.PreencherDados(userId.Value);
                         Home aux = new Home(userId.Value); // Passa o ID do usuário para o formulário Home
                         aux.ShowDialog();
                     });

@@ -34,10 +34,31 @@ namespace PII_VIII
             int quantTreinos = quant != null ? Convert.ToInt32(quant) : 0;
             return quantTreinos;
         }
+        public DataTable BuscarDadosTreino(int idTreino)
+        {
+            string query = $"SELECT * from treino where id_treino = {idTreino}";
+            DataTable dt = conexao.RetornaTabela(query);
+            return dt;
+        }
+        //Também na classe Treino criar uma função que recebe um id de Treino e preenche os dados daquele treino na atual classe
+        public void PreencherDados(int treinoid) 
+        {
+            string query = $"SELECT * from treino where id_treino = {treinoid}";
+            DataTable dt = conexao.RetornaTabela(query);
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+                IdTreino = treinoid;
+                NomeTreino = row["nometreino"].ToString();
+                Descricao = row["descricao"].ToString() ;
+                IdObjetivo = int.Parse(row["id_objetivo"].ToString());
+            }
+            else
+            {
+                throw new Exception("Treino não encontrado.");
+            }
 
-
-
-
+        }
     }
 
 

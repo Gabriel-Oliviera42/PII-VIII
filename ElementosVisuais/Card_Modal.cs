@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace PII_VIII.ElementosVisuais
 {
-    internal class Card_Modal:FormArredondado
+    internal class Card_Modal : FormArredondado
     {
         Chave chave = new Chave();
 
@@ -76,7 +76,7 @@ namespace PII_VIII.ElementosVisuais
             AddInfos();
             this.Controls.Add(chave.RetornaEspacoTop(40));
             AddTopo();
-            
+
             AbreCard();
 
         }
@@ -137,15 +137,15 @@ namespace PII_VIII.ElementosVisuais
             //Ajusta Conteúdo
             desc.Text = at.Descricao;
             tit.Text = at.Nome;
-            
+
 
             fundo.Controls.Add(desc);
             fundo.Controls.Add(chave.RetornaEspacoTop(10));
             fundo.Controls.Add(tit);
 
-            
 
-            return fundo;   
+
+            return fundo;
         }
 
         private void AddInfos()
@@ -190,7 +190,7 @@ namespace PII_VIII.ElementosVisuais
             espTitulo.Controls.Add(chave.RetornaEspacoTop(5));
             espTitulo.Controls.Add(titulo);
 
-            
+
             this.Controls.Add(espTitulo);
             this.Controls.Add(chave.RetornaEspacoTop(20));
             this.Controls.Add(espIcone);
@@ -215,7 +215,7 @@ namespace PII_VIII.ElementosVisuais
             back.Font = chave.Sub_H3_Font;
             back.ForeColor = chave.RoxoCinza;
             back.BackColor = chave.CinzaClaro;
-            
+
 
             Label titTab = new Label();
             titTab.Text = "Janela de Treino";
@@ -235,37 +235,48 @@ namespace PII_VIII.ElementosVisuais
         }
 
         public void AbreCard()
-        {
-
-            Thread t = new Thread(() =>
-            {
-                this.StartPosition = FormStartPosition.CenterScreen;
-                this.ShowDialog();
-            });
-
-            t.Start();
+        {            
             FormEscurecerTela();
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.ShowDialog();
         }
 
-        //cria um form escuro com opacidade de 50% para ficar sobre o fundo sempre que o poupup aparece
+        // Função para criar o form escuro com opacidade de 50%
         public void FormEscurecerTela()
         {
+            // Criar o formulário escuro
             Form es = new Form();
             es.FormBorderStyle = FormBorderStyle.None;
             es.BackColor = Color.Black;
             es.Opacity = 0.5; // Opacidade de 50%
             es.WindowState = FormWindowState.Maximized;
-            this.FormClosing += (sender, e) =>
-            {
-                es.Close();
-            };
+
+            // Exibir o formulário escuro de forma não-modal
+            es.Show();
+
+            // Fechar o formulário escuro e o Card Modal ao clicar sobre o formulário escuro
             es.Click += (s, e) =>
             {
-                this.Close();
+                // Fechar o formulário escuro
                 es.Close();
+
+                // Fechar o Card Modal de forma adequada
+                this.DialogResult = DialogResult.Cancel; // ou você pode usar this.Close(), mas o DialogResult pode ser mais adequado
             };
-            
-            es.ShowDialog();
+
+            // Fechar o formulário escuro quando o Card Modal for fechado
+            this.FormClosing += (sender, e) =>
+            {
+                // Verificar se o formulário escuro não foi fechado
+                if (!es.IsDisposed)
+                {
+                    es.Close(); // Fechar o form escuro assim que o Card Modal for fechado
+                }
+            };
         }
+
+
+
+
     }
 }
