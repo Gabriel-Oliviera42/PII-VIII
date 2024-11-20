@@ -59,103 +59,122 @@ namespace PII_VIII.ElementosVisuais
 
         public Card()
         {
-            this.Width = 600;
-            this.Height = 268;
-            this.Radius = 40;
-            this.BackColor = chave.CinzaClaro;
-            this.Padding = new Padding(20);
+            Width = 600;
+            Height = 268;
+            Radius = 40;
+            BackColor = chave.CinzaClaro;
+            Padding = new Padding(20);
             
 
             //Adicionando icone
-            Panel espIcone = new Panel();
-            espIcone.Dock = DockStyle.Top;
-            espIcone.Height = 50;
+            Panel espIcone = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 50
+            };
 
 
-            PanelArredonado icone = new PanelArredonado();
-            icone.BackColor = chave.Azul;
-            icone.Dock= DockStyle.Left;
-            icone.Width = 50;
-            icone.Radius = 50;
-            icone.BackgroundImage = Properties.Resources.Star;
-            icone.BackgroundImageLayout = ImageLayout.Stretch;
+            PanelArredonado icone = new PanelArredonado
+            {
+                BackColor = chave.Azul,
+                Dock = DockStyle.Left,
+                Width = 50,
+                Radius = 50,
+                BackgroundImage = Properties.Resources.Star,
+                BackgroundImageLayout = ImageLayout.Stretch
+
+            };
 
             espIcone.Controls.Add(icone);
 
             //Adicionando título
 
-            Panel espTitulo = new Panel();
-            espTitulo.Dock = DockStyle.Top;
-            espTitulo.AutoSize = true;
+            Panel espTitulo = new Panel
+            {
+                Dock = DockStyle.Top,
+                AutoSize = true
+            };
 
-            
-            titulo.Dock = DockStyle.Top;
-            titulo.AutoSize = true;
-            titulo.Text = "Nome do Treino";
-            titulo.Font = chave.tituloCard_Font;
-            titulo.ForeColor = chave.Azul;
+            titulo = new Label
+            {
+                Dock = DockStyle.Top,
+                AutoSize = true,
+                Text = "Nome do Treino",
+                Font = chave.tituloCard_Font,
+                ForeColor = chave.Azul
+            };
 
-            
-            subtitulo.Dock = DockStyle.Top;
-            subtitulo.AutoSize = true;
-            subtitulo.Text = "Descrição do Treino";
-            subtitulo.Font = chave.SubtiruloCard_Font;
-            subtitulo.ForeColor = chave.Preto;
+            subtitulo = new Label
+            {
+                Dock = DockStyle.Top,
+                AutoSize = true,
+                Text = "Descrição do Treino",
+                Font = chave.SubtiruloCard_Font,
+                ForeColor = chave.Preto
+            };
 
             espTitulo.Controls.Add(subtitulo);
             espTitulo.Controls.Add(chave.RetornaEspacoTop(5));
             espTitulo.Controls.Add(titulo);
 
             //Adiciona card de descrição
-            PanelArredonado CardDesc = new PanelArredonado();
-            CardDesc.Dock = DockStyle.Top;
-            //CardDesc.AutoSize = true;
-            CardDesc.Height = 84;
-            CardDesc.Padding = new Padding(20);
-            CardDesc.Radius = 20;
-            CardDesc.BackColor = chave.Sub_Azul;
+            PanelArredonado CardDesc = new PanelArredonado
+            {
+                Dock = DockStyle.Top,
+                Height = 84,
+                Padding = new Padding(20),
+                Radius = 20,
+                BackColor = chave.Sub_Azul
+            };
 
             //Adiciona textos de descrição
-            Panel espTextoCard = new Panel();
-            espTextoCard.Dock = DockStyle.Left;
-            //espTextoCard.AutoSize = true;
-            espTextoCard.Width = 460;
+            Panel espTextoCard = new Panel
+            {
+                Dock = DockStyle.Left,
+                Width = 460
+            };
 
-            
-            tituloCard.Dock = DockStyle.Top;
-            tituloCard.AutoSize = true;
-            tituloCard.Text = "Quantidade de Atividades Físicas";
-            tituloCard.Font = chave.Botao;
-            tituloCard.ForeColor = chave.Azul;
+            tituloCard = new Label
+            {
+                Dock = DockStyle.Top,
+                AutoSize = true,
+                Text = "Quantidade de Atividades Físicas",
+                Font = chave.Botao,
+                ForeColor = chave.Azul
+            };
 
-            
-            descCard.Dock = DockStyle.Top;
-            descCard.AutoSize = true;
-            descCard.Text = "Tipos de Treino";
-            descCard.Font = chave.TextoPequeno;
-            descCard.ForeColor = chave.Preto;
-
+            descCard = new Label
+            {
+                Dock = DockStyle.Top,
+                AutoSize = true,
+                Text = "Tipos de Treino",
+                Font = chave.TextoPequeno,
+                ForeColor = chave.Preto
+            };
 
             espTextoCard.Controls.Add(descCard);
             espTextoCard.Controls.Add(tituloCard);
 
             //icone no card
-            Panel iconeCard = new Panel();
-            iconeCard.Dock = DockStyle.Right;
-            iconeCard.Width = 40;
-            iconeCard.BackgroundImage = Properties.Resources.LupaAzul;
-            iconeCard.BackgroundImageLayout = ImageLayout.Center;
+            Panel iconeCard = new Panel
+            {
+                Dock = DockStyle.Right,
+                Width = 40,
+                BackgroundImage = Properties.Resources.LupaAzul,
+                BackgroundImageLayout = ImageLayout.Center
+            };
+
             iconeCard.Click += (s, e) => new Card_Modal(_treino) { treino = _treino} ;
 
             //adicionando elementos no card 
             CardDesc.Controls.Add(iconeCard);
             CardDesc.Controls.Add(espTextoCard);
 
-            this.Controls.Add(CardDesc);
-            this.Controls.Add(chave.RetornaEspacoTop(20));
-            this.Controls.Add(espTitulo);
-            this.Controls.Add(chave.RetornaEspacoTop(20));
-            this.Controls.Add(espIcone);
+            Controls.Add(CardDesc);
+            Controls.Add(chave.RetornaEspacoTop(20));
+            Controls.Add(espTitulo);
+            Controls.Add(chave.RetornaEspacoTop(20));
+            Controls.Add(espIcone);
 
 
         }

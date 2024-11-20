@@ -34,7 +34,7 @@ namespace PII_VIII
             return dt;
         }
 
-        //Na classe Atividade Física, criar uma função que recebe um id de Atividade Física e preenche os dados da mesma na atual classe
+        //Na classe Atividade Física, criar uma função que recebe um id de At ividade Física e preenche os dados da mesma na atual classe
         public void PreencherDados(int AtividadeFisicaId)
         {
             string query = $"MATCH (n:AtividadeFisica) WHERE n.id = {AtividadeFisicaId} RETURN n.id AS id, n.repeticoes AS repeticoes, n.dificuldade AS dificuldade, n.nomeatividade AS nomeatividade, n.descricao AS descricao";

@@ -68,11 +68,11 @@ namespace PII_VIII.ElementosVisuais
 
         public Card_Modal(Treino t)
         {
-            //this.AutoSize = true;
-            this.Width = 1000;
-            this.Height = 800;
-            this.MaximumSize = this.Size;
-            this.AutoScroll = true;
+            
+            Width = 1000;
+            Height = 800;
+            MaximumSize = this.Size;
+            AutoScroll = true;
             
 
 
