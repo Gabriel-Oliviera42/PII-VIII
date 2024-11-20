@@ -36,7 +36,6 @@ namespace PII_VIII.Forms
             this.Name = "Home";
             this.Padding = new System.Windows.Forms.Padding(40);
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.Home_Load);
             this.ResumeLayout(false);
 
         }
@@ -106,8 +105,8 @@ namespace PII_VIII.Forms
                 Label semTreinos_Label = new Label
                 {
                     Text = "Você ainda não tem treinos.",
-                    ForeColor = chave.Preto,
-                    Font = chave.H3_Font,
+                    ForeColor = chave.RoxoCinza,
+                    Font = chave.Sub_H3_Font,
                     AutoSize = true,
                     Dock = DockStyle.Top
                 };
@@ -123,6 +122,7 @@ namespace PII_VIII.Forms
                         Descricao = row["descricao"].ToString(),
                         IdTreino = int.Parse(row["id_treino"].ToString())
                     };
+                    treino.PreencherDados(treino.IdTreino);
 
                     Card card = new Card { treino = treino };
                     slideSeusTreinos.Controls.Add(card);
@@ -149,9 +149,9 @@ namespace PII_VIII.Forms
                 // Caso não haja treinos indicados
                 Label semTreinos_Label = new Label
                 {
-                    Text = "Você ainda não tem treinos indicados.",
-                    ForeColor = chave.Preto,
-                    Font = chave.H3_Font,
+                    Text = "Você ainda não tem treinos.",
+                    ForeColor = chave.RoxoCinza,
+                    Font = chave.Sub_H3_Font,
                     AutoSize = true,
                     Dock = DockStyle.Top
                 };
@@ -168,6 +168,8 @@ namespace PII_VIII.Forms
                         Descricao = row["descricao"].ToString(),
                         IdTreino = int.Parse(row["id_treino"].ToString())
                     };
+
+                    indicado.PreencherDados(indicado.IdTreino);
 
                     Card card = new Card { treino = indicado };
                     slideOutrosTreinos.Controls.Add(card);
@@ -196,9 +198,6 @@ namespace PII_VIII.Forms
         }
 
 
-        private void Home_Load(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

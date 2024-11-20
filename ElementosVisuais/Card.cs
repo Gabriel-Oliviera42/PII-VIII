@@ -145,7 +145,7 @@ namespace PII_VIII.ElementosVisuais
             iconeCard.Width = 40;
             iconeCard.BackgroundImage = Properties.Resources.LupaAzul;
             iconeCard.BackgroundImageLayout = ImageLayout.Center;
-            iconeCard.Click += (s, e) => new Card_Modal() ;
+            iconeCard.Click += (s, e) => new Card_Modal(_treino) { treino = _treino} ;
 
             //adicionando elementos no card 
             CardDesc.Controls.Add(iconeCard);

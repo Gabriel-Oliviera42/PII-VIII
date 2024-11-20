@@ -46,6 +46,7 @@ namespace PII_VIII
             this.WindowState = FormWindowState.Maximized;
             this.Name = "Login";
             this.ResumeLayout(false);
+            this.Padding = new Padding(40);
 
         }
 
@@ -152,7 +153,7 @@ namespace PII_VIII
             EspForm.Controls.Add(RetornaEspaco(40));
             EspForm.Controls.Add(espaco_tr);
             EspForm.Controls.Add(Tit);
-        }//Adicionar Campos
+        }
 
         private void AdicionaFormulario_Cadastro()
         {
@@ -316,7 +317,7 @@ namespace PII_VIII
             container.Controls.Add(Texto01);
             container.Controls.Add(Texto02);
             container.Dock = DockStyle.Fill;
-            container.Padding = new Padding(0, 230, 0, 230);
+            container.Padding = new Padding(0, 340, 0, 340);
 
             BotaoArredondado Sair = new BotaoArredondado();
             Sair.Text = "SAIR";

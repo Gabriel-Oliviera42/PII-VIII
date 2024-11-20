@@ -20,33 +20,45 @@ namespace PII_VIII.ElementosVisuais
         private Label tituloCard = new Label();
         private Label descCard = new Label();
         private Treino _treino = new Treino();
+        private Panel AtiviEsp = new Panel();
 
         public Treino treino
         {
             set
             {
+                atualizaDados(value);
                 _treino = value;
-                atualizaDados();
 
             }
         }
 
-        private void atualizaDados()
+        private void atualizaDados(Treino t)
         {
-            titulo.Text = _treino.NomeTreino;
-            subtitulo.Text = _treino.Descricao;
-            AtividadeFisica AF = new AtividadeFisica();
+            titulo.Text = t.NomeTreino;
+            subtitulo.Text = t.Descricao;
+            AtividadeFisica at = new AtividadeFisica();
 
-            string desc = "";
-            int count = 0;
-            foreach (DataRow x in AF.BuscarAtividadeTreino(_treino.IdTreino).Rows)
+           // string query = $"MATCH (a:AtividadeFisica)-[r:INCLUSA_EM_TREINO]->(t:Treino) where t.id ={idTreino} RETURN a.nomeatividade AS Atividade, a.descricao AS Descrição ,a.dificuldade AS Dificuldade, a.repeticoes AS Repetições";
+
+
+            foreach (DataRow r in at.BuscarAtividadeTreino(t.IdTreino).Rows)
             {
-                desc += x[1] + ", ";
-                count++;
+                AtividadeFisica atv = new AtividadeFisica()
+                {
+                    Nome = r["nomeatividade"].ToString()
+                };
+               // atv.PreencherDados(int.Parse(r["id"].ToString()));
             }
-            tituloCard.Text = count + " Atividades Físicas"; ;
-            descCard.Text = desc;
 
+            AtiviEsp.Controls.Add(RetornaAtvFis(at));
+            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
+            AtiviEsp.Controls.Add(RetornaAtvFis(at));
+            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
+            AtiviEsp.Controls.Add(RetornaAtvFis(at));
+            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
+            AtiviEsp.Controls.Add(RetornaAtvFis(at));
+            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
+            AtiviEsp.Controls.Add(RetornaAtvFis(at));
 
         }
 
@@ -54,13 +66,14 @@ namespace PII_VIII.ElementosVisuais
         //EX: "public CardModal(Treino treinorecbido)" e "CardModal exemplo = new CardModal(treino);"
         //Mas para isso a chamada dela na tela de principal tem que estar concluida senão dá erro toda vez que chamar
 
-        public Card_Modal()
+        public Card_Modal(Treino t)
         {
             //this.AutoSize = true;
             this.Width = 1000;
             this.Height = 800;
             this.MaximumSize = this.Size;
             this.AutoScroll = true;
+            
 
 
             this.ShowInTaskbar = false;
@@ -77,13 +90,15 @@ namespace PII_VIII.ElementosVisuais
             this.Controls.Add(chave.RetornaEspacoTop(40));
             AddTopo();
 
+            treino = t;
+            //atualizaDados(t);
             AbreCard();
 
         }
 
         private void AddAtFisica()
         {
-            Panel AtiviEsp = new Panel();
+           
             AtiviEsp.AutoSize = true;
             AtiviEsp.Dock = DockStyle.Top;
             this.Controls.Add(AtiviEsp);
@@ -91,28 +106,17 @@ namespace PII_VIII.ElementosVisuais
             AtividadeFisica at = new AtividadeFisica();
             at.Nome = "Teste de Nome";
             at.Descricao = "Teste de Descrição";
-
-
-            //ADICIONANDO ATIVIDADES FÍSICAS
-
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
-            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
-            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
-            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
-            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
-
-
-
-
         }
 
         PanelArredonado RetornaAtvFis(AtividadeFisica at)
         {
             PanelArredonado fundo = new PanelArredonado();
+            // fundo.Width = 290;
+            //fundo.Height = 140;
+
+            fundo.AutoSize = true;
+            fundo.Dock = DockStyle.Top;
+
             fundo.BackColor = chave.CinzaClaro;
             fundo.Radius = 20;
             fundo.Padding = new Padding(20);
@@ -235,48 +239,37 @@ namespace PII_VIII.ElementosVisuais
         }
 
         public void AbreCard()
-        {            
+        {
+
+            Thread t = new Thread(() =>
+            {
+                this.StartPosition = FormStartPosition.CenterScreen;
+                this.ShowDialog();
+            });
+
+            t.Start();
             FormEscurecerTela();
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.ShowDialog();
         }
 
-        // Função para criar o form escuro com opacidade de 50%
+        //cria um form escuro com opacidade de 50% para ficar sobre o fundo sempre que o poupup aparece
         public void FormEscurecerTela()
         {
-            // Criar o formulário escuro
             Form es = new Form();
             es.FormBorderStyle = FormBorderStyle.None;
             es.BackColor = Color.Black;
             es.Opacity = 0.5; // Opacidade de 50%
             es.WindowState = FormWindowState.Maximized;
-
-            // Exibir o formulário escuro de forma não-modal
-            es.Show();
-
-            // Fechar o formulário escuro e o Card Modal ao clicar sobre o formulário escuro
-            es.Click += (s, e) =>
-            {
-                // Fechar o formulário escuro
-                es.Close();
-
-                // Fechar o Card Modal de forma adequada
-                this.DialogResult = DialogResult.Cancel; // ou você pode usar this.Close(), mas o DialogResult pode ser mais adequado
-            };
-
-            // Fechar o formulário escuro quando o Card Modal for fechado
             this.FormClosing += (sender, e) =>
             {
-                // Verificar se o formulário escuro não foi fechado
-                if (!es.IsDisposed)
-                {
-                    es.Close(); // Fechar o form escuro assim que o Card Modal for fechado
-                }
+                es.Close();
             };
+            es.Click += (s, e) =>
+            {
+                this.Close();
+                es.Close();
+            };
+
+            es.ShowDialog();
         }
-
-
-
-
     }
 }
