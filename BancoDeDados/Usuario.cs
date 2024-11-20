@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PII_VIII
 {
+    using Neo4j.Driver;
     using System.Data;
     using System.Globalization;
 
@@ -94,13 +95,21 @@ namespace PII_VIII
         }
         public DataTable BuscarTreinosUsuario(int iduser)
         {
-            string query = $"select * from treino_usuario";
+            string query = $"select * from treino_usuario tu inner join treino t on tu.id_treino= t.id_treino where tu.id_usuario={iduser} ";
             DataTable dt = con.RetornaTabela(query);
             return dt;
         }
 
+        public DataTable VerificarTreino(int iduser)
+        {
+            string query = $"select t.* from treino_faixaetariapeso tf inner join treino t on tf.id_treino = t.id_treino " +
+                $"inner join usuario u on t.id_objetivo = u.id_objetivo " +
+                $"and tf.id_faixaetariapeso = u.id_faixaetariapeso  " +
+                $"and tf.id_treino not in (select tu.id_treino from treino_usuario tu where tu.id_usuario = u.id_usuario ) and u.id_usuario ={iduser} ";
+            DataTable dt = con.RetornaTabela(query);
+            return dt;
 
-
+        }
     }
 
 }

@@ -125,6 +125,9 @@
     </Compile>
     <Compile Include="BancoDeDados\Treino.cs" />
     <Compile Include="BancoDeDados\Usuario.cs" />
+    <EmbeddedResource Include="Forms\Home.resx">
+      <DependentUpon>Home.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Teste\FrmCadastroUsuario.resx">
       <DependentUpon>FrmCadastroUsuario.cs</DependentUpon>
     </EmbeddedResource>
