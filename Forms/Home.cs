@@ -24,12 +24,10 @@ namespace PII_VIII.Forms
 
         private void InitializeComponent()
         {
-
             this.SuspendLayout();
             this.WindowState = FormWindowState.Maximized;
             this.Name = "Home";
             this.ResumeLayout(false);
-            this.Padding = new Padding(40);
 
         }
 
@@ -88,12 +86,11 @@ namespace PII_VIII.Forms
             seusTreinos_Label.Font = chave.H3_Font;
             seusTreinos_Label.AutoSize = true;
             seusTreinos_Label.Dock = DockStyle.Top;
-
-
-
             Flow Slide = new Flow();
             Slide.Dock = DockStyle.Top;
 
+            //Treinos do usuário 
+            DataTable treinos = new Usuario().BuscarTreinosUsuario(userId);
 
             DataTable teste = new Usuario().TreinosIndicadosUsuario(userId);
 
