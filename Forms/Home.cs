@@ -1,4 +1,8 @@
-﻿using PII_VIII.Elementos_Visuais;
+﻿
+
+
+
+using PII_VIII.Elementos_Visuais;
 using PII_VIII.ElementosVisuais;
 using System;
 using System.Collections.Generic;
@@ -16,25 +20,32 @@ using System.Windows.Forms.VisualStyles;
 
 namespace PII_VIII.Forms
 {
-    internal class Home:Form
+    internal class Home : Form
     {
         Menu_Principal menu = new Menu_Principal();
-        Chave chave = new Chave();        
+        Chave chave = new Chave();
+        private int userId;
+
         private void InitializeComponent()
         {
-
             this.SuspendLayout();
-            this.WindowState = FormWindowState.Maximized;
+            // 
+            // Home
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
             this.Name = "Home";
+            this.Padding = new System.Windows.Forms.Padding(40);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.Home_Load);
             this.ResumeLayout(false);
-            this.Padding = new Padding(40);
 
         }
 
         public Home(int idUsuarioLogado)
         {
-            Program.user.IdUsuario = idUsuarioLogado;
-            InitializeComponent();          
+
+            this.userId = idUsuarioLogado;
+            InitializeComponent();
             AddBarraUsuario();
             AddElementos();
             AddMenu();
@@ -86,27 +97,45 @@ namespace PII_VIII.Forms
             seusTreinos_Label.Font = chave.H3_Font;
             seusTreinos_Label.AutoSize = true;
             seusTreinos_Label.Dock = DockStyle.Top;
-
-
-
             Flow Slide = new Flow();
             Slide.Dock = DockStyle.Top;
 
 
-            DataTable teste = new Usuario().TreinosIndicadosUsuario(Program.user.IdUsuario);
+            //--Carrega os CARD's com os treinos relacinados ao usuario--//
+          
 
-            foreach (DataRow row in teste.Rows)
+            //Treinos do usuário 
+            DataTable treinos = new Usuario().BuscarTreinosUsuario(userId);
+
+            foreach (DataRow row in treinos.Rows)
             {
+              
                 Treino treino = new Treino();
                 treino.NomeTreino = row["nometreino"].ToString();
                 treino.Descricao = row["descricao"].ToString();
                 treino.IdTreino = int.Parse(row["id_treino"].ToString());
                 Card card = new Card();
-                card.treino = treino; 
+                card.treino = treino;
                 Slide.Controls.Add(card);
+                
+            }
+            //Treino indicados para o usuário
+            DataTable indicados = new Usuario().VerificarTreino(userId);
+            foreach (DataRow row in indicados.Rows)
+            {
+
+                Treino indicado = new Treino();
+                indicado.NomeTreino = row["nometreino"].ToString();
+                indicado.Descricao = row["descricao"].ToString();
+                indicado.IdTreino = int.Parse(row["id_treino"].ToString());
+                Card card = new Card();
+                card.treino = indicado;
+                Slide.Controls.Add(card);
+
             }
 
-            Slide.Height = ((Slide.Controls.Count/2)+1) * new Card().Height;
+
+            Slide.Height = ((Slide.Controls.Count / 2) + 1) * new Card().Height;
             SeusTreinos.Controls.Add(Slide);
             SeusTreinos.Controls.Add(chave.RetornaEspacoTop(10));
             SeusTreinos.Controls.Add(seusTreinos_Label);
@@ -118,6 +147,11 @@ namespace PII_VIII.Forms
 
 
             this.Controls.Add(espaco);
+        }
+
+        private void Home_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
