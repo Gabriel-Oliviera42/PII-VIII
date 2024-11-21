@@ -19,6 +19,14 @@ namespace PII_VIII.ElementosVisuais
         private Label tituloCard = new Label();
         private Label descCard = new Label();
         private Treino _treino = new Treino();
+        private BotaoArredondado iconeAddRemove;
+        private Label lbAddRemove;
+
+        public BotaoArredondado AddRemove
+        {
+            get { return iconeAddRemove; }
+            set { iconeAddRemove = value; }
+        }
 
         private Form formPai = new Form();
 
@@ -29,6 +37,27 @@ namespace PII_VIII.ElementosVisuais
                 _treino = value;
                 atualizaDados();
                 
+            }
+            get
+            {
+                return _treino;
+            }
+        }
+
+        public Boolean TreinoUsuario
+        {
+            set
+            {
+                if (value==true)
+                {
+                    iconeAddRemove.Text = "-";
+                    lbAddRemove.Text = "Remover Treino";
+                }
+                else
+                {
+                    iconeAddRemove.Text = "+";
+                    lbAddRemove.Text = "Adicionar Treino";
+                }
             }
         }
 
@@ -55,7 +84,6 @@ namespace PII_VIII.ElementosVisuais
             // descCard.Text = "Tipos de Treino";
             //descCard.Text = desc;
         }
-
 
         public Card()
         {
@@ -85,9 +113,56 @@ namespace PII_VIII.ElementosVisuais
 
             };
 
+            Panel espAddRemove = new Panel
+            {
+                Dock = DockStyle.Right,
+                //Width = 212
+                AutoSize = true,
+            };
+
+
+            iconeAddRemove = new BotaoArredondado
+            {
+                Size = new Size(espIcone.Height, espIcone.Height),
+                Radius = espIcone.Height,
+                BackColor = chave.Sub_Azul,
+                //Text = "+",
+                ForeColor = chave.Azul,
+                Font = chave.H3_Font,
+                FlatStyle = FlatStyle.Flat,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Left
+            };
+
+            lbAddRemove = new Label
+            {
+                Size = new Size(espIcone.Height, espIcone.Height),
+                //Text = "Adicionar Treino",
+                ForeColor = chave.Azul,
+                Font = chave.SubtiruloCard_Font,
+                AutoSize = true,
+                FlatStyle = FlatStyle.Flat,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Left,
+                Padding = new Padding(4, 12, 4, 12)
+
+            };
+
+            TreinoUsuario = false;
+
+            iconeAddRemove.FlatAppearance.BorderSize = 0;
+
+            espAddRemove.Click += (s, e) =>
+            {
+
+            };
+          
+            espAddRemove.Controls.Add(lbAddRemove);
+            espAddRemove.Controls.Add(iconeAddRemove);
+
+            espIcone.Controls.Add(espAddRemove);
             espIcone.Controls.Add(icone);
 
-            //Adicionando título
 
             Panel espTitulo = new Panel
             {
@@ -110,7 +185,7 @@ namespace PII_VIII.ElementosVisuais
                 AutoSize = true,
                 Text = "Descrição do Treino",
                 Font = chave.SubtiruloCard_Font,
-                ForeColor = chave.Preto
+                ForeColor = chave.RoxoCinza
             };
 
             espTitulo.Controls.Add(subtitulo);

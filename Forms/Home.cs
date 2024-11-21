@@ -26,6 +26,9 @@ namespace PII_VIII.Forms
         Chave chave = new Chave();
         private int userId;
 
+
+        private FlowLayoutPanel slideSeusTreinos;
+        private FlowLayoutPanel slideOutrosTreinos;
         private void InitializeComponent()
         {
             this.SuspendLayout();
@@ -94,12 +97,46 @@ namespace PII_VIII.Forms
             seusTreinos_Label.AutoSize = true;
             seusTreinos_Label.Dock = DockStyle.Top;
 
-            FlowLayoutPanel slideSeusTreinos = new FlowLayoutPanel();
+            slideSeusTreinos = new FlowLayoutPanel();
             slideSeusTreinos.Dock = DockStyle.Top;
 
+            // Adicionar cabeçalho "Outros Treinos Para Você"
+            Label outrosTreinos_Label = new Label();
+            outrosTreinos_Label.Text = "Outros Treinos Para Você:";
+            outrosTreinos_Label.ForeColor = chave.Preto;
+            outrosTreinos_Label.Font = chave.H3_Font;
+            outrosTreinos_Label.AutoSize = true;
+            outrosTreinos_Label.Dock = DockStyle.Top;
+
+            slideOutrosTreinos = new FlowLayoutPanel();
+            slideOutrosTreinos.Dock = DockStyle.Top;
+
+            TodosTreinos.Controls.Add(slideOutrosTreinos);
+            TodosTreinos.Controls.Add(chave.RetornaEspacoTop(40));
+            TodosTreinos.Controls.Add(outrosTreinos_Label);
+            TodosTreinos.Controls.Add(chave.RetornaEspacoTop(40));
+            TodosTreinos.Controls.Add(slideSeusTreinos);
+            TodosTreinos.Controls.Add(chave.RetornaEspacoTop(40));
+            TodosTreinos.Controls.Add(seusTreinos_Label);
+
+            // Adicionar ao espaço principal
+            espaco.AutoScroll = true;
+            espaco.Controls.Add(TodosTreinos);
+            espaco.Controls.Add(chave.RetornaEspacoTop(40));
+            espaco.Controls.Add(banner);
+            this.Controls.Add(espaco);
+
+            AtualizaCards();
+        }
+
+        private void AtualizaCards()
+        {
+
+            slideSeusTreinos.Controls.Clear();
+            slideOutrosTreinos.Controls.Clear();
             // Treinos do usuário
             DataTable treinos = new Usuario().BuscarTreinosUsuario(userId);
-            if(treinos == null || treinos.Rows.Count == 0)
+            if (treinos == null || treinos.Rows.Count == 0)
             {
                 // Caso não haja treinos indicados
                 Label semTreinos_Label = new Label
@@ -108,7 +145,8 @@ namespace PII_VIII.Forms
                     ForeColor = chave.RoxoCinza,
                     Font = chave.Sub_H3_Font,
                     AutoSize = true,
-                    Dock = DockStyle.Top
+                    Dock = DockStyle.Top,
+                    Name = "lblnone"
                 };
                 slideSeusTreinos.Controls.Add(semTreinos_Label);
             }
@@ -124,22 +162,13 @@ namespace PII_VIII.Forms
                     };
                     treino.PreencherDados(treino.IdTreino);
 
-                    Card card = new Card { treino = treino };
+                    Card card = new Card { treino = treino, TreinoUsuario = true };
+                    card.Name = treino.IdTreino.ToString();
+
+                    card.AddRemove.Click += (s, e) => RemoverTreino(card.treino);
                     slideSeusTreinos.Controls.Add(card);
                 }
             }
-            
-
-            // Adicionar cabeçalho "Outros Treinos Para Você"
-            Label outrosTreinos_Label = new Label();
-            outrosTreinos_Label.Text = "Outros Treinos Para Você:";
-            outrosTreinos_Label.ForeColor = chave.Preto;
-            outrosTreinos_Label.Font = chave.H3_Font;
-            outrosTreinos_Label.AutoSize = true;
-            outrosTreinos_Label.Dock = DockStyle.Top;
-
-            FlowLayoutPanel slideOutrosTreinos = new FlowLayoutPanel();
-            slideOutrosTreinos.Dock = DockStyle.Top;
 
             // Treinos indicados para o usuário
             DataTable indicados = new Usuario().TreinosIndicadosUsuario(userId);
@@ -153,7 +182,8 @@ namespace PII_VIII.Forms
                     ForeColor = chave.RoxoCinza,
                     Font = chave.Sub_H3_Font,
                     AutoSize = true,
-                    Dock = DockStyle.Top
+                    Dock = DockStyle.Top,
+                    Name = "lblnone"
                 };
                 slideOutrosTreinos.Controls.Add(semTreinos_Label);
             }
@@ -171,7 +201,9 @@ namespace PII_VIII.Forms
 
                     indicado.PreencherDados(indicado.IdTreino);
 
-                    Card card = new Card { treino = indicado };
+                    Card card = new Card { treino = indicado, TreinoUsuario = false };
+                    card.Name = indicado.IdTreino.ToString();
+                    card.AddRemove.Click += (s, e) => AdicionarTreino(card.treino);
                     slideOutrosTreinos.Controls.Add(card);
                 }
             }
@@ -180,24 +212,49 @@ namespace PII_VIII.Forms
             slideSeusTreinos.Height = (int)Math.Ceiling(slideSeusTreinos.Controls.Count / 2.0) * new Card().Height;
             slideOutrosTreinos.Height = (int)Math.Ceiling(slideOutrosTreinos.Controls.Count / 2.0) * new Card().Height;
 
-
-            TodosTreinos.Controls.Add(slideOutrosTreinos);
-            TodosTreinos.Controls.Add(chave.RetornaEspacoTop(40));
-            TodosTreinos.Controls.Add(outrosTreinos_Label);
-            TodosTreinos.Controls.Add(chave.RetornaEspacoTop(40));
-            TodosTreinos.Controls.Add(slideSeusTreinos);
-            TodosTreinos.Controls.Add(chave.RetornaEspacoTop(40));
-            TodosTreinos.Controls.Add(seusTreinos_Label);
-
-            // Adicionar ao espaço principal
-            espaco.AutoScroll = true;
-            espaco.Controls.Add(TodosTreinos);
-            espaco.Controls.Add(chave.RetornaEspacoTop(40));
-            espaco.Controls.Add(banner);
-            this.Controls.Add(espaco);
         }
 
 
-        
+
+        private void AdicionarTreino(Treino t)
+        {
+
+            if (slideOutrosTreinos.Controls.ContainsKey(t.IdTreino.ToString()))
+            {
+                Card c = (Card)slideOutrosTreinos.Controls[t.IdTreino.ToString()];
+                c.Name = t.IdTreino.ToString();
+                c.TreinoUsuario = true;
+
+                c.AddRemove.Click += (s, e) => RemoverTreino(t);
+
+                if (slideSeusTreinos.Controls.ContainsKey("lblnone"))
+                {
+                    slideSeusTreinos.Controls.Remove(slideSeusTreinos.Controls["lblnone"]);
+                }
+                slideSeusTreinos.Controls.Add(c);
+            }
+        }
+
+        private void RemoverTreino(Treino t)
+        {
+            if (slideSeusTreinos.Controls.ContainsKey(t.IdTreino.ToString()))
+            {
+                Card c = (Card)slideSeusTreinos.Controls[t.IdTreino.ToString()];
+                c.Name = t.IdTreino.ToString();
+                c.TreinoUsuario = false;
+                c.AddRemove.Click += (s, e) => AdicionarTreino(t);
+                if (slideOutrosTreinos.Controls.ContainsKey("lblnone"))
+                {
+                    slideOutrosTreinos.Controls.Remove(slideOutrosTreinos.Controls["lblnone"]);
+                }
+                slideOutrosTreinos.Controls.Add(c);
+
+                //slideSeusTreinos.Controls.Remove(slideSeusTreinos.Controls[t.IdTreino.ToString()]);
+
+            }
+
+        }
+
+
     }
 }
