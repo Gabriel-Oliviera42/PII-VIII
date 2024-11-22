@@ -26,13 +26,13 @@ namespace PII_VIII
             DataTable dt = Task.Run(() => conexaoNeo4J.DTConsulta(query)).Result;
             return dt;
         }
-
-        public DataTable BuscarAtividadeTreino(int idTreino)
+        public async Task<DataTable> BuscarAtividadeTreinoAsync(int idTreino)
         {
-            string query = $"MATCH (a:AtividadeFisica)-[r:INCLUSA_EM_TREINO]->(t:Treino) where t.id ={idTreino} RETURN a.nomeatividade AS Atividade, a.descricao AS Descrição ,a.dificuldade AS Dificuldade, a.repeticoes AS Repetições";
-            DataTable dt = Task.Run(() => conexaoNeo4J.DTConsulta(query)).Result;
+            string query = $"MATCH (a:AtividadeFisica)-[r:INCLUSA_EM_TREINO]->(t:Treino) where t.id ={idTreino} RETURN a.nomeatividade AS Atividade, a.descricao AS Descrição ,a.dificuldade AS Dificuldade, a.repeticoes AS Repetições, a.id AS IdAtividade";
+            DataTable dt = await conexaoNeo4J.DTConsulta(query);
             return dt;
         }
+
 
         //Na classe Atividade Física, criar uma função que recebe um id de At ividade Física e preenche os dados da mesma na atual classe
         public void PreencherDados(int AtividadeFisicaId)

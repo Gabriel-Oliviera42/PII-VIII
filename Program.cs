@@ -21,12 +21,12 @@ namespace PII_VIII
        
         static void Main()
         {
-            user.PreencherDados(4);
+            user.PreencherDados(8);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
            
            //Application.Run(new Login());
-           Application.Run(new Home(4));
+           Application.Run(new Home(8));
         }
     }
 }

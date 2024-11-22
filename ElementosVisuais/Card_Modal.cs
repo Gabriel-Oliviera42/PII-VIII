@@ -32,33 +32,31 @@ namespace PII_VIII.ElementosVisuais
             }
         }
 
-        private void atualizaDados(Treino t)
+        private async void atualizaDados(Treino t)
         {
-            titulo.Text = t.NomeTreino;
-            subtitulo.Text = t.Descricao;
-            AtividadeFisica at = new AtividadeFisica();
-
-           // string query = $"MATCH (a:AtividadeFisica)-[r:INCLUSA_EM_TREINO]->(t:Treino) where t.id ={idTreino} RETURN a.nomeatividade AS Atividade, a.descricao AS Descrição ,a.dificuldade AS Dificuldade, a.repeticoes AS Repetições";
-
-
-            foreach (DataRow r in at.BuscarAtividadeTreino(t.IdTreino).Rows)
             {
-                AtividadeFisica atv = new AtividadeFisica()
-                {
-                    Nome = r["nomeatividade"].ToString()
-                };
-               // atv.PreencherDados(int.Parse(r["id"].ToString()));
-            }
+                titulo.Text = t.NomeTreino;
+                subtitulo.Text = t.Descricao;
+                AtividadeFisica at = new AtividadeFisica();
 
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
-            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
-            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
-            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
-            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
-            AtiviEsp.Controls.Add(RetornaAtvFis(at));
+                // Buscando dados de forma assíncrona
+                DataTable dt = await at.BuscarAtividadeTreinoAsync(t.IdTreino);
+
+                // Atualizando os controles no thread da interface do usuário
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        AtividadeFisica atv = new AtividadeFisica()
+                        {
+                            Nome = row["Atividade"].ToString()
+                        };
+                        atv.PreencherDados(int.Parse(row["IdAtividade"].ToString()));
+                        AtiviEsp.Controls.Add(RetornaAtvFis(atv));
+                        AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
+                    }
+                }));
+            }
 
         }
 
