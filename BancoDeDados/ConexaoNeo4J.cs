@@ -14,9 +14,9 @@ namespace PII_VIII
         private IDriver _driver;
         public void Conectar()
         {
-            string uri = "neo4j+s://46c7c773.databases.neo4j.io";
+            string uri = "neo4j+s://21046fa6.databases.neo4j.io";
             string user = "neo4j";
-            string password = "wUXyRtpIoBERwTKY635vObjnLuXJzGWvrVBWTPM1oFc";           
+            string password = "O9384Kj9rJuipTy6vvhkkW1rLI0cjWi9-xdSnWqG57w";           
             _driver = GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));
         }
         public async Task ExecutarComandoAsync(string query)
@@ -33,7 +33,6 @@ namespace PII_VIII
             var session = _driver.AsyncSession();            
             var result = await session.RunAsync(query);
             return result;        
-            Dispose();
         }
 
         public async Task<DataTable> DTConsulta(string query)
@@ -60,6 +59,17 @@ namespace PII_VIII
             }          
             return dt;
         }
+
+        public async Task<DataTable> DTConsultaAsync(string cypher)
+        {
+            // Aqui você vai executar a consulta usando Neo4j de forma assíncrona
+            DataTable dt = new DataTable();
+            // Código para executar a consulta
+            // Exemplo de um retorno simulando uma execução assíncrona
+            await Task.Delay(100); // Simulando latência de uma consulta
+            return dt;
+        }
+
 
         public async Task<DataSet> DSConsulta(string query)
         {

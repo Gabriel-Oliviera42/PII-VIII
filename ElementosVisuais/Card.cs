@@ -239,7 +239,7 @@ namespace PII_VIII.ElementosVisuais
                 BackgroundImageLayout = ImageLayout.Center
             };
 
-            iconeCard.Click += (s, e) => new Card_Modal(_treino) { treino = _treino} ;
+            iconeCard.Click += (s, e) => new Card_Modal(_treino) ;
 
             //adicionando elementos no card 
             CardDesc.Controls.Add(iconeCard);

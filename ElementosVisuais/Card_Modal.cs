@@ -23,55 +23,53 @@ namespace PII_VIII.ElementosVisuais
         {
             set
             {
-                atualizaDados(value);
+                atualizarDados(value);
                 _treino = value;
             }
         }
 
-        private async void atualizaDados(Treino t)
+        private async void atualizarDados(Treino t)
         {
             try
             {
-                // Atualiza título e subtítulo
                 titulo.Text = t.NomeTreino;
                 subtitulo.Text = t.Descricao;
 
                 AtividadeFisica at = new AtividadeFisica();
 
-                // Buscando dados de forma assíncrona
-                DataTable dt = await at.BuscarAtividadeTreinoAsync(t.IdTreino);
+                AtiviEsp.Controls.Clear();
 
-                // Garantir que o formulário está ativo
+                DataTable dt = await at.BuscarAtividadesAsync(t.IdTreino);
+
                 if (!this.IsDisposed && this.IsHandleCreated)
                 {
-                    // Atualizando os controles no thread da interface do usuário
                     this.Invoke((MethodInvoker)(() =>
                     {
-                        // Limpar o painel antes de adicionar novos controles
-                        AtiviEsp.Controls.Clear();
-
                         foreach (DataRow row in dt.Rows)
                         {
                             AtividadeFisica atv = new AtividadeFisica()
                             {
-                                Nome = row["Atividade"].ToString()
+                                IdAtividade = int.Parse(row["IDSQL"].ToString()),
+                                Nome = row["Nome"].ToString(),
+                                Dificuldade = row["Dificuldade"].ToString(),
+                                Descricao = row["Descricao"].ToString()
                             };
-                            atv.PreencherDados(int.Parse(row["IdAtividade"].ToString()));
                             AtiviEsp.Controls.Add(RetornaAtvFis(atv));
                             AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
                         }
-
-                        // Traz o formulário para frente após a atualização
-                        this.BringToFront();
                     }));
                 }
+
             }
             catch (Exception ex)
             {
                 // Em caso de erro, exibe a mensagem
                 MessageBox.Show($"Erro ao atualizar os dados: {ex.Message}");
+
             }
         }
+
+
 
 
         public Card_Modal(Treino t)
@@ -80,10 +78,6 @@ namespace PII_VIII.ElementosVisuais
             Height = 800;
             MaximumSize = this.Size;
             AutoScroll = true;
-
-            // Garante que o formulário ficará sempre no topo
-            this.TopMost = true;
-
             this.ShowInTaskbar = false;
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterParent;
@@ -232,18 +226,10 @@ namespace PII_VIII.ElementosVisuais
                 StartPosition = FormStartPosition.CenterScreen,
                 ShowInTaskbar = false // Não exibe na barra de tarefas
             };
-
-            // Exibe o formulário escurecido primeiro
             es.Show();
-
-            // Adiciona um atraso pequeno para garantir que o formulário escurecido seja exibido corretamente
-            Thread.Sleep(50);  // Atraso de 50 milissegundos
-
-            // Exibe o Card_Modal (popup)
+            Thread.Sleep(50);
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.Show(); // Usando Show() ao invés de ShowDialog()
-
-            // Fecha o formulário escurecido ao fechar o popup
+            this.Show();
             this.FormClosing += (sender, e) => es.Close();
         }
 
