@@ -10,6 +10,7 @@ namespace PII_VIII
     using Neo4j.Driver;
     using System.Data;
     using System.Globalization;
+    using System.Windows.Forms;
 
     //Criar uma função que recebe o Id de um usuário e preenche com os dados restantes na atual classe
 
@@ -130,6 +131,80 @@ namespace PII_VIII
             return dt;
 
         }
+
+        public float ImcUser(int idUser)
+        {
+            // Corrigir a consulta SQL para buscar peso e altura
+            string query = $"SELECT peso, altura FROM usuario WHERE id_usuario = {idUser}";
+
+            try
+            {
+                // Executa a consulta e retorna os dados em um DataTable
+                DataTable dt = con.RetornaTabela(query);
+
+                if (dt.Rows.Count > 0)
+                {
+                    // Obter peso e altura
+                    float peso = Convert.ToSingle(dt.Rows[0]["peso"]);
+                    float altura = Convert.ToSingle(dt.Rows[0]["altura"]);
+
+                    // Calcular o IMC
+                    if (altura > 0)
+                    {
+                        float imc = peso / (altura * altura);
+                        return imc;
+                    }
+                    else
+                    {
+                        throw new Exception("Altura não pode ser zero.");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Usuário não encontrado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Mostra a mensagem de erro
+                MessageBox.Show($"Erro ao calcular IMC: {ex.Message}");
+                return 0;
+            }
+        }
+
+        public string ClassificarIMC(float imc)
+        {
+            if (imc < 18.5)
+                return "Abaixo do peso";
+            else if (imc >= 18.5 && imc < 24.9)
+                return "Peso normal";
+            else if (imc >= 25 && imc < 29.9)
+                return "Sobrepeso";
+            else if (imc >= 30 && imc < 34.9)
+                return "Obesidade grau 1";
+            else if (imc >= 35 && imc < 39.9)
+                return "Obesidade grau 2";
+            else
+                return "Obesidade grau 3";
+        }
+
+        public string BuscarDescricaoObjetivo(int idObjetivo)
+        {
+            string query = $"SELECT descricao FROM objetivo WHERE id_objetivo = {idObjetivo}";
+            try
+            {
+                // Executa a consulta e obtém o valor único
+                object descricao = con.RetornaEscalar(query);
+                return descricao != null ? descricao.ToString() : "Objetivo não encontrado";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao buscar objetivo: {ex.Message}");
+                return "Erro ao buscar objetivo";
+            }
+        }
+
+
     }
 
 }

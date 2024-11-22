@@ -23,6 +23,7 @@ namespace PII_VIII.ElementosVisuais
         Label Objetivo;
         Label IMC;
         Label Classificação;
+        Usuario user = new Usuario();
         public Barra_Usuario()
         {
             AjustaPanel();
@@ -41,14 +42,28 @@ namespace PII_VIII.ElementosVisuais
 
         private void atualizadados()
         {
-            Nome.Text = Program.user.Nome;
-            Email.Text = Program.user.Email;
-            DataDeNascimento.Text = "Data de Nascimento: " + Program.user.DataNascimento.ToString("dd/MM/yyyy");
-            Altura.Text = Program.user.Altura.ToString("0.00 kg");
-            Peso.Text = Program.user.Peso.ToString("0.00 m");
+            try
+            {
+                Nome.Text = Program.user.Nome;
+                Email.Text = Program.user.Email;
+                DataDeNascimento.Text = "Data de Nascimento: " + Program.user.DataNascimento.ToString("dd/MM/yyyy");
+                Altura.Text = $"Altura: {Program.user.Altura:0.00} m";
+                Peso.Text = $"Peso: {Program.user.Peso:0.00} kg";
 
-            //Adicionar texto de Objetivo, IMC, e Classificação
+                float imc = Program.user.ImcUser(Program.user.IdUsuario); 
+                IMC.Text = $"IMC: {imc:0.00}";
+
+                string classificacao = Program.user.ClassificarIMC(imc); 
+                Classificação.Text = $"Classificação: {classificacao}";
+                
+                Objetivo.Text = $"Objetivo atual: {Program.user.BuscarDescricaoObjetivo(Program.user.IdObjetivo)}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao atualizar os dados do usuário: {ex.Message}");
+            }
         }
+
 
 
         private void CriaEspParaInfos()
@@ -116,9 +131,9 @@ namespace PII_VIII.ElementosVisuais
                 BackColor = chave.RoxoFluorescente
             };
 
-            DataDeNascimento = retornaLabel("Data de Nascimento: __/__/____");
-            Altura = retornaLabel("Altura: __,__m");
-            Peso = retornaLabel("Peso: __,__kg");
+            DataDeNascimento = RetornaLabel("Data de Nascimento: __/__/____");
+            Altura = RetornaLabel("Altura: __,__m");
+            Peso = RetornaLabel("Peso: __,__kg");
 
 
             PanelArredonado esp02 = new PanelArredonado
@@ -130,9 +145,9 @@ namespace PII_VIII.ElementosVisuais
                 BackColor = chave.RoxoFluorescente
             };
 
-            Objetivo = retornaLabel("Objetivo atual: ____");
-            IMC = retornaLabel("IMC: __,__");
-            Classificação = retornaLabel("Objetivo Classificação: ____");
+            Objetivo = RetornaLabel("Objetivo atual: ____");
+            IMC = RetornaLabel("IMC: __,__");
+            Classificação = RetornaLabel("Objetivo Classificação: ____");
 
             p01.Controls.Add(Email);
             p01.Controls.Add(Nome);
@@ -154,7 +169,7 @@ namespace PII_VIII.ElementosVisuais
 
         }
 
-        private Label retornaLabel(string tx)
+        private Label RetornaLabel(string tx)
         {
             Label x = new Label
             {
