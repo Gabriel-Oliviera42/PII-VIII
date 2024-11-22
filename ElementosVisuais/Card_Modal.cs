@@ -1,10 +1,7 @@
 ﻿using PII_VIII.Elementos_Visuais;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,51 +25,64 @@ namespace PII_VIII.ElementosVisuais
             {
                 atualizaDados(value);
                 _treino = value;
-
             }
         }
 
         private async void atualizaDados(Treino t)
         {
+            try
             {
+                // Atualiza título e subtítulo
                 titulo.Text = t.NomeTreino;
                 subtitulo.Text = t.Descricao;
+
                 AtividadeFisica at = new AtividadeFisica();
 
                 // Buscando dados de forma assíncrona
                 DataTable dt = await at.BuscarAtividadeTreinoAsync(t.IdTreino);
 
-                // Atualizando os controles no thread da interface do usuário
-                this.Invoke((MethodInvoker)(() =>
+                // Garantir que o formulário está ativo
+                if (!this.IsDisposed && this.IsHandleCreated)
                 {
-                    foreach (DataRow row in dt.Rows)
+                    // Atualizando os controles no thread da interface do usuário
+                    this.Invoke((MethodInvoker)(() =>
                     {
-                        AtividadeFisica atv = new AtividadeFisica()
-                        {
-                            Nome = row["Atividade"].ToString()
-                        };
-                        atv.PreencherDados(int.Parse(row["IdAtividade"].ToString()));
-                        AtiviEsp.Controls.Add(RetornaAtvFis(atv));
-                        AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
-                    }
-                }));
-            }
+                        // Limpar o painel antes de adicionar novos controles
+                        AtiviEsp.Controls.Clear();
 
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            AtividadeFisica atv = new AtividadeFisica()
+                            {
+                                Nome = row["Atividade"].ToString()
+                            };
+                            atv.PreencherDados(int.Parse(row["IdAtividade"].ToString()));
+                            AtiviEsp.Controls.Add(RetornaAtvFis(atv));
+                            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
+                        }
+
+                        // Traz o formulário para frente após a atualização
+                        this.BringToFront();
+                    }));
+                }
+            }
+            catch (Exception ex)
+            {
+                // Em caso de erro, exibe a mensagem
+                MessageBox.Show($"Erro ao atualizar os dados: {ex.Message}");
+            }
         }
 
-        //Ainda vou ajustar mas assim que chamar a função abaixo ela deve enviar como parâmetro a classe treino que do PoupUP
-        //EX: "public CardModal(Treino treinorecbido)" e "CardModal exemplo = new CardModal(treino);"
-        //Mas para isso a chamada dela na tela de principal tem que estar concluida senão dá erro toda vez que chamar
 
         public Card_Modal(Treino t)
         {
-            
             Width = 1000;
             Height = 800;
             MaximumSize = this.Size;
             AutoScroll = true;
-            
 
+            // Garante que o formulário ficará sempre no topo
+            this.TopMost = true;
 
             this.ShowInTaskbar = false;
             this.FormBorderStyle = FormBorderStyle.None;
@@ -89,14 +99,11 @@ namespace PII_VIII.ElementosVisuais
             AddTopo();
 
             treino = t;
-            //atualizaDados(t);
             AbreCard();
-
         }
 
         private void AddAtFisica()
         {
-           
             AtiviEsp.AutoSize = true;
             AtiviEsp.Dock = DockStyle.Top;
             this.Controls.Add(AtiviEsp);
@@ -109,9 +116,6 @@ namespace PII_VIII.ElementosVisuais
         PanelArredonado RetornaAtvFis(AtividadeFisica at)
         {
             PanelArredonado fundo = new PanelArredonado();
-            // fundo.Width = 290;
-            //fundo.Height = 140;
-
             fundo.AutoSize = true;
             fundo.Dock = DockStyle.Top;
 
@@ -125,38 +129,27 @@ namespace PII_VIII.ElementosVisuais
             tit.Font = chave.tituloCard_Font;
             tit.ForeColor = chave.Azul;
 
-
-
             Label desc = new Label();
             desc.AutoSize = true;
             desc.Dock = DockStyle.Top;
             desc.Font = chave.SubtiruloCard_Font;
             desc.ForeColor = chave.RoxoCinza;
 
-
-
-
-            //Ajusta Conteúdo
             desc.Text = at.Descricao;
             tit.Text = at.Nome;
-
 
             fundo.Controls.Add(desc);
             fundo.Controls.Add(chave.RetornaEspacoTop(10));
             fundo.Controls.Add(tit);
-
-
 
             return fundo;
         }
 
         private void AddInfos()
         {
-            //Adicionando icone
             Panel espIcone = new Panel();
             espIcone.Dock = DockStyle.Top;
             espIcone.Height = 60;
-
 
             PanelArredonado icone = new PanelArredonado();
             icone.BackColor = chave.Azul;
@@ -168,19 +161,15 @@ namespace PII_VIII.ElementosVisuais
 
             espIcone.Controls.Add(icone);
 
-            //Adicionando título
-
             Panel espTitulo = new Panel();
             espTitulo.Dock = DockStyle.Top;
             espTitulo.AutoSize = true;
-
 
             titulo.Dock = DockStyle.Top;
             titulo.AutoSize = true;
             titulo.Text = "Nome do Treino";
             titulo.Font = chave.H3_Font;
             titulo.ForeColor = chave.Azul;
-
 
             subtitulo.Dock = DockStyle.Top;
             subtitulo.AutoSize = true;
@@ -192,11 +181,9 @@ namespace PII_VIII.ElementosVisuais
             espTitulo.Controls.Add(chave.RetornaEspacoTop(5));
             espTitulo.Controls.Add(titulo);
 
-
             this.Controls.Add(espTitulo);
             this.Controls.Add(chave.RetornaEspacoTop(20));
             this.Controls.Add(espIcone);
-
         }
 
         private void AddTopo()
@@ -218,7 +205,6 @@ namespace PII_VIII.ElementosVisuais
             back.ForeColor = chave.RoxoCinza;
             back.BackColor = chave.CinzaClaro;
 
-
             Label titTab = new Label();
             titTab.Text = "Janela de Treino";
             titTab.Font = chave.tituloCard_Font;
@@ -228,46 +214,41 @@ namespace PII_VIII.ElementosVisuais
             titTab.Padding = new Padding(16);
             titTab.Dock = DockStyle.Left;
 
-
             barra_Topo.Controls.Add(titTab);
             barra_Topo.Controls.Add(back);
-
 
             this.Controls.Add(barra_Topo);
         }
 
         public void AbreCard()
         {
-
-            Thread t = new Thread(() =>
+            // Cria o formulário escurecido
+            Form es = new Form
             {
-                this.StartPosition = FormStartPosition.CenterScreen;
-                this.ShowDialog();
-            });
-
-            t.Start();
-            FormEscurecerTela();
-        }
-
-        //cria um form escuro com opacidade de 50% para ficar sobre o fundo sempre que o poupup aparece
-        public void FormEscurecerTela()
-        {
-            Form es = new Form();
-            es.FormBorderStyle = FormBorderStyle.None;
-            es.BackColor = Color.Black;
-            es.Opacity = 0.5; // Opacidade de 50%
-            es.WindowState = FormWindowState.Maximized;
-            this.FormClosing += (sender, e) =>
-            {
-                es.Close();
-            };
-            es.Click += (s, e) =>
-            {
-                this.Close();
-                es.Close();
+                FormBorderStyle = FormBorderStyle.None,
+                BackColor = Color.Black,
+                Opacity = 0.5, // Opacidade de 50%
+                WindowState = FormWindowState.Maximized,
+                StartPosition = FormStartPosition.CenterScreen,
+                ShowInTaskbar = false // Não exibe na barra de tarefas
             };
 
-            es.ShowDialog();
+            // Exibe o formulário escurecido primeiro
+            es.Show();
+
+            // Adiciona um atraso pequeno para garantir que o formulário escurecido seja exibido corretamente
+            Thread.Sleep(50);  // Atraso de 50 milissegundos
+
+            // Exibe o Card_Modal (popup)
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Show(); // Usando Show() ao invés de ShowDialog()
+
+            // Fecha o formulário escurecido ao fechar o popup
+            this.FormClosing += (sender, e) => es.Close();
         }
+
+
+
+
     }
 }
