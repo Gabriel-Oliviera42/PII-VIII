@@ -1,7 +1,4 @@
 ﻿
-
-
-
 using PII_VIII.Elementos_Visuais;
 using PII_VIII.ElementosVisuais;
 using System;
@@ -40,6 +37,7 @@ namespace PII_VIII.Forms
             this.Padding = new System.Windows.Forms.Padding(40);
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
+            this.Text = "Treinos";
 
         }
 
@@ -55,6 +53,7 @@ namespace PII_VIII.Forms
 
         private void AddMenu()
         {
+            menu.FormPai = this;
             this.Controls.Add(chave.RetornaEspacoLeft(20));
             this.Controls.Add(menu);
         }

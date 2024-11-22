@@ -1,9 +1,11 @@
 ﻿using PII_VIII.Elementos_Visuais;
+using PII_VIII.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,7 +15,8 @@ namespace PII_VIII.ElementosVisuais
     {
         Chave chave = new Chave();
 
-        //Criando Menu
+        public Form FormPai = new Form();
+       
         public Menu_Principal()
         {
             this.Radius = 40;
@@ -86,19 +89,43 @@ namespace PII_VIII.ElementosVisuais
         
         private void Treinos_click()
         {
-            MessageBox.Show("Treinos");
+            Thread init = new Thread(() =>
+            {
+                Home aux = new Home(Program.user.IdUsuario); 
+                aux.ShowDialog();
+            });
+            init.Start();
+            FormPai.Close();
         }
         private void Historico_click()
         {
-            MessageBox.Show("Historico");
+            Thread init = new Thread(() =>
+            {
+                Historico aux = new Historico(); 
+                aux.ShowDialog();
+            });
+            init.Start();
+            FormPai.Close();
         }        
         private void Perfil_click()
         {
-            MessageBox.Show("Perfil");
+            Thread init = new Thread(() =>
+            {
+                Perfil aux = new Perfil(); 
+                aux.ShowDialog();
+            });
+            init.Start();
+            FormPai.Close();
         }
         private void Sair_click()
         {
-            MessageBox.Show("Sair");            
+            Thread init = new Thread(() =>
+            {
+                Login aux = new Login(); 
+                aux.ShowDialog();
+            });
+            init.Start();
+            FormPai.Close();
         }
     }
 }

@@ -90,6 +90,9 @@
     <Compile Include="ElementosVisuais\Elementos.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Forms\Historico.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ElementosVisuais\Menu_Principal.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -97,6 +100,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\Home.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Perfil.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Teste\FrmCadastroUsuario.cs">
