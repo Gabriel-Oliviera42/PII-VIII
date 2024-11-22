@@ -17,6 +17,12 @@ namespace PII_VIII.ElementosVisuais
         Panel infos = new Panel();
         Label Nome = new Label();
         Label Email = new Label();
+        Label DataDeNascimento;
+        Label Altura;
+        Label Peso;
+        Label Objetivo;
+        Label IMC;
+        Label Classificação;
         public Barra_Usuario()
         {
             AjustaPanel();
@@ -37,6 +43,11 @@ namespace PII_VIII.ElementosVisuais
         {
             Nome.Text = Program.user.Nome;
             Email.Text = Program.user.Email;
+            DataDeNascimento.Text = "Data de Nascimento: " + Program.user.DataNascimento.ToString("dd/MM/yyyy");
+            Altura.Text = Program.user.Altura.ToString("0.00 kg");
+            Peso.Text = Program.user.Peso.ToString("0.00 m");
+
+            //Adicionar texto de Objetivo, IMC, e Classificação
         }
 
 
@@ -61,84 +72,145 @@ namespace PII_VIII.ElementosVisuais
         private void AddInfos()
         {
 
-            Panel p01 = new Panel();
-            p01.Dock = DockStyle.Top;
-            p01.AutoSize = true;
+            Panel p01 = new Panel
+            {
+                Dock = DockStyle.Top,
+                AutoSize = true
+            };
+
+            Label lbl = new Label
+            {
+                Text = "SEJA BEM VINDO(A)",
+                Dock = DockStyle.Top,
+                AutoSize = true,
+                Font = chave.SubtiruloCard_Font,
+                ForeColor = chave.SubRoxo
+            };
+
+            Nome = new Label
+            {
+                Dock = DockStyle.Top,
+                Text = "Usuário",
+                ForeColor = chave.Branco,
+                Font = chave.H3_Font,
+                AutoSize = true
+
+            };
+
+            Email = new Label
+            {
+                Dock = DockStyle.Top,
+                Text = "usuaio@email.com",
+                ForeColor = chave.SubRoxo,
+                Font = chave.SubtiruloCard_Font,
+                AutoSize = true
+            };
 
 
-            Label lbl = new Label();
-            lbl.Text = "SEJA BEM VINDO(A)";
-            lbl.Dock = DockStyle.Top;
-            lbl.AutoSize = true;
-            lbl.Font = chave.SubtiruloCard_Font;
-            lbl.ForeColor = chave.SubRoxo;
+            PanelArredonado esp01 = new PanelArredonado
+            {
+                Dock = DockStyle.Top,
+                Padding = new Padding(20),
+                Radius = 20,
+                AutoSize = true,
+                BackColor = chave.RoxoFluorescente
+            };
+
+            DataDeNascimento = retornaLabel("Data de Nascimento: __/__/____");
+            Altura = retornaLabel("Altura: __,__m");
+            Peso = retornaLabel("Peso: __,__kg");
 
 
-            Nome.Dock = DockStyle.Top;
-            Nome.Text = "Usuário";
-            Nome.ForeColor = chave.Branco;
-            Nome.Font = chave.H3_Font;
-            Nome.AutoSize = true;
+            PanelArredonado esp02 = new PanelArredonado
+            {
+                Dock = DockStyle.Top,
+                Padding = new Padding(20),
+                Radius = 20,
+                AutoSize = true,
+                BackColor = chave.RoxoFluorescente
+            };
 
-            Email.Dock = DockStyle.Top;
-            Email.Text = "usuaio@email.com";
-            Email.ForeColor = chave.SubRoxo;
-            Email.Font = chave.SubtiruloCard_Font;
-            Email.AutoSize = true;
+            Objetivo = retornaLabel("Objetivo atual: ____");
+            IMC = retornaLabel("IMC: __,__");
+            Classificação = retornaLabel("Objetivo Classificação: ____");
 
             p01.Controls.Add(Email);
             p01.Controls.Add(Nome);
             p01.Controls.Add(lbl);
 
+            esp01.Controls.Add(Peso);
+            esp01.Controls.Add(Altura);
+            esp01.Controls.Add(DataDeNascimento);
+
+            esp02.Controls.Add(Classificação);
+            esp02.Controls.Add(IMC);
+            esp02.Controls.Add(Objetivo);
+
+            infos.Controls.Add(esp02);
+            infos.Controls.Add(chave.RetornaEspacoTop(20));
+            infos.Controls.Add(esp01);
+            infos.Controls.Add(chave.RetornaEspacoTop(40));
             infos.Controls.Add(p01);
 
         }
 
+        private Label retornaLabel(string tx)
+        {
+            Label x = new Label
+            {
+                Text = tx,
+
+                Dock = DockStyle.Top,
+                AutoSize = true,
+                ForeColor = chave.SubRoxo,
+                Font = chave.SubtiruloCard_Font
+            };
+            return x;
+        }
+
         private void AddTopo()
         {
-            PanelArredonado topo = new PanelArredonado();
-            topo.Dock = DockStyle.Top;
-            topo.Height = 120;
-            topo.BackColor = chave.RoxoEscuro;
-            topo.Radius = 38;
-            topo.Padding = new Padding(36);
-
-            this.Controls.Add(topo);
-            Panel icone = new Panel();
-            icone.Dock = DockStyle.Left;
-            icone.Width = topo.Height - 36 * 2;
-            icone.BackgroundImage = Properties.Resources.Icones_PNG;
-            icone.BackgroundImageLayout = ImageLayout.Stretch;
-
-            Panel esp = new Panel();
-
-            esp.Dock = DockStyle.Left;
-            esp.Width = this.Width - icone.Width - 40 * 2;
-            //esp.AutoSize = true;
-
-            Label top01 = new Label();
-            top01.Text = "GESTÃO DE SAÚDE";
-
-            top01.ForeColor = chave.Branco;
-            top01.Font = chave.tituloCard_Font;
-            top01.Dock = DockStyle.Top;
-            //top01.Height = 20;
-            top01.AutoSize = true;
-
-
-            Label top02 = new Label();
-            top02.Text = "Treinos para iniciantes";
-
-            top02.ForeColor = chave.Branco;
-            top02.Font = chave.TextoPequeno;
-            top02.Dock = DockStyle.Top;
-            //top02.Height = 20;
-            top02.AutoSize = true;
+            PanelArredonado topo = new PanelArredonado
+            {
+                Dock = DockStyle.Top,
+                Height = 120,
+                BackColor = chave.RoxoEscuro,
+                Radius = 38,
+                Padding = new Padding(36)
+            };
+            Panel icone = new Panel
+            {
+                Dock = DockStyle.Left,
+                Width = topo.Height - 36 * 2,
+                BackgroundImage = Properties.Resources.Icones_PNG,
+                BackgroundImageLayout = ImageLayout.Stretch
+            };
+            Panel esp = new Panel
+            {
+                Dock = DockStyle.Left,
+                Width = this.Width - icone.Width - 40 * 2
+            };
+            Label top01 = new Label
+            {
+                Text = "GESTÃO DE SAÚDE",
+                ForeColor = chave.Branco,
+                Font = chave.tituloCard_Font,
+                Dock = DockStyle.Top,
+                AutoSize = true
+            };
+            Label top02 = new Label
+            {
+                Text = "Treinos para iniciantes",
+                ForeColor = chave.Branco,
+                Font = chave.TextoPequeno,
+                Dock = DockStyle.Top,
+                AutoSize = true
+            };
 
             esp.Controls.Add(top02);
-
             esp.Controls.Add(top01);
 
+            this.Controls.Add(topo);
             topo.Controls.Add(esp);
             topo.Controls.Add(chave.RetornaEspacoLeft(10));
             topo.Controls.Add(icone);

@@ -233,6 +233,8 @@ namespace PII_VIII.Forms
                 }
                 slideSeusTreinos.Controls.Add(c);
             }
+
+
         }
 
         private void RemoverTreino(Treino t)
