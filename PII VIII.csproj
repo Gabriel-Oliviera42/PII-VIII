@@ -83,7 +83,7 @@
     <Compile Include="ElementosVisuais\Card.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ElementosVisuais\CardHistorico.cs">
+    <Compile Include="ElementosVisuais\Card_Historico.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ElementosVisuais\Card_Modal.cs">

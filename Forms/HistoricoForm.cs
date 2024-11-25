@@ -98,11 +98,11 @@ namespace PII_VIII.ElementosVisuais
                 AutoSize = true
             };
             EspCard.Controls.Add(chave.RetornaEspacoTop(5));
-            EspCard.Controls.Add(new CardHistorico());
+            EspCard.Controls.Add(new Card_Historico());
             EspCard.Controls.Add(chave.RetornaEspacoTop(5));
-            EspCard.Controls.Add(new CardHistorico());
+            EspCard.Controls.Add(new Card_Historico());
             EspCard.Controls.Add(chave.RetornaEspacoTop(5));
-            EspCard.Controls.Add(new CardHistorico());
+            EspCard.Controls.Add(new Card_Historico());
             EspInfos.Controls.Add(EspCard);
             EspInfos.Controls.Add(chave.RetornaEspacoTop(40));
             EspInfos.Controls.Add(EspTopo);
