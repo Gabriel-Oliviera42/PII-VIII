@@ -101,7 +101,7 @@ namespace PII_VIII.ElementosVisuais
         {
             Thread init = new Thread(() =>
             {
-                Historico aux = new Historico(); 
+                Historico_Form aux = new Historico_Form(); 
                 aux.ShowDialog();
             });
             init.Start();

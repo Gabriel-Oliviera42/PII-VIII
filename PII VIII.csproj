@@ -83,6 +83,9 @@
     <Compile Include="ElementosVisuais\Card.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ElementosVisuais\CardHistorico.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ElementosVisuais\Card_Modal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,14 +93,14 @@
     <Compile Include="ElementosVisuais\Elementos.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\Historico.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="ElementosVisuais\Menu_Principal.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ElementosVisuais\Modulos.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\HistoricoForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Home.cs">
       <SubType>Form</SubType>
