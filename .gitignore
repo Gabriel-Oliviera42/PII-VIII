@@ -366,3 +366,5 @@ FodyWeavers.xsd
 /Forms/Home.cs
 /Program.cs
 /BancoDeDados/Treino.cs
+/ElementosVisuais/CardHistorico.cs
+/Forms/Historico_Form.cs
