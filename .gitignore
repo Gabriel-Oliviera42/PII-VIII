@@ -362,3 +362,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Program.cs
+/BancoDeDados/Treino.cs
+/Forms/Home.cs
+/Program.cs
+/BancoDeDados/Treino.cs

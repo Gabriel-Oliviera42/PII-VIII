@@ -1,4 +1,5 @@
-﻿using PII_VIII.Forms;
+﻿using PII_VIII.ElementosVisuais;
+using PII_VIII.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,8 @@ namespace PII_VIII
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
            
-           Application.Run(new Login());
+          // Application.Run(new Login());
+            Application.Run(new Historico_Form());
            //Application.Run(new Home(8));
         }
     }

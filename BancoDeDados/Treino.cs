@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -60,6 +61,45 @@ namespace PII_VIII
 
         }
         
+    }
+
+    public class TreinoRepository : IDisposable
+    {
+        private readonly SqlConnection _connection;
+
+        public TreinoRepository()
+        {
+            // Inicialize sua conexão com o banco
+            _connection = new SqlConnection("SuaStringDeConexao");
+            _connection.Open();
+        }
+
+        public void AdicionarTreinoAoUsuario(int idUsuario, int idTreino)
+        {
+            var query = "INSERT INTO UsuarioTreino (IdUsuario, IdTreino) VALUES (@IdUsuario, @IdTreino)";
+            using (var command = new SqlCommand(query, _connection))
+            {
+                command.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                command.Parameters.AddWithValue("@IdTreino", idTreino);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void RemoverTreinoDoUsuario(int idUsuario, int idTreino)
+        {
+            var query = "DELETE FROM UsuarioTreino WHERE IdUsuario = @IdUsuario AND IdTreino = @IdTreino";
+            using (var command = new SqlCommand(query, _connection))
+            {
+                command.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                command.Parameters.AddWithValue("@IdTreino", idTreino);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void Dispose()
+        {
+            _connection?.Dispose();
+        }
     }
 
 

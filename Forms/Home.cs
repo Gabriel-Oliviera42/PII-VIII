@@ -164,7 +164,7 @@ namespace PII_VIII.Forms
                     Card card = new Card { treino = treino, TreinoUsuario = true };
                     card.Name = treino.IdTreino.ToString();
 
-                    card.AddRemove.Click += (s, e) => RemoverTreino(card.treino);
+                    card.AddRemove.Click += (s, e) => RemoverTreinoParaUsuario(Program.user, treino);
                     slideSeusTreinos.Controls.Add(card);
                 }
             }
@@ -202,7 +202,7 @@ namespace PII_VIII.Forms
 
                     Card card = new Card { treino = indicado, TreinoUsuario = false };
                     card.Name = indicado.IdTreino.ToString();
-                    card.AddRemove.Click += (s, e) => AdicionarTreino(card.treino);
+                    card.AddRemove.Click += (s, e) => AdicionarTreinoParaUsuario(Program.user, indicado);
                     slideOutrosTreinos.Controls.Add(card);
                 }
             }
@@ -215,45 +215,101 @@ namespace PII_VIII.Forms
 
 
 
-        private void AdicionarTreino(Treino t)
+        private void AdicionarTreinoParaUsuario(Usuario usuario, Treino treino)
         {
-
-            if (slideOutrosTreinos.Controls.ContainsKey(t.IdTreino.ToString()))
+            // Verifica se o treino já existe no controle
+            if (slideOutrosTreinos.Controls.ContainsKey(treino.IdTreino.ToString()))
             {
-                Card c = (Card)slideOutrosTreinos.Controls[t.IdTreino.ToString()];
-                c.Name = t.IdTreino.ToString();
-                c.TreinoUsuario = true;
+                Card card = (Card)slideOutrosTreinos.Controls[treino.IdTreino.ToString()];
+                card.Name = treino.IdTreino.ToString();
+                card.TreinoUsuario = true;
 
-                c.AddRemove.Click += (s, e) => RemoverTreino(t);
+                // Atualiza o botão de remoção
+                card.AddRemove.Click += (s, e) => RemoverTreinoParaUsuario(usuario, treino);
 
+                // Remove mensagem de "nenhum treino" se presente
                 if (slideSeusTreinos.Controls.ContainsKey("lblnone"))
                 {
                     slideSeusTreinos.Controls.Remove(slideSeusTreinos.Controls["lblnone"]);
                 }
-                slideSeusTreinos.Controls.Add(c);
+
+                // Adiciona ao painel de treinos do usuário
+                slideSeusTreinos.Controls.Add(card);
+
+                // Adiciona o treino ao banco de dados
+                AdicionarTreinoAoBanco(usuario.IdUsuario, treino.IdTreino);
             }
+            else
+            {
+                // Caso o treino não exista nos outros treinos, cria um novo Card
+                Card novoCard = new Card
+                {
+                    Name = treino.IdTreino.ToString(),
+                    TreinoUsuario = true,
+                };
 
+                // Configura evento para remoção
+                novoCard.AddRemove.Click += (s, e) => RemoverTreinoParaUsuario(usuario, treino);
 
+                // Adiciona o novo Card ao painel
+                slideSeusTreinos.Controls.Add(novoCard);
+
+                // Adiciona o treino ao banco de dados
+                AdicionarTreinoAoBanco(usuario.IdUsuario, treino.IdTreino);
+            }
         }
 
-        private void RemoverTreino(Treino t)
+        private void RemoverTreinoParaUsuario(Usuario usuario, Treino treino)
         {
-            if (slideSeusTreinos.Controls.ContainsKey(t.IdTreino.ToString()))
+            // Remove do painel
+            if (slideSeusTreinos.Controls.ContainsKey(treino.IdTreino.ToString()))
             {
-                Card c = (Card)slideSeusTreinos.Controls[t.IdTreino.ToString()];
-                c.Name = t.IdTreino.ToString();
-                c.TreinoUsuario = false;
-                c.AddRemove.Click += (s, e) => AdicionarTreino(t);
-                if (slideOutrosTreinos.Controls.ContainsKey("lblnone"))
+                slideSeusTreinos.Controls.RemoveByKey(treino.IdTreino.ToString());
+
+                // Verifica se o painel ficou vazio e adiciona mensagem "nenhum treino"
+                if (slideSeusTreinos.Controls.Count == 0)
                 {
-                    slideOutrosTreinos.Controls.Remove(slideOutrosTreinos.Controls["lblnone"]);
+                    Label lblNone = new Label
+                    {
+                        Name = "lblnone",
+                        Text = "Nenhum treino disponível",
+                    };
+                    slideSeusTreinos.Controls.Add(lblNone);
                 }
-                slideOutrosTreinos.Controls.Add(c);
 
-                //slideSeusTreinos.Controls.Remove(slideSeusTreinos.Controls[t.IdTreino.ToString()]);
-
+                // Remove o treino do banco de dados
+                RemoverTreinoDoBanco(usuario.IdUsuario, treino.IdTreino);
             }
+        }
 
+        private void AdicionarTreinoAoBanco(int idUsuario, int idTreino)
+        {
+            try
+            {
+                using (var repository = new TreinoRepository())
+                {
+                    repository.AdicionarTreinoAoUsuario(idUsuario, idTreino);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao adicionar treino no banco: {ex.Message}");
+            }
+        }
+
+        private void RemoverTreinoDoBanco(int idUsuario, int idTreino)
+        {
+            try
+            {
+                using (var repository = new TreinoRepository())
+                {
+                    repository.RemoverTreinoDoUsuario(idUsuario, idTreino);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao remover treino no banco: {ex.Message}");
+            }
         }
 
 
