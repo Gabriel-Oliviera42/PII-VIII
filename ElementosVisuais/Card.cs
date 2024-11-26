@@ -81,7 +81,7 @@ namespace PII_VIII.ElementosVisuais
             tituloCard.Text = quantidadeAtividades + " Atividades Físicas";
 
             // Se desejar, ajuste o descCard para mostrar outros detalhes
-            // descCard.Text = "Tipos de Treino";
+            descCard.Text = "Teste de de Treino";
             //descCard.Text = desc;
         }
 
@@ -151,11 +151,6 @@ namespace PII_VIII.ElementosVisuais
             TreinoUsuario = false;
 
             iconeAddRemove.FlatAppearance.BorderSize = 0;
-
-            espAddRemove.Click += (s, e) =>
-            {
-
-            };
           
             espAddRemove.Controls.Add(lbAddRemove);
             espAddRemove.Controls.Add(iconeAddRemove);

@@ -46,7 +46,7 @@ namespace PII_VIII.ElementosVisuais
             {
                 Nome.Text = Program.user.Nome;
                 Email.Text = Program.user.Email;
-                DataDeNascimento.Text = "Data de Nascimento: " + Program.user.DataNascimento.ToString("dd/MM/yyyy");
+                DataDeNascimento.Text = "Data de Nascimento:\n" + Program.user.DataNascimento.ToString("dd/MM/yyyy");
                 Altura.Text = $"Altura: {Program.user.Altura:0.00} m";
                 Peso.Text = $"Peso: {Program.user.Peso:0.00} kg";
 
@@ -56,7 +56,7 @@ namespace PII_VIII.ElementosVisuais
                 string classificacao = Program.user.ClassificarIMC(imc); 
                 Classificacao.Text = $"Classificacao: {classificacao}";
                 
-                Objetivo.Text = $"Objetivo atual: {Program.user.BuscarDescricaoObjetivo(Program.user.IdObjetivo)}";
+                Objetivo.Text = $"Objetivo atual:\n{Program.user.BuscarDescricaoObjetivo(Program.user.IdObjetivo)}";
             }
             catch (Exception ex)
             {
@@ -99,7 +99,8 @@ namespace PII_VIII.ElementosVisuais
                 Dock = DockStyle.Top,
                 AutoSize = true,
                 Font = chave.SubtiruloCard_Font,
-                ForeColor = chave.SubRoxo
+                ForeColor = chave.SubRoxo,
+                Padding = new Padding(0, 2, 0, 2)
             };
 
             Nome = new Label
@@ -108,7 +109,8 @@ namespace PII_VIII.ElementosVisuais
                 Text = "Usuário",
                 ForeColor = chave.Branco,
                 Font = chave.H3_Font,
-                AutoSize = true
+                AutoSize = true,
+                Padding = new Padding(0,2,0,2)
 
             };
 
@@ -118,7 +120,8 @@ namespace PII_VIII.ElementosVisuais
                 Text = "usuaio@email.com",
                 ForeColor = chave.SubRoxo,
                 Font = chave.SubtiruloCard_Font,
-                AutoSize = true
+                AutoSize = true,
+                Padding = new Padding(0, 2, 0, 2)
             };
 
 
@@ -178,7 +181,8 @@ namespace PII_VIII.ElementosVisuais
                 Dock = DockStyle.Top,
                 AutoSize = true,
                 ForeColor = chave.SubRoxo,
-                Font = chave.SubtiruloCard_Font
+                Font = chave.SubtiruloCard_Font,
+                Padding = new Padding(0, 5, 0, 5)
             };
             return x;
         }

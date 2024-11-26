@@ -67,6 +67,7 @@ namespace PII_VIII
                 Program.user.Peso = float.Parse(row["peso"].ToString());
                 Program.user.IdObjetivo = int.Parse(row["id_objetivo"].ToString());
                 Program.user.IdFaixa = int.Parse(row["id_faixaetariapeso"].ToString());
+                Program.user.Senha = row["senha"].ToString();
             }
             else
             {

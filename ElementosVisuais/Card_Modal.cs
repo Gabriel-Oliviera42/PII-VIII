@@ -17,7 +17,7 @@ namespace PII_VIII.ElementosVisuais
         private Label tituloCard = new Label();
         private Label descCard = new Label();
         private Treino _treino = new Treino();
-        private Panel AtiviEsp = new Panel();
+        private PanelArredonado AtiviEsp = new PanelArredonado();
 
         public Treino treino
         {
@@ -109,25 +109,33 @@ namespace PII_VIII.ElementosVisuais
 
         PanelArredonado RetornaAtvFis(AtividadeFisica at)
         {
-            PanelArredonado fundo = new PanelArredonado();
-            fundo.AutoSize = true;
-            fundo.Dock = DockStyle.Top;
+            PanelArredonado fundo = new PanelArredonado
+            {
+                AutoSize = true,
+                Dock = DockStyle.Top,
+                BackColor = chave.CinzaClaro,
+                Radius = 20,
+                Padding = new Padding(20)
+            };
 
-            fundo.BackColor = chave.CinzaClaro;
-            fundo.Radius = 20;
-            fundo.Padding = new Padding(20);
+            Label tit = new Label
+            {
+                AutoSize = true,
+                Dock = DockStyle.Top,
+                Font = chave.tituloCard_Font,
+                ForeColor = chave.Azul
+            };
 
-            Label tit = new Label();
-            tit.AutoSize = true;
-            tit.Dock = DockStyle.Top;
-            tit.Font = chave.tituloCard_Font;
-            tit.ForeColor = chave.Azul;
-
-            Label desc = new Label();
-            desc.AutoSize = true;
-            desc.Dock = DockStyle.Top;
-            desc.Font = chave.SubtiruloCard_Font;
-            desc.ForeColor = chave.RoxoCinza;
+            Label desc = new Label
+            {
+                AutoSize = false,
+                Width = 1000,
+                Height = 120,
+                
+                Dock = DockStyle.Top,
+                Font = chave.SubtiruloCard_Font,
+                ForeColor = chave.RoxoCinza
+            };
 
             desc.Text = at.Descricao;
             tit.Text = at.Nome;
@@ -135,6 +143,7 @@ namespace PII_VIII.ElementosVisuais
             fundo.Controls.Add(desc);
             fundo.Controls.Add(chave.RetornaEspacoTop(10));
             fundo.Controls.Add(tit);
+            
 
             return fundo;
         }
