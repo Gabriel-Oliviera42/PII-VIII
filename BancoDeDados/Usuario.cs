@@ -43,11 +43,25 @@ namespace PII_VIII
 
         public void Deletar(int id)
         {
-            string query = $"DELETE FROM usuario WHERE id = {id}";           
-            con.Executar(query);            
+            try
+            {
+                // Excluir os registros relacionados na tabela historico
+                string queryHistorico = $"DELETE FROM historico WHERE id_usuario = {id}";
+                con.Executar(queryHistorico);
+
+                // Excluir os registros relacionados na tabela treino
+                string queryTreino = $"DELETE FROM treino_usuario WHERE id_usuario = {id}";
+                con.Executar(queryTreino);
+
+                // Agora, excluir o usuário
+                string queryUsuario = $"DELETE FROM usuario WHERE id_usuario = {id}";
+                con.Executar(queryUsuario);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao excluir a conta: " + ex.Message);
+            }
         }
-
-
 
         public void PreencherDados(int idUsuario)
         {

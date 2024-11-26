@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -77,7 +78,7 @@ namespace PII_VIII.Forms
             {
                 MessageBox.Show($"Erro ao atualizar os dados do usuário: {ex.Message}");
             }
-}
+        }
 
         private void AddMenu()
         {
@@ -269,7 +270,39 @@ namespace PII_VIII.Forms
 
         private void ApagarPerfilClick()
         {
+            // Aparece uma mensagem perguntando se o usuário tem certeza que quer apagar a conta
+            DialogResult result = MessageBox.Show("Você tem certeza que deseja apagar sua conta? Essa ação não pode ser desfeita.",
+                                                 "Confirmar Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
+            // Se sim, o usuário confirmou a exclusão
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    Usuario usuario = new Usuario();
+                    usuario.Deletar(Program.user.IdUsuario);  // Deleta o usuário no banco de dados
+
+                    // Apaga as informações da sessão atual do usuário
+                    Program.user = null;
+
+                    // Inicia o formulário de login em uma thread separada
+                    Thread init = new Thread(() =>
+                    {
+                        Login aux = new Login();
+                        aux.ShowDialog();  // Exibe o formulário de login de forma modal
+                    });
+                    init.Start();
+
+                    // Fecha o formulário de perfil após iniciar a thread para o login
+                    this.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    // Caso haja erro ao excluir a conta
+                    MessageBox.Show($"Erro ao excluir a conta: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private Label retornaLabel(string tx)
