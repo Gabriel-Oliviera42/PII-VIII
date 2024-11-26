@@ -93,6 +93,16 @@ namespace PII_VIII.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap IconePerfil {
+            get {
+                object obj = ResourceManager.GetObject("IconePerfil", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Icones_PNG {
             get {
                 object obj = ResourceManager.GetObject("Icones_PNG", resourceCulture);

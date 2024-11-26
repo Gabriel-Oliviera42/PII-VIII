@@ -22,7 +22,7 @@ namespace PII_VIII.ElementosVisuais
         Label Peso;
         Label Objetivo;
         Label IMC;
-        Label Classificação;
+        Label Classificacao;
         Usuario user = new Usuario();
         public Barra_Usuario()
         {
@@ -54,7 +54,7 @@ namespace PII_VIII.ElementosVisuais
                 IMC.Text = $"IMC: {imc:0.00}";
 
                 string classificacao = Program.user.ClassificarIMC(imc); 
-                Classificação.Text = $"Classificação: {classificacao}";
+                Classificacao.Text = $"Classificacao: {classificacao}";
                 
                 Objetivo.Text = $"Objetivo atual: {Program.user.BuscarDescricaoObjetivo(Program.user.IdObjetivo)}";
             }
@@ -147,7 +147,7 @@ namespace PII_VIII.ElementosVisuais
 
             Objetivo = RetornaLabel("Objetivo atual: ____");
             IMC = RetornaLabel("IMC: __,__");
-            Classificação = RetornaLabel("Objetivo Classificação: ____");
+            Classificacao = RetornaLabel("Objetivo Classificacao: ____");
 
             p01.Controls.Add(Email);
             p01.Controls.Add(Nome);
@@ -157,7 +157,7 @@ namespace PII_VIII.ElementosVisuais
             esp01.Controls.Add(Altura);
             esp01.Controls.Add(DataDeNascimento);
 
-            esp02.Controls.Add(Classificação);
+            esp02.Controls.Add(Classificacao);
             esp02.Controls.Add(IMC);
             esp02.Controls.Add(Objetivo);
 
