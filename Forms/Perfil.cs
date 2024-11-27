@@ -266,6 +266,7 @@ namespace PII_VIII.Forms
         private void EditarPerfilClick()
         {
             Card_Modal_Editar_Perfil aux = new Card_Modal_Editar_Perfil();
+            
         }
 
         private void ApagarPerfilClick()
