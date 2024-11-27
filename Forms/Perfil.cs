@@ -90,7 +90,6 @@ namespace PII_VIII.Forms
         {
             Barra_Usuario barra_usuario = new Barra_Usuario();
             barra_usuario.Dock = DockStyle.Right;
-            this.Controls.Add(chave.RetornaEspacoLeft(20));
             this.Controls.Add(barra_usuario);
         }
 
@@ -265,9 +264,27 @@ namespace PII_VIII.Forms
 
         private void EditarPerfilClick()
         {
-            Card_Modal_Editar_Perfil aux = new Card_Modal_Editar_Perfil();
-            
+            Card_Modal_Editar_Perfil aux = new Card_Modal_Editar_Perfil
+            {
+                OnCloseCallback = AtualizarFormularioPerfil
+            };
+
         }
+        private void AtualizarFormularioPerfil()
+        {
+            // Localiza a barra de usuário existente no formulário
+            var barraExistente = this.Controls.OfType<Barra_Usuario>().FirstOrDefault();
+
+            if (barraExistente != null)
+            {
+                // Remove a barra existente
+                this.Controls.Remove(barraExistente);
+                barraExistente.Dispose(); // Libera os recursos associados ao componente
+            }
+            AddBarraUsuario();
+            atualizadados();
+        }
+
 
         private void ApagarPerfilClick()
         {

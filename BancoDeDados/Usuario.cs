@@ -39,8 +39,8 @@ namespace PII_VIII
 
         public void Atualizar(int id)
         {
-           string query = $"UPDATE usuario SET nome = '{Nome}', email = '{Email}', datanascimento = '{DataNascimento.ToString("yyyy-MM-dd")}', altura ={Altura.ToString("0.00", CultureInfo.InvariantCulture)}, peso =  {Peso.ToString("0.00", CultureInfo.InvariantCulture)} WHERE id_usuario = {id}";
-           con.Executar(query);            
+            string query = $"UPDATE usuario SET nome = '{Nome}', email = '{Email}', datanascimento = '{DataNascimento.ToString("yyyy-MM-dd")}', altura ={Altura.ToString("0.00", CultureInfo.InvariantCulture)}, peso =  {Peso.ToString("0.00", CultureInfo.InvariantCulture)}, id_objetivo =  {IdObjetivo} WHERE id_usuario = {id}"; 
+            con.Executar(query);            
         }
 
         public void Deletar(int id)

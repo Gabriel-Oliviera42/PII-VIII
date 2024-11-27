@@ -34,6 +34,7 @@ namespace PII_VIII.ElementosVisuais
         private TextBox Senha_TextBox = new TextBox();
         private selecao objetivo = new selecao();
 
+        public Action OnCloseCallback { get; set; }
 
         public Card_Modal_Editar_Perfil()
         {
@@ -423,6 +424,8 @@ namespace PII_VIII.ElementosVisuais
                 atualizadados();               
 
                 this.Close();
+                OnCloseCallback?.Invoke();
+
             }
             catch (Exception ex)
             {
