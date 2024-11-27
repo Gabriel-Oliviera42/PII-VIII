@@ -1,4 +1,5 @@
 ﻿using PII_VIII.Elementos_Visuais;
+using PII_VIII.ElementosVisuais.PII_VIII.ElementosVisuais;
 using PII_VIII.Forms;
 using System;
 using System.Collections.Generic;
@@ -101,7 +102,8 @@ namespace PII_VIII.ElementosVisuais
         {
             Thread init = new Thread(() =>
             {
-                Historico_Form aux = new Historico_Form(); 
+
+                HistoricoForms aux = new HistoricoForms(); 
                 aux.ShowDialog();
             });
             init.Start();
