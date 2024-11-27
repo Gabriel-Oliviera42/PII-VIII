@@ -1,4 +1,5 @@
-﻿using PII_VIII.Elementos_Visuais;
+﻿/*
+using PII_VIII.Elementos_Visuais;
 using PII_VIII.ElementosVisuais;
 using System;
 using System.Collections.Generic;
@@ -157,7 +158,8 @@ namespace PII_VIII.ElementosVisuais
         }
     }
 }
-/*
+*/
+
  using PII_VIII.Elementos_Visuais;
 using PII_VIII.ElementosVisuais;
 using System;
@@ -179,6 +181,9 @@ namespace PII_VIII.ElementosVisuais
         Menu_Principal menu = new Menu_Principal();
         Chave chave = new Chave();
         private TextBox Pesquisa = new TextBox();
+
+        private Panel slidehistoricoativo;
+        private Panel slidehistoricoantigo;
         private void InitializeComponent()
         {
             this.SuspendLayout();
@@ -220,12 +225,14 @@ namespace PII_VIII.ElementosVisuais
                 Width = 1220
             };
             this.Controls.Add(EspInfos);
+
+            //adiciona o cabecalho
             Panel EspTopo = new Panel
             {
                 Dock = DockStyle.Top,
                 AutoSize = true
             };
-
+            //titulo historico
             Label h1 = new Label
             {
                 Dock = DockStyle.Top,
@@ -234,12 +241,13 @@ namespace PII_VIII.ElementosVisuais
                 Font = chave.H1_Font,
                 Text = "Histórico"
             };
-
+            //campo de pesquisa
             Panel EspImput = new Panel
             {
                 Height = 55,
                 Dock = DockStyle.Top
             };
+            //botao de pesquisa
             BotaoArredondado PesquisaBotao = new BotaoArredondado
             {
                 Dock = DockStyle.Right,
@@ -252,17 +260,54 @@ namespace PII_VIII.ElementosVisuais
                 Width = 280
             };
             PesquisaBotao.FlatAppearance.BorderSize = 0;
+
+
             Panel EspCard = new Panel
             {
                 Dock = DockStyle.Top,
-                AutoSize = true
-            };
-            EspCard.Controls.Add(chave.RetornaEspacoTop(5));
-            EspCard.Controls.Add(new Card_Historico());
-            EspCard.Controls.Add(chave.RetornaEspacoTop(5));
-            EspCard.Controls.Add(new Card_Historico());
-            EspCard.Controls.Add(chave.RetornaEspacoTop(5));
-            EspCard.Controls.Add(new Card_Historico());
+                AutoSize = true,
+            };         
+
+            // Criar painel principal para os treinos
+            Panel TodosHistoricos = new Panel();
+            TodosHistoricos.Dock = DockStyle.Top;
+            TodosHistoricos.AutoSize = true;
+
+
+            Label planoatual = new Label();
+            planoatual.Text = "Plano ativo:";
+            planoatual.ForeColor = chave.Preto;
+            planoatual.Font = chave.H3_Font;
+            planoatual.AutoSize = true;
+            planoatual.Dock = DockStyle.Top;            
+
+            // Adicionar cabeçalho "planos anteriores"
+            Label planos_anteriores = new Label();
+            planos_anteriores.Text = "Planos anteriores:";
+            planos_anteriores.ForeColor = chave.Preto;
+            planos_anteriores.Font = chave.H3_Font;
+            planos_anteriores.AutoSize = true;
+            planos_anteriores.Dock = DockStyle.Top;
+
+            slidehistoricoativo = new Panel();
+            slidehistoricoativo.Dock = DockStyle.Top;
+            slidehistoricoativo.Height = 200;
+
+            slidehistoricoantigo = new Panel();
+            slidehistoricoantigo.Dock = DockStyle.Top;
+            slidehistoricoativo.Height = 200;
+
+            TodosHistoricos.Controls.Add(slidehistoricoantigo);
+            TodosHistoricos.Controls.Add(chave.RetornaEspacoTop(40));
+            TodosHistoricos.Controls.Add(planos_anteriores);
+
+            TodosHistoricos.Controls.Add(chave.RetornaEspacoTop(40));
+
+            TodosHistoricos.Controls.Add(slidehistoricoativo);
+            TodosHistoricos.Controls.Add(chave.RetornaEspacoTop(40));
+            TodosHistoricos.Controls.Add(planoatual);
+
+            EspInfos.Controls.Add(TodosHistoricos);
             EspInfos.Controls.Add(EspCard);
             EspInfos.Controls.Add(chave.RetornaEspacoTop(40));
             EspInfos.Controls.Add(EspTopo);
@@ -272,7 +317,63 @@ namespace PII_VIII.ElementosVisuais
             EspTopo.Controls.Add(EspImput);
             EspTopo.Controls.Add(chave.RetornaEspacoTop(20));
             EspTopo.Controls.Add(h1);
+            
+
+            AtualizaCards();
         }
+
+        private void AtualizaCards()
+        {
+            // Limpar os controles existentes
+            slidehistoricoativo.Controls.Clear();
+            slidehistoricoantigo.Controls.Clear();
+
+            // Buscar o histórico ativo
+            DataTable ativo = new Historico().BuscarHistoricoAtivo(Program.user.IdUsuario);
+
+            // Verifica se há histórico ativo
+            if (ativo.Rows.Count > 0) // Corrigido: Verifica se há registros
+            {
+                foreach (DataRow row in ativo.Rows)
+                {
+                    Historico h = new Historico
+                    {
+                        DataInicial = Convert.ToDateTime(row["datainicio"]),
+                        DataFinal = row["datafinal"] != DBNull.Value ? Convert.ToDateTime(row["datafinal"]) : (DateTime?)null,
+                        IdHistorico = int.Parse(row["id_historico"].ToString()),
+                        IdObejetivo = int.Parse(row["id_objetivo"].ToString())
+                    };
+
+                    // Cria o cartão e adiciona ao painel
+                    Card_Historico card_Historico = new Card_Historico
+                    {
+                        historico = h,
+                    };
+
+                    slidehistoricoativo.Controls.Add(card_Historico);
+                }
+            }
+            else
+            {
+                // Adiciona uma mensagem quando não há histórico ativo
+                Label noDataLabel = new Label
+                {
+                    Text = "Nenhum plano ativo encontrado.",
+                    AutoSize = true,
+                    ForeColor = chave.Preto,
+                    Font = chave.H3_Font,
+                    Dock = DockStyle.Top
+                };
+
+                slidehistoricoativo.Controls.Add(noDataLabel);
+            }
+
+            // Atualizar a interface
+            slidehistoricoativo.Refresh();
+        }
+
+
+
 
 
         private Panel retornaCampo(TextBox tx, string nome, int width)
@@ -295,8 +396,9 @@ namespace PII_VIII.ElementosVisuais
             fundoTxt.Controls.Add(tx);
 
             return fundoTxt;
-        }
+        }
+    }
 
-    }
+    
 }
- */
+
