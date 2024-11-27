@@ -252,10 +252,7 @@ namespace PII_VIII.Forms
                 novoCard.AddRemove.Click += (s, e) => RemoverTreinoParaUsuario(usuario, treino);
 
                 // Adiciona o novo Card ao painel
-                slideSeusTreinos.Controls.Add(novoCard);
-
-                // Adiciona o treino ao banco de dados
-                AdicionarTreinoAoBanco(usuario.IdUsuario, treino.IdTreino);
+                slideSeusTreinos.Controls.Add(novoCard);              
             }
         }
 
@@ -266,19 +263,9 @@ namespace PII_VIII.Forms
             {
                 slideSeusTreinos.Controls.RemoveByKey(treino.IdTreino.ToString());
 
-                // Verifica se o painel ficou vazio e adiciona mensagem "nenhum treino"
-                if (slideSeusTreinos.Controls.Count == 0)
-                {
-                    Label lblNone = new Label
-                    {
-                        Name = "lblnone",
-                        Text = "Nenhum treino disponível",
-                    };
-                    slideSeusTreinos.Controls.Add(lblNone);
-                }
-
-                // Remove o treino do banco de dados
+                
                 RemoverTreinoDoBanco(usuario.IdUsuario, treino.IdTreino);
+                AtualizaCards();
             }
         }
 
@@ -286,10 +273,8 @@ namespace PII_VIII.Forms
         {
             try
             {
-                using (var repository = new TreinoRepository())
-                {
-                    repository.AdicionarTreinoAoUsuario(idUsuario, idTreino);
-                }
+                Treino treino = new Treino();
+                treino.AdicionarTreinoAoUsuario(idUsuario, idTreino);                
             }
             catch (Exception ex)
             {
@@ -301,10 +286,8 @@ namespace PII_VIII.Forms
         {
             try
             {
-                using (var repository = new TreinoRepository())
-                {
-                    repository.RemoverTreinoDoUsuario(idUsuario, idTreino);
-                }
+                Treino treino = new Treino();
+                treino.RemoverTreinoDoUsuario(idUsuario, idTreino);
             }
             catch (Exception ex)
             {

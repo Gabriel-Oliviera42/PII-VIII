@@ -9,6 +9,8 @@ namespace PII_VIII
 {
     using Neo4j.Driver;
     using System.Data;
+    using System.Data.Common;
+    using System.Data.SqlClient;
     using System.Globalization;
     using System.Windows.Forms;
 
@@ -139,14 +141,6 @@ namespace PII_VIII
             return dt;
         }
 
-        public DataTable VerificarTreino(int iduser)
-        {
-            string query = $"";
-            DataTable dt = con.RetornaTabela(query);
-            return dt;
-
-        }
-
         public float ImcUser(int idUser)
         {
             // Corrigir a consulta SQL para buscar peso e altura
@@ -219,7 +213,7 @@ namespace PII_VIII
             }
         }
 
-
+        
     }
 
 }

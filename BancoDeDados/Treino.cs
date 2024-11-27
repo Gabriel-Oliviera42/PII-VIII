@@ -59,46 +59,18 @@ namespace PII_VIII
                 throw new Exception("Treino não encontrado.");
             }
 
-        }
-        
-    }
-
-    public class TreinoRepository : IDisposable
-    {
-        private readonly SqlConnection _connection;
-
-        public TreinoRepository()
-        {
-            // Inicialize sua conexão com o banco
-            _connection = new SqlConnection("SuaStringDeConexao");
-            _connection.Open();
-        }
+        }        
 
         public void AdicionarTreinoAoUsuario(int idUsuario, int idTreino)
         {
-            var query = "INSERT INTO UsuarioTreino (IdUsuario, IdTreino) VALUES (@IdUsuario, @IdTreino)";
-            using (var command = new SqlCommand(query, _connection))
-            {
-                command.Parameters.AddWithValue("@IdUsuario", idUsuario);
-                command.Parameters.AddWithValue("@IdTreino", idTreino);
-                command.ExecuteNonQuery();
-            }
+            var query = $"INSERT INTO treino_usuario (id_usuario, id_treino) VALUES ({idUsuario} , {idTreino})";
+            conexao.Executar(query);            
         }
 
         public void RemoverTreinoDoUsuario(int idUsuario, int idTreino)
         {
-            var query = "DELETE FROM UsuarioTreino WHERE IdUsuario = @IdUsuario AND IdTreino = @IdTreino";
-            using (var command = new SqlCommand(query, _connection))
-            {
-                command.Parameters.AddWithValue("@IdUsuario", idUsuario);
-                command.Parameters.AddWithValue("@IdTreino", idTreino);
-                command.ExecuteNonQuery();
-            }
-        }
-
-        public void Dispose()
-        {
-            _connection?.Dispose();
+            var query = $"DELETE FROM treino_usuario WHERE id_usuario = {idUsuario} AND id_treino = {idTreino}";
+            conexao.Executar(query);
         }
     }
 
