@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace PII_VIII.ElementosVisuais
 {
@@ -402,7 +403,33 @@ namespace PII_VIII.ElementosVisuais
 
         private void ConcluirClick()
         {
+            try
+            {
+                Usuario user = new Usuario();
+                user.Nome = Nome_TextBox.Text;
+                user.Email = Email_TextBox.Text;
+                int dia = int.Parse(Aniversario_TextBox.Text.Substring(0, 2));
+                int mes = int.Parse(Aniversario_TextBox.Text.Substring(3, 2));
+                int ano = int.Parse(Aniversario_TextBox.Text.Substring(6, 4));
+                user.DataNascimento = new DateTime(ano, mes, dia);
+                user.Altura = float.Parse(Altura_TextBox.Text);
+                user.Peso = float.Parse(Peso_TextBox.Text);
+                user.Senha = Senha_TextBox.Text;
+                user.IdObjetivo = objetivo.ItemSelecionado;
+                user.Atualizar(Program.user.IdUsuario);
+                Program.user.PreencherDados(Program.user.IdUsuario);
 
+                MessageBox.Show("Dados do Usuario Alterados com sucesso!");
+                atualizadados();               
+
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("erro: não foi possivel alterar os dados do usuario" + ex.Message);
+            }
+
+            
         }
     }
 }
