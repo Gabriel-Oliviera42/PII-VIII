@@ -1,4 +1,5 @@
 ﻿using PII_VIII.ElementosVisuais;
+using PII_VIII.ElementosVisuais.PII_VIII.ElementosVisuais;
 using PII_VIII.Forms;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,13 @@ namespace PII_VIII
         [STAThread]       
         static void Main()
         {
-            user.PreencherDados(8);
+            user.PreencherDados(1);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
            
            //Application.Run(new Login());
-            //Application.Run(new Historico_Form());
-           Application.Run(new Home(8));
+            Application.Run(new HistoricoForms());
+          // Application.Run(new Home(8));
         }
     }
 }

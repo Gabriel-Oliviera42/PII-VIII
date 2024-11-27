@@ -26,6 +26,21 @@ namespace PII_VIII.ElementosVisuais
             private TextBox Pesquisa = new TextBox();
             
             Historico historico = new Historico();
+
+            public HistoricoForms()
+            {
+                InitializeComponent();
+                AddBarraUsuario();
+                AdicionarElementos();
+                AddMenu();
+                if(Program.user.IdUsuario != 0 && Program.user.IdUsuario != null)
+                {
+                    PreencheCard_usuario();
+                }
+
+            }
+
+
             private void InitializeComponent()
             {
                 this.SuspendLayout();
@@ -98,7 +113,7 @@ namespace PII_VIII.ElementosVisuais
 
                 EspImput.Controls.Add(PesquisaBotao);
                 EspImput.Controls.Add(chave.RetornaEspacoLeft(20));
-                EspImput.Controls.Add(retornaCampo(Pesquisa, "Insira o Registro", 900));
+                EspImput.Controls.Add(retornaCampo(Pesquisa, "Insira a Data do Registro", 900));
 
                 EspTopo.Controls.Add(EspImput);
                 EspTopo.Controls.Add(chave.RetornaEspacoTop(20));
@@ -120,22 +135,97 @@ namespace PII_VIII.ElementosVisuais
                 tx.Dock = DockStyle.Fill;
                 tx.BorderStyle = BorderStyle.None;
                 tx.BackColor = chave.CinzaClaro;
-                tx.ForeColor = chave.RoxoEscuro;
+                tx.ForeColor = chave.RoxoCinza;
                 tx.Text = nome;
-
+                tx = AjustaTextBox(tx);
+                
                 fundoTxt.Controls.Add(tx);
                 return fundoTxt;
             }
 
 
+            public void PreencheCard_usuario()
+            {
+                DataTable dt = new Historico().RetornarHistoricoDeUsuario(Program.user.IdUsuario);
+                foreach (DataRow linha in dt.Rows)
+                {
+                    Card_Historico card = new Card_Historico();
+                    Historico h = new Historico();
+                    h.PreencherDados(int.Parse(linha["id_historico"].ToString()));
+                    card.historico = h;
+                    EspCard.Controls.Add(card);
+                }
+
+            }
+
+
             private void PesquisarRegistro()
             {
+
+                int dia = int.Parse(Pesquisa.Text.Substring(0, 2));
+                int mes = int.Parse(Pesquisa.Text.Substring(3, 2));
+                int ano = int.Parse(Pesquisa.Text.Substring(6, 4));
+
                 int idUsuario = Program.user.IdUsuario;
                 string pesquisa = Pesquisa.Text.Trim();
-                DataTable resultados = historico.BuscarHistorico(pesquisa, idUsuario);
+                DataTable resultados = historico.BuscarHistorico(pesquisa, idUsuario, dia, mes, ano);
                 PreencherCards(resultados);
             }
 
+
+            private TextBox AjustaTextBox(TextBox tx)
+            {
+                string texto = tx.Text;
+                bool focus = false;
+
+                //tx.Click += (s, e) =>
+                //{
+                //    if(tx.Text == texto)
+                //    {
+                //        tx.Text = "";
+                //        focus = true;
+                //        tx.ForeColor = chave.RoxoEscuro;
+                //    }
+                //    else if(tx.Text == "")
+                //    {
+                //        tx.Text = texto;
+                //        focus = false;
+                //    }
+                //    else
+                //    {
+                //        tx.ForeColor = chave.RoxoCinza;
+                //    }
+                //};
+
+                tx.KeyPress += (s, e) =>
+                {
+                    if (tx.Text == texto && tx.ForeColor == chave.RoxoCinza)
+                    {
+                        tx.Text = "";
+                        focus = true;
+                        tx.ForeColor = chave.RoxoEscuro;
+                    }
+                    else if (tx.Text == "" && tx.ForeColor == chave.RoxoEscuro)
+                    {
+                        tx.Text = texto;
+                        focus = false;
+                        tx.ForeColor = chave.RoxoCinza;
+                        this.ActiveControl = null;
+                    }
+                    else
+                    {
+                        tx.ForeColor = chave.RoxoEscuro;
+                    }
+                    if (!char.IsControl(e.KeyChar))
+                    {
+                        FormatDateTextBox(tx);
+                    }
+
+                };
+                return tx;
+
+            
+            }
 
 
 
@@ -145,13 +235,46 @@ namespace PII_VIII.ElementosVisuais
                 foreach (DataRow linha in resultados.Rows)
                 {
                     Card_Historico card = new Card_Historico();
-                    card.Titulo.Text = linha["data_registro"].ToString();
-                    card.Subtitulo.Text = linha["tipo_treino"].ToString();
-                    card.TituloCard.Text = linha["quantidade_atividades"].ToString();
-                    card.DescCard.Text = linha["meta_alcançada"].ToString();
+                    Historico h = new Historico();
+                    h.PreencherDados(int.Parse(linha["id_historico"].ToString()));
+                    card.historico = h;
                     EspCard.Controls.Add(card);
                 }
             }
+
+            private void FormatDateTextBox(TextBox textBox)
+            {
+                // Remove todos os caracteres não numéricos para facilitar o controle
+                string text = new string(textBox.Text.Where(char.IsDigit).ToArray());
+
+                if (text.Length >= 2)
+                {
+                    text = text.Insert(2, "/");
+                }
+                if (text.Length >= 5)
+                {
+                    text = text.Insert(5, "/");
+                }
+
+                // Limita o texto ao formato DD/MM/YYYY
+                if (text.Length > 10)
+                {
+                    text = text.Substring(0, 10);
+                }
+
+                // Limita o texto ao comprimento máximo de 9 dígitos (DDMMYYYY)
+                if (text.Length > 9)
+                {
+                    text = text.Substring(0, 8);
+                }
+                // Atualiza o texto do TextBox sem mover o cursor para o final
+                int currentSelectionStart = textBox.SelectionStart;
+                textBox.Text = text;
+                textBox.SelectionStart = currentSelectionStart;
+                textBox.SelectionStart = textBox.Text.Length;
+                textBox.SelectionLength = 0;
+            }
+
 
 
         }

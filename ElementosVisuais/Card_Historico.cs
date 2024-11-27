@@ -19,14 +19,11 @@ namespace PII_VIII.ElementosVisuais
         private Label descCard = new Label();
         private Treino _treino = new Treino();
         private Form formPai = new Form();
+        private Historico _historico = new Historico();
 
 
 
 
-        public Label Titulo { get; set; }
-        public Label Subtitulo { get; set; }
-        public Label TituloCard { get; set; }
-        public Label DescCard { get; set; }
 
 
         public Form Form_Pai
@@ -38,19 +35,26 @@ namespace PII_VIII.ElementosVisuais
         }
         private void atualizaDados()
         {
+            Objetivo ob = new Objetivo();
+            ob.PreencherDados(_historico.id_objetivo);
+
+            titulo.Text = _historico.DataInicio.ToString("dd/MM/yyyy");
+            subtitulo.Text = ob.Descricao.ToString();
+
+            
 
         }
         public Historico historico
         {
             set
             {
-                historico = value;
+                _historico = value;
                 atualizaDados();
 
             }
             get
             {
-                return historico;
+                return _historico;
             }
         }
 
