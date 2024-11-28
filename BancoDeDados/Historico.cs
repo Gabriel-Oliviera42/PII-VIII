@@ -18,6 +18,8 @@ namespace PII_VIII
         public DateTime? DataFinal {  get; set; }
         public int IdObjetivo { get; set; }
 
+        public string DescricaoObjetivo { get; set; }
+
         public void PreencherDados(int id_hist)
         {
             string sql = $@"SELECT * FROM historico WHERE id_historico = {id_hist}";
@@ -30,6 +32,9 @@ namespace PII_VIII
                 IdObjetivo = int.Parse(row["id_objetivo"].ToString());
                 DataInicial = (DateTime)row["datainicio"];
                 DataFinal = row["datafinal"] == DBNull.Value ? (DateTime?)null : (DateTime)row["datafinal"];
+                Objetivo obj = new Objetivo();
+                obj.PreencherDados(IdObjetivo);
+                DescricaoObjetivo = obj.Descricao;
             }
             else
             {
@@ -81,26 +86,6 @@ namespace PII_VIII
                 throw new Exception("Erro ao buscar histórico: " + ex.Message);
             }
         }
-
-        //public DataTable BuscarHistorico(string pesquisa, int idUsuario)
-        //{
-        //    string sql = $@"
-        //SELECT * 
-        //FROM historico 
-        //WHERE id_usuario = {idUsuario} AND (
-        //    id_historico = {pesquisa} OR 
-        //    id_usuario LIKE '%{pesquisa}%' OR 
-        //    id_objetivo LIKE '%{pesquisa}%' OR 
-        //    CONVERT(VARCHAR, datainicio) LIKE '%{pesquisa}%' OR 
-        //    CONVERT(VARCHAR, datafinal) LIKE '%{pesquisa}%')";
-        //    try
-        //    {
-        //        return conn.RetornaTabela(sql);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception("Erro ao buscar histórico: " + ex.Message);
-        //    }
-        //}
+        
     }
 }

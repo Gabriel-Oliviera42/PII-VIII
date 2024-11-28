@@ -16,9 +16,7 @@ using System.Windows.Forms;
 namespace PII_VIII
 {
     public partial class Login : Form
-    {
-
-        //OBS: Ainda tenho que criar a parte de LOGIN e levar para outra tela após Cadastro ou Login
+    {        
 
         //CLASSES E VARIÁVEIS ↓
         private Chave chave = new Chave();
@@ -61,7 +59,7 @@ namespace PII_VIII
             AdicionaFormulario_Login();
         }
 
-
+        
 
         //FUNÇÕES PRINCIPAIS ↓
 
