@@ -205,7 +205,7 @@ namespace PII_VIII.ElementosVisuais
         private void PesquisaBotao_Click(object sender, EventArgs e)
         {          
 
-            if(Pesquisa.Text.Length > 9)
+            if(Pesquisa.Text.Length > 9 & !string.IsNullOrEmpty(Pesquisa.Text) & Pesquisa.Text != "Insira o Registro")
             {
 
                 TodosHistoricos.Controls.Clear();
@@ -231,7 +231,24 @@ namespace PII_VIII.ElementosVisuais
                 }
 
                 DataTable resultados = historico.BuscarHistorico(Program.user.IdUsuario, dia, mes, ano);
-                PreencherCards(resultados);
+                if(resultados.Rows.Count > 0)
+                {
+                    PreencherCards(resultados);
+                }
+                else
+                {
+                    Label nada = new Label();
+                    nada.Text = "Nenhum registro encontrado para a data informada";
+                    nada.ForeColor = chave.Preto;
+                    nada.Font = chave.H3_Font;
+                    nada.AutoSize = true;
+                    nada.Dock = DockStyle.Top;
+
+                    TodosHistoricos.Controls.Add(nada); 
+
+
+                }
+                
             }
             else
             {

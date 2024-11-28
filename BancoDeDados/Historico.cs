@@ -60,7 +60,7 @@ namespace PII_VIII
         public DataTable BuscarHistorico(int idUsuario, int dia, int mes, int ano)
         {
             string data = $"{ano}-{mes}-{dia}";
-            string sql = $"select * from historico  where datafinal = '{data}'  or datainicio = '{data}' and id_usuario = {idUsuario} ";
+            string sql = $"SELECT * FROM historico WHERE id_usuario = {idUsuario} AND (datafinal = '{data}' OR datainicio = '{data}')";
             try
             {
                 return conn.RetornaTabela(sql);
