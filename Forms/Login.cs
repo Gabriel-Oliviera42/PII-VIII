@@ -51,7 +51,7 @@ namespace PII_VIII
             this.ResumeLayout(false);
             this.Padding = new Padding(40);
             this.BackColor = chave.Branco;
-
+            this.Icon = Properties.Resources.iconeazul;
         }
 
 
@@ -375,6 +375,24 @@ namespace PII_VIII
                     int mes = int.Parse(Aniversario_TextBox.Text.Substring(3, 2));
                     int ano = int.Parse(Aniversario_TextBox.Text.Substring(6, 4));
 
+                    if(ano > DateTime.Now.Year || ano < 1924) 
+                    {
+                        MessageBox.Show("Ano invalido");
+                        return;
+                    }
+
+                    if(mes <= 1 || mes >=12)
+                    {
+                        MessageBox.Show("Mês invalido");
+                        return;
+                    }
+                    if (dia <= 1 || dia >= 31)
+                    {
+                        MessageBox.Show("Dia invalido");
+                        return;
+                    }
+
+
                     us.DataNascimento = new DateTime(ano, mes, dia);
 
                     // Cálculo da idade
@@ -386,21 +404,28 @@ namespace PII_VIII
                     us.IdFaixa = us.VerificaFaixaEtariaPeso(us.Peso, idade);
                     us.Senha = Senha_TextBox.Text;
 
+
+
                     // Inserção no banco de dados
                     try
                     {
-
+                        if (us.IdFaixa != 0)
+                        {
+                            us.Inserir();
+                            MessageBox.Show("Usuário cadastrado com sucesso!");
+                            RetornarParaLogin(); // Chamando método para retornar ao login
+                        }
+                        else
+                        {
+                            MessageBox.Show("Não foi encontrada uma faixa etária/peso correspondente.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
                         us.Inserir();
                     }catch(Exception ex)
                     {
                         MessageBox.Show("não foi possivel cadastrar" + ex.Message);
                         return;
-                    }
-
-                    MessageBox.Show("Usuário cadastrado com sucesso!");
-                    RetornarParaLogin(); // Chamando método para retornar ao login
-
-
+                    }         
                 }
                 catch (FormatException)
                 {

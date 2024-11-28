@@ -406,33 +406,87 @@ namespace PII_VIII.ElementosVisuais
         {
             try
             {
+                // Validação básica de campos obrigatórios
+                if (string.IsNullOrWhiteSpace(Nome_TextBox.Text) ||
+                    string.IsNullOrWhiteSpace(Email_TextBox.Text) ||
+                    string.IsNullOrWhiteSpace(Aniversario_TextBox.Text) ||
+                    string.IsNullOrWhiteSpace(Altura_TextBox.Text) ||
+                    string.IsNullOrWhiteSpace(Peso_TextBox.Text) ||
+                    string.IsNullOrWhiteSpace(Senha_TextBox.Text))
+                {
+                    MessageBox.Show("Por favor, preencha todos os campos obrigatórios.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 Usuario user = new Usuario();
                 user.Nome = Nome_TextBox.Text;
                 user.Email = Email_TextBox.Text;
+
+                // Conversão e validação da data de nascimento
                 int dia = int.Parse(Aniversario_TextBox.Text.Substring(0, 2));
                 int mes = int.Parse(Aniversario_TextBox.Text.Substring(3, 2));
                 int ano = int.Parse(Aniversario_TextBox.Text.Substring(6, 4));
+                if (ano > DateTime.Now.Year || ano < 1924)
+                {
+                    MessageBox.Show("Ano invalido");
+                    return;
+                }
+
+                if (mes <= 1 || mes >= 12)
+                {
+                    MessageBox.Show("Mês invalido");
+                    return;
+                }
+                if (dia <= 1 || dia >= 31)
+                {
+                    MessageBox.Show("Dia invalido");
+                    return;
+                }
+
                 user.DataNascimento = new DateTime(ano, mes, dia);
+
+                // Cálculo da idade
+                int anoAtual = DateTime.Now.Year;
+                int idade = anoAtual - ano;
+
                 user.Altura = float.Parse(Altura_TextBox.Text);
                 user.Peso = float.Parse(Peso_TextBox.Text);
                 user.Senha = Senha_TextBox.Text;
+
+                // Associações
                 user.IdObjetivo = objetivo.ItemSelecionado;
-                user.Atualizar(Program.user.IdUsuario);
-                Program.user.PreencherDados(Program.user.IdUsuario);
+                user.IdFaixa = user.VerificaFaixaEtariaPeso(user.Peso, idade);
 
-                MessageBox.Show("Dados do Usuario Alterados com sucesso!");
-                atualizadados();               
+                if (user.IdFaixa != 0)
+                {
+                    // Atualização do usuário
+                    user.Atualizar(Program.user.IdUsuario);
 
-                this.Close();
-                OnCloseCallback?.Invoke();
+                    // Atualiza os dados no programa
+                    Program.user.PreencherDados(Program.user.IdUsuario);
 
+                    MessageBox.Show("Dados do usuário alterados com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Atualiza a interface
+                    atualizadados();
+
+                    // Fecha o formulário e chama o callback
+                    this.Close();
+                    OnCloseCallback?.Invoke();
+                }
+                else
+                {
+                    MessageBox.Show("Não foi encontrada uma faixa etária/peso correspondente.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("erro: não foi possivel alterar os dados do usuario" + ex.Message);
+                // Tratamento de erros gerais
+                MessageBox.Show($"Ocorreu um erro ao atualizar os dados do usuário: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            
+
+
         }
     }
 }
