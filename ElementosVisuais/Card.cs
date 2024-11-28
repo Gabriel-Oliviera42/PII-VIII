@@ -14,13 +14,58 @@ namespace PII_VIII.ElementosVisuais
     internal class Card:PanelArredonado
     {
         Chave chave = new Chave();
-        private Label titulo = new Label();
         private Label subtitulo = new Label();
-        private Label tituloCard = new Label();
         private Label descCard = new Label();
         private Treino _treino = new Treino();
-        private BotaoArredondado iconeAddRemove;
+
+
+
+        private Label titulo = new Label();
+        private Label tituloCard = new Label();
         private Label lbAddRemove;
+        private BotaoArredondado iconeAddRemove;
+        PanelArredonado icone;
+        PanelArredonado CardDesc;
+        Panel iconeCard;
+
+        private void atualizaCores()
+        {
+            if(treino.IdObjetivo == 1)
+            {
+                lbAddRemove.ForeColor = chave.Azul;
+                icone.BackColor = chave.Azul;
+                titulo.ForeColor = chave.Azul;
+                tituloCard.ForeColor = chave.Azul;
+                iconeAddRemove.ForeColor = chave.Azul;
+
+                CardDesc.BackColor = chave.Sub_Azul;
+                iconeCard.BackgroundImage = Properties.Resources.LupaAzul;
+            }
+            else if(treino.IdObjetivo == 2)
+            {
+                lbAddRemove.ForeColor = chave.vermelho;
+                icone.BackColor = chave.vermelho;
+                titulo.ForeColor = chave.vermelho;
+                tituloCard.ForeColor = chave.vermelho;
+                iconeAddRemove.ForeColor = chave.vermelho;
+
+                CardDesc.BackColor = chave.Sub_vermelho;
+                iconeCard.BackgroundImage = Properties.Resources.Lupa_Vermelha;
+            }
+            else if (treino.IdObjetivo == 3)
+            {
+                lbAddRemove.ForeColor = chave.Verde;
+                icone.BackColor = chave.Verde;
+                titulo.ForeColor = chave.Verde;
+                tituloCard.ForeColor = chave.Verde;
+                iconeAddRemove.ForeColor = chave.Verde;
+
+                CardDesc.BackColor = chave.Sub_Verde;
+                iconeCard.BackgroundImage = Properties.Resources.Lupa_Verde;
+            }
+        }
+
+
 
         public BotaoArredondado AddRemove
         {
@@ -62,6 +107,8 @@ namespace PII_VIII.ElementosVisuais
         }
 
 
+
+
         public Form Form_Pai
         {
             set
@@ -83,6 +130,10 @@ namespace PII_VIII.ElementosVisuais
             // Se desejar, ajuste o descCard para mostrar outros detalhes
             descCard.Text = "Teste de de Treino";
             //descCard.Text = desc;
+            Objetivo ob = new Objetivo();
+            ob.PreencherDados(_treino.IdObjetivo);
+            descCard.Text = "Meta: "+ob.Descricao;
+            atualizaCores();
         }
 
         public Card()
@@ -102,7 +153,7 @@ namespace PII_VIII.ElementosVisuais
             };
 
 
-            PanelArredonado icone = new PanelArredonado
+            icone = new PanelArredonado
             {
                 BackColor = chave.Azul,
                 Dock = DockStyle.Left,
@@ -188,7 +239,7 @@ namespace PII_VIII.ElementosVisuais
             espTitulo.Controls.Add(titulo);
 
             //Adiciona card de descrição
-            PanelArredonado CardDesc = new PanelArredonado
+            CardDesc = new PanelArredonado
             {
                 Dock = DockStyle.Top,
                 Height = 84,
@@ -226,7 +277,7 @@ namespace PII_VIII.ElementosVisuais
             espTextoCard.Controls.Add(tituloCard);
 
             //icone no card
-            Panel iconeCard = new Panel
+            iconeCard = new Panel
             {
                 Dock = DockStyle.Right,
                 Width = 40,

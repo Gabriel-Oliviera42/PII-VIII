@@ -16,6 +16,7 @@ namespace PII_VIII.ElementosVisuais
         private Label dataInicio = new Label();
         private Label dataFim = new Label();
         private Label descricaoObjetivo = new Label();
+        private PanelArredonado icone;
 
         private Historico _historico = new Historico();
 
@@ -24,12 +25,48 @@ namespace PII_VIII.ElementosVisuais
         public Label DataFim { get; set; }
 
         public Label DescricaoObjetivo { get; set; }
-                
+
+        private bool IsAtual = false;
+
+        private void atualizaCores()
+        {
+            if (_historico.IdObjetivo == 1)
+            {
+                dataInicio.ForeColor = chave.Azul;
+                dataFim.ForeColor = chave.Azul;
+                icone.BackColor = chave.Azul;
+
+            }
+            else if(_historico.IdObjetivo == 2)
+            {
+                dataInicio.ForeColor = chave.vermelho;
+                dataFim.ForeColor = chave.vermelho;
+                icone.BackColor = chave.vermelho;
+            }
+            else if (_historico.IdObjetivo == 3)
+            {
+                dataInicio.ForeColor = chave.Verde;
+                dataFim.ForeColor = chave.Verde;
+                icone.BackColor = chave.Verde;
+            }
+        }
+
+
         private void atualizaDados()
         {
             dataInicio.Text = "De: " + _historico.DataInicial.ToString("dd/MM/yyyy");
-            dataFim.Text = "Até : " + _historico.DataFinal?.ToString("dd/MM/yyyy");
-            descricaoObjetivo.Text = "Objetivo: " + _historico.DescricaoObjetivo;           
+            if(_historico.DataFinal == null)
+            {
+                dataFim.Text = "Até : ATUAL";
+                IsAtual = true;
+            }
+            else
+            {
+                dataFim.Text = "Até : " + _historico.DataFinal?.ToString("dd/MM/yyyy");
+                IsAtual= false;
+            }
+            descricaoObjetivo.Text = "Objetivo: " + _historico.DescricaoObjetivo;
+            atualizaCores();
 
         }
         public Historico historico
@@ -58,22 +95,26 @@ namespace PII_VIII.ElementosVisuais
             {
                 Dock = DockStyle.Left,
                 Width = 50,
-                Padding = new Padding(0, 14, 0, 14),
+                Padding = new Padding(0, 44, 0, 44),
             };
-            PanelArredonado icone = new PanelArredonado
+            icone = new PanelArredonado
             {
                 BackColor = chave.Azul,
 
                 Dock = DockStyle.Fill,
                 Radius = 50,
-                BackgroundImage = Properties.Resources.Star,
+                BackgroundImage = Properties.Resources.Historico_Card_icone,
                 BackgroundImageLayout = ImageLayout.Stretch
             };
+
             espIcone.Controls.Add(icone);
+
+
             Panel espTitulo = new Panel
             {
                 Dock = DockStyle.Left,
-                Width = 354,
+                Width = 600,
+                
                 Padding = new Padding(0, 14, 0, 14),
             };
             dataInicio = new Label
@@ -82,7 +123,8 @@ namespace PII_VIII.ElementosVisuais
                 AutoSize = true,
                 Text = "//",
                 Font = chave.tituloCard_Font,
-                ForeColor = chave.Azul
+                ForeColor = chave.Azul,
+                Padding = new Padding(0, 5, 0, 5)
             };
             dataFim = new Label
             {
@@ -90,7 +132,8 @@ namespace PII_VIII.ElementosVisuais
                 AutoSize = true,
                 Text = "//",
                 Font = chave.tituloCard_Font,
-                ForeColor = chave.Azul
+                ForeColor = chave.Azul,
+                Padding = new Padding(0, 5, 0, 5)
             };
             descricaoObjetivo = new Label
             {
@@ -98,14 +141,18 @@ namespace PII_VIII.ElementosVisuais
                 AutoSize = true,
                 Text = "Meta: ____",
                 Font = chave.SubtiruloCard_Font,
-                ForeColor = chave.RoxoCinza
+                ForeColor = chave.RoxoCinza,
+                Padding = new Padding(0, 5, 0, 5)
             };
+
+            espTitulo.Controls.Add(descricaoObjetivo);
             espTitulo.Controls.Add(dataFim);
             espTitulo.Controls.Add(dataInicio);            
-            espTitulo.Controls.Add(descricaoObjetivo);           
+                      
 
             Controls.Add(espTitulo);
             Controls.Add(chave.RetornaEspacoLeft(10));
+            Controls.Add(espIcone);
 
         }
     }

@@ -36,7 +36,12 @@ namespace PII_VIII
         private PanelArredonado FundoRoxo;
         private Panel EspForm = new Panel();
 
+
+
         //Configurações iniciais do FORM
+
+
+
         private void InitializeComponent()
         {
             
@@ -45,6 +50,7 @@ namespace PII_VIII
             this.Name = "Login";
             this.ResumeLayout(false);
             this.Padding = new Padding(40);
+            this.BackColor = chave.Branco;
 
         }
 

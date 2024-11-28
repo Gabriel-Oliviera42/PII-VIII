@@ -1,5 +1,6 @@
 ﻿using PII_VIII.Elementos_Visuais;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Threading;
@@ -12,9 +13,9 @@ namespace PII_VIII.ElementosVisuais
     {
         Chave chave = new Chave();
 
-        private Label titulo = new Label();
+        
         private Label subtitulo = new Label();
-        private Label tituloCard = new Label();
+        private Label subtitulo2 = new Label();
         private Label descCard = new Label();
         private Treino _treino = new Treino();
         private PanelArredonado AtiviEsp = new PanelArredonado();
@@ -28,48 +29,94 @@ namespace PII_VIII.ElementosVisuais
             }
         }
 
+        private Label titulo = new Label();
+        private Label tituloCard = new Label();
+        PanelArredonado icone;
+
+        private void atualizaCores(Treino treino)
+        {
+            if (treino.IdObjetivo == 1)
+            {
+
+                icone.BackColor = chave.Azul;
+                titulo.ForeColor = chave.Azul;
+                tituloCard.ForeColor = chave.Azul;
+
+
+
+            }
+            else if (treino.IdObjetivo == 2)
+            {
+
+                icone.BackColor = chave.vermelho;
+                titulo.ForeColor = chave.vermelho;
+                tituloCard.ForeColor = chave.vermelho;
+            }
+            else if (treino.IdObjetivo == 3)
+            {
+  
+                icone.BackColor = chave.Verde;
+                titulo.ForeColor = chave.Verde;
+                tituloCard.ForeColor = chave.Verde;
+
+            }
+        }
+
         private async void atualizarDados(Treino t)
         {
+            atualizaCores(t); // Atualiza as cores do layout baseado no treino
+
             try
             {
+                
+                // Atualiza os títulos
                 titulo.Text = t.NomeTreino;
                 subtitulo.Text = t.Descricao;
 
-                AtividadeFisica at = new AtividadeFisica();
-
+                // Limpa os controles anteriores
                 AtiviEsp.Controls.Clear();
 
+                // Busca atividades relacionadas ao treino
+                AtividadeFisica at = new AtividadeFisica();
                 DataTable dt = await at.BuscarAtividadesAsync(t.IdTreino);
 
+                // Verifica se o formulário ainda está ativo para evitar exceções
                 if (!this.IsDisposed && this.IsHandleCreated)
                 {
-                    this.Invoke((MethodInvoker)(async () =>
-                    {
-                        foreach (DataRow row in dt.Rows)
-                        {
-                            AtividadeFisica atv = new AtividadeFisica()
-                            {
-                                IdAtividade = int.Parse(row["IDSQL"].ToString()),
-                                Nome = row["Nome"].ToString(),
-                                Dificuldade = row["Dificuldade"].ToString(),
-                                Descricao = row["Descricao"].ToString()
-                            };
-                            AtiviEsp.Controls.Add(RetornaAtvFis(atv));
-                            AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
-                           
-                             DataTable regioes = await atv.BuscarRegioesAtividadesAsync(atv.IdAtividade);
-                            
+                    // Cria uma lista temporária de controles para evitar atualizações contínuas da UI
+                    List<Control> controles = new List<Control>();
 
-                        }
-                    }));
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        // Cria uma nova atividade baseada nos dados retornados
+                        AtividadeFisica atv = new AtividadeFisica()
+                        {
+                            IdAtividade = int.Parse(row["IDSQL"].ToString()),
+                            Nome = row["Nome"].ToString(),
+                            Dificuldade = row["Dificuldade"].ToString(),
+                            Descricao = row["Descricao"].ToString()
+                        };
+
+                        // Adiciona o painel e o espaçamento na lista de controles
+                        controles.Add(await RetornaAtvFis(atv));
+                        controles.Add(chave.RetornaEspacoTop(10));
+                    }
+
+
+                    // Adiciona os controles ao container de uma vez
+                    
+                    AtiviEsp.Controls.AddRange(controles.ToArray());
+                    AtiviEsp.DoubleBufferedPanel();
                 }
 
+                // Atualiza o subtítulo para indicar sucesso
+                subtitulo2.Text = "Atividades Físicas carregadas com sucesso";
+                subtitulo2.ForeColor = titulo.ForeColor;
             }
             catch (Exception ex)
             {
-                // Em caso de erro, exibe a mensagem
+                // Exibe mensagem de erro e registra para depuração
                 MessageBox.Show($"Erro ao atualizar os dados: {ex.Message}");
-
             }
         }
 
@@ -111,7 +158,7 @@ namespace PII_VIII.ElementosVisuais
             at.Descricao = "Teste de Descrição";
         }
 
-        PanelArredonado RetornaAtvFis(AtividadeFisica at)
+        private async Task<PanelArredonado> RetornaAtvFis(AtividadeFisica at)
         {
             PanelArredonado fundo = new PanelArredonado
             {
@@ -141,10 +188,74 @@ namespace PII_VIII.ElementosVisuais
                 ForeColor = chave.RoxoCinza
             };
 
+            if(_treino.IdObjetivo == 1)
+            {
+                tit.ForeColor = chave.Azul;
+            }
+            else if(_treino.IdObjetivo == 2)
+            {
+                tit.ForeColor = chave.vermelho;
+            }
+            else if(_treino.IdObjetivo == 3)
+            {
+                tit.ForeColor = chave.Verde;
+            }
+
+            PanelArredonado EspRegioes = new PanelArredonado
+            {
+                Radius = 20,
+                Dock = DockStyle.Top,
+                Height = 20
+            };
+
+
+            try
+            {
+                DataTable regioes = await at.BuscarRegioesAtividadesAsync(at.IdAtividade);
+
+                foreach (DataRow row in regioes.Rows)
+                {
+                    PanelArredonado regFundo = new PanelArredonado
+                    {
+                        
+                        Radius = 20,
+                        Width = 70,
+                        BackColor = tit.ForeColor,
+                        Dock = DockStyle.Left,
+                    };
+                    Label regTit = new Label
+                    {
+                        Text = row[0].ToString(),
+                        Font = chave.Textoicone,
+                        ForeColor = chave.Branco,
+                        Dock = DockStyle.Fill,
+                        TextAlign = ContentAlignment.MiddleCenter
+                    };
+                    regFundo.Controls.Add( regTit );
+                    EspRegioes.Controls.Add(chave.RetornaEspacoLeft(10));
+                    EspRegioes.Controls.Add( regFundo );
+
+                    EspRegioes.DoubleBufferedPanel();
+                    fundo.DoubleBufferedPanel();
+                    regFundo.DoubleBufferedPanel();
+                    regFundo.Radius = 20;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro: {ex.Message}");
+            }
+
+
+
+
+
             desc.Text = at.Descricao;
             tit.Text = at.Nome;
 
             fundo.Controls.Add(desc);
+            fundo.Controls.Add(chave.RetornaEspacoTop(10));
+            fundo.Controls.Add(EspRegioes);
             fundo.Controls.Add(chave.RetornaEspacoTop(10));
             fundo.Controls.Add(tit);
             
@@ -158,7 +269,7 @@ namespace PII_VIII.ElementosVisuais
             espIcone.Dock = DockStyle.Top;
             espIcone.Height = 60;
 
-            PanelArredonado icone = new PanelArredonado();
+            icone = new PanelArredonado();
             icone.BackColor = chave.Azul;
             icone.Dock = DockStyle.Left;
             icone.Width = espIcone.Height;
@@ -184,6 +295,15 @@ namespace PII_VIII.ElementosVisuais
             subtitulo.Font = chave.Sub_H3_Font;
             subtitulo.ForeColor = chave.Preto;
 
+            subtitulo2.Dock = DockStyle.Top;
+            subtitulo2.AutoSize = true;
+            subtitulo2.Text = "Carregando Atividades Físicas...";
+            subtitulo2.Font = chave.SubtiruloCard_Font;
+            subtitulo2.ForeColor = chave.RoxoCinza;
+
+
+            espTitulo.Controls.Add(subtitulo2);
+            espTitulo.Controls.Add(chave.RetornaEspacoTop(5));
             espTitulo.Controls.Add(subtitulo);
             espTitulo.Controls.Add(chave.RetornaEspacoTop(5));
             espTitulo.Controls.Add(titulo);

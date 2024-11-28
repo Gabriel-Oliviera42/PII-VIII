@@ -83,6 +83,16 @@ namespace PII_VIII.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Historico_Card_icone {
+            get {
+                object obj = ResourceManager.GetObject("Historico_Card_icone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Home {
             get {
                 object obj = ResourceManager.GetObject("Home", resourceCulture);
@@ -106,6 +116,26 @@ namespace PII_VIII.Properties {
         internal static System.Drawing.Bitmap Icones_PNG {
             get {
                 object obj = ResourceManager.GetObject("Icones_PNG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Lupa_Verde {
+            get {
+                object obj = ResourceManager.GetObject("Lupa_Verde", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Lupa_Vermelha {
+            get {
+                object obj = ResourceManager.GetObject("Lupa_Vermelha", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -40,6 +40,7 @@ namespace PII_VIII.Forms
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
             this.Text = "Perfil";
+            this.BackColor = chave.Branco;
 
         }
 

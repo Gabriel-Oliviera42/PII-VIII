@@ -57,26 +57,27 @@ namespace PII_VIII
             return dt;
         }
 
-        public DataTable BuscarHistorico(string pesquisa, int idUsuario, int dia, int mes, int ano)
+        public DataTable BuscarHistorico(int idUsuario, int dia, int mes, int ano)
         {
             string sql = $@"
-        SELECT * 
-        FROM historico 
-        WHERE id_usuario = {idUsuario} AND (
-            CONVERT(VARCHAR, datainicio) = '{ano}-{mes}-{dia}' OR
-            CONVERT(VARCHAR, datainicio) LIKE '{ano}-{mes}%' OR
-            CONVERT(VARCHAR, datainicio) LIKE '%{mes}-{dia}' OR
-            CONVERT(VARCHAR, datainicio) LIKE '{ano}%' OR
-            CONVERT(VARCHAR, datainicio) LIKE '%{mes}%' OR
-            CONVERT(VARCHAR, datainicio) LIKE '%{dia}' OR
-            CONVERT(VARCHAR, datafinal) = '{ano}-{mes}-{dia}' OR
-            CONVERT(VARCHAR, datafinal) LIKE '{ano}-{mes}%' OR
-            CONVERT(VARCHAR, datafinal) LIKE '%{mes}-{dia}' OR
-            CONVERT(VARCHAR, datafinal) LIKE '{ano}%' OR
-            CONVERT(VARCHAR, datafinal) LIKE '%{mes}%' OR
-            CONVERT(VARCHAR, datafinal) LIKE '%{dia}' OR
-            CONVERT(VARCHAR, datainicio) LIKE '%{pesquisa}%' OR 
-            CONVERT(VARCHAR, datafinal) LIKE '%{pesquisa}%')";
+    SELECT *, 
+        CASE 
+            WHEN CONVERT(VARCHAR, datainicio) = '{ano}-{mes}-{dia}' AND CONVERT(VARCHAR, datafinal) = '{ano}-{mes}-{dia}' THEN 10
+            WHEN CONVERT(VARCHAR, datainicio) = '{ano}-{mes}-{dia}' OR CONVERT(VARCHAR, datafinal) = '{ano}-{mes}-{dia}' THEN 9
+            WHEN CONVERT(VARCHAR, datainicio) LIKE '{ano}-{mes}%' THEN 8
+            WHEN CONVERT(VARCHAR, datafinal) LIKE '{ano}-{mes}%' THEN 7
+            WHEN CONVERT(VARCHAR, datainicio) LIKE '%{mes}-{dia}' THEN 6
+            WHEN CONVERT(VARCHAR, datafinal) LIKE '%{mes}-{dia}' THEN 5
+            WHEN CONVERT(VARCHAR, datainicio) LIKE '{ano}%' THEN 4
+            WHEN CONVERT(VARCHAR, datafinal) LIKE '{ano}%' THEN 3
+            WHEN CONVERT(VARCHAR, datainicio) LIKE '%{mes}%' THEN 2
+            WHEN CONVERT(VARCHAR, datainicio) LIKE '%{dia}' THEN 1
+            ELSE 0
+        END AS Similaridade
+    FROM historico 
+    WHERE id_usuario = {idUsuario}
+    ORDER BY Similaridade ASC";
+
             try
             {
                 return conn.RetornaTabela(sql);
@@ -86,6 +87,7 @@ namespace PII_VIII
                 throw new Exception("Erro ao buscar histórico: " + ex.Message);
             }
         }
-        
+
+
     }
 }

@@ -124,6 +124,9 @@
   <data name="historico" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\historico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Historico_Card_icone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Historico_Card_icone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Home" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Home.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -135,6 +138,12 @@
   </data>
   <data name="LupaAzul" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lupa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Lupa_Verde" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Lupa_Verde.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Lupa_Vermelha" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Lupa_Vermelha.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Meta" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Meta.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
