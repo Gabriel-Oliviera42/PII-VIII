@@ -32,7 +32,7 @@ namespace PII_VIII.Elementos_Visuais
 
         
         private int op = 0;
-        public int ItemSelecionado { get { return op+1; } set { op = value-1; atualiza(); } }
+        public int ItemSelecionado { get { return op+1; } set { op = value-1; atualiza();atualizaCor(); } }
         List<string> itens = new List<string>();
 
         public List<string> Items { get{ return itens; } set { itens = value; atualiza(); } }
