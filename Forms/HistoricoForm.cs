@@ -91,7 +91,7 @@ namespace PII_VIII.ElementosVisuais
             BotaoArredondado PesquisaBotao = new BotaoArredondado
             {
                 Dock = DockStyle.Right,
-                Radius = 10,
+                Radius = 20,
                 BackColor = chave.RoxoClaro,
                 Text = "Pesquisar",
                 Font = chave.SubtiruloCard_Font,
@@ -284,39 +284,19 @@ namespace PII_VIII.ElementosVisuais
         private TextBox AjustaTextBox(TextBox tx)
         {
             string texto = tx.Text;
-            bool focus = false;
-
-            //tx.Click += (s, e) =>
-            //{
-            //    if(tx.Text == texto)
-            //    {
-            //        tx.Text = "";
-            //        focus = true;
-            //        tx.ForeColor = chave.RoxoEscuro;
-            //    }
-            //    else if(tx.Text == "")
-            //    {
-            //        tx.Text = texto;
-            //        focus = false;
-            //    }
-            //    else
-            //    {
-            //        tx.ForeColor = chave.RoxoCinza;
-            //    }
-            //};
 
             tx.KeyPress += (s, e) =>
             {
                 if (tx.Text == texto && tx.ForeColor == chave.RoxoCinza)
                 {
                     tx.Text = "";
-                    focus = true;
+
                     tx.ForeColor = chave.RoxoEscuro;
                 }
                 else if (tx.Text == "" && tx.ForeColor == chave.RoxoEscuro)
                 {
                     tx.Text = texto;
-                    focus = false;
+
                     tx.ForeColor = chave.RoxoCinza;
                     this.ActiveControl = null;
                 }
