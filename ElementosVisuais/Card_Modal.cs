@@ -360,6 +360,11 @@ namespace PII_VIII.ElementosVisuais
                 ShowInTaskbar = false // Não exibe na barra de tarefas
             };
             es.Show();
+            es.Click += (sender, e) =>
+            {
+                this.Close(); // Fecha o formulário original
+                es.Close(); // Fecha o formulário escurecido
+            };
             Thread.Sleep(50);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Show();
