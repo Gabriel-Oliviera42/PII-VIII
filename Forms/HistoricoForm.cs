@@ -155,7 +155,6 @@ namespace PII_VIII.ElementosVisuais
 
             AtualizaCards();
         }
-
         private void AtualizaCards()
         {
             // Limpar os controles existentes
@@ -202,20 +201,27 @@ namespace PII_VIII.ElementosVisuais
                 }
             }
         }
-
         private void PesquisaBotao_Click(object sender, EventArgs e)
         {
-            TodosHistoricos.Controls.Clear();
-            Historico historico = new Historico();
+            
 
-            int dia = int.Parse(Pesquisa.Text.Substring(0, 2));
-            int mes = int.Parse(Pesquisa.Text.Substring(3, 2));
-            int ano = int.Parse(Pesquisa.Text.Substring(6, 4));
+            if(Pesquisa.Text.Length > 9)
+            {
+                TodosHistoricos.Controls.Clear();
+                Historico historico = new Historico();
+                int dia = int.Parse(Pesquisa.Text.Substring(0, 2));
+                int mes = int.Parse(Pesquisa.Text.Substring(3, 2));
+                int ano = int.Parse(Pesquisa.Text.Substring(6, 4));
 
-            int idUsuario = Program.user.IdUsuario;
-            string pesquisa = Pesquisa.Text.Trim();
-            DataTable resultados = historico.BuscarHistorico(pesquisa, idUsuario, dia, mes, ano);
-            PreencherCards(resultados);
+                DataTable resultados = historico.BuscarHistorico(Program.user.IdUsuario, dia, mes, ano);
+                PreencherCards(resultados);
+            }
+            else
+            {
+                MessageBox.Show("Adicione uma data completa. Por exemplo: 05/06/2024");
+            }
+
+
         }
         private Panel retornaCampo(TextBox tx, string nome, int width)
         {

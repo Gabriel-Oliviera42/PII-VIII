@@ -57,7 +57,7 @@ namespace PII_VIII
             return dt;
         }
 
-        public DataTable BuscarHistorico(string pesquisa, int idUsuario, int dia, int mes, int ano)
+        public DataTable BuscarHistorico(int idUsuario, int dia, int mes, int ano)
         {
             string sql = $@"
     SELECT *, 
