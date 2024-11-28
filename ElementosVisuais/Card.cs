@@ -130,6 +130,9 @@ namespace PII_VIII.ElementosVisuais
             // Se desejar, ajuste o descCard para mostrar outros detalhes
             descCard.Text = "Teste de de Treino";
             //descCard.Text = desc;
+            Objetivo ob = new Objetivo();
+            ob.PreencherDados(_treino.IdObjetivo);
+            descCard.Text = "Meta: "+ob.Descricao;
             atualizaCores();
         }
 
