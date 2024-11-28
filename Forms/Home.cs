@@ -38,6 +38,7 @@ namespace PII_VIII.Forms
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
             this.Text = "Treinos";
+            this.BackColor = chave.Branco;
 
         }
 
@@ -98,6 +99,7 @@ namespace PII_VIII.Forms
 
             slideSeusTreinos = new FlowLayoutPanel();
             slideSeusTreinos.Dock = DockStyle.Top;
+            
 
             // Adicionar cabeçalho "Outros Treinos Para Você"
             Label outrosTreinos_Label = new Label();
@@ -254,6 +256,8 @@ namespace PII_VIII.Forms
                 // Adiciona o novo Card ao painel
                 slideSeusTreinos.Controls.Add(novoCard);              
             }
+            slideSeusTreinos.Height = (int)Math.Ceiling(slideSeusTreinos.Controls.Count / 2.0) * new Card().Height;
+            slideOutrosTreinos.Height = (int)Math.Ceiling(slideOutrosTreinos.Controls.Count / 2.0) * new Card().Height;
         }
 
         private void RemoverTreinoParaUsuario(Usuario usuario, Treino treino)
