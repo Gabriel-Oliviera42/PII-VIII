@@ -91,5 +91,13 @@ namespace PII_VIII
                 throw new Exception("Atividade física não encontrada.");
             }
         }
+
+
+        public async Task<DataTable> BuscarRegioesAtividadesAsync(int idAtividade)
+        {
+            string querry = $"MATCH p=(a:AtividadeFisica)-[:ATIVA]->(b:Regiao) where a.`id_SQL` = {idAtividade} RETURN b.nome;";
+            DataTable resultado = await conexaoNeo4J.DTConsulta(querry);
+            return resultado;
+        }
     }
 }

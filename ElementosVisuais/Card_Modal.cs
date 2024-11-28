@@ -43,7 +43,7 @@ namespace PII_VIII.ElementosVisuais
 
                 if (!this.IsDisposed && this.IsHandleCreated)
                 {
-                    this.Invoke((MethodInvoker)(() =>
+                    this.Invoke((MethodInvoker)(async () =>
                     {
                         foreach (DataRow row in dt.Rows)
                         {
@@ -56,6 +56,10 @@ namespace PII_VIII.ElementosVisuais
                             };
                             AtiviEsp.Controls.Add(RetornaAtvFis(atv));
                             AtiviEsp.Controls.Add(chave.RetornaEspacoTop(10));
+                           
+                             DataTable regioes = await atv.BuscarRegioesAtividadesAsync(atv.IdAtividade);
+                            
+
                         }
                     }));
                 }

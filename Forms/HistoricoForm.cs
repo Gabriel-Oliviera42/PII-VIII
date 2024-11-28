@@ -262,16 +262,13 @@ namespace PII_VIII.ElementosVisuais
             PesquisaBotao.FlatAppearance.BorderSize = 0;
 
 
-            Panel EspCard = new Panel
-            {
-                Dock = DockStyle.Top,
-                AutoSize = true,
-            };         
+       
 
-            // Criar painel principal para os treinos
+            // Criar painel principal para os todos os historicos
             Panel TodosHistoricos = new Panel();
             TodosHistoricos.Dock = DockStyle.Top;
-            TodosHistoricos.AutoSize = true;
+            TodosHistoricos.Height = 760;
+            //TodosHistoricos.AutoSize = true;
 
 
             Label planoatual = new Label();
@@ -291,11 +288,11 @@ namespace PII_VIII.ElementosVisuais
 
             slidehistoricoativo = new Panel();
             slidehistoricoativo.Dock = DockStyle.Top;
-            slidehistoricoativo.Height = 200;
+            slidehistoricoativo.AutoSize = true;
 
             slidehistoricoantigo = new Panel();
             slidehistoricoantigo.Dock = DockStyle.Top;
-            slidehistoricoativo.Height = 200;
+            slidehistoricoantigo.AutoSize = true;
 
             TodosHistoricos.Controls.Add(slidehistoricoantigo);
             TodosHistoricos.Controls.Add(chave.RetornaEspacoTop(40));
@@ -308,7 +305,6 @@ namespace PII_VIII.ElementosVisuais
             TodosHistoricos.Controls.Add(planoatual);
 
             EspInfos.Controls.Add(TodosHistoricos);
-            EspInfos.Controls.Add(EspCard);
             EspInfos.Controls.Add(chave.RetornaEspacoTop(40));
             EspInfos.Controls.Add(EspTopo);
             EspImput.Controls.Add(PesquisaBotao);
@@ -317,7 +313,9 @@ namespace PII_VIII.ElementosVisuais
             EspTopo.Controls.Add(EspImput);
             EspTopo.Controls.Add(chave.RetornaEspacoTop(20));
             EspTopo.Controls.Add(h1);
-            
+
+
+            TodosHistoricos.AutoScroll = true;
 
             AtualizaCards();
         }
@@ -335,14 +333,9 @@ namespace PII_VIII.ElementosVisuais
             if (ativo.Rows.Count > 0) // Corrigido: Verifica se há registros
             {
                 foreach (DataRow row in ativo.Rows)
-                {
-                    Historico h = new Historico
-                    {
-                        DataInicial = Convert.ToDateTime(row["datainicio"]),
-                        DataFinal = row["datafinal"] != DBNull.Value ? Convert.ToDateTime(row["datafinal"]) : (DateTime?)null,
-                        IdHistorico = int.Parse(row["id_historico"].ToString()),
-                        IdObejetivo = int.Parse(row["id_objetivo"].ToString())
-                    };
+                {                    
+                    Historico h = new Historico();
+                    h.PreencherDados(int.Parse(row["id_historico"].ToString()));
 
                     // Cria o cartão e adiciona ao painel
                     Card_Historico card_Historico = new Card_Historico
@@ -353,23 +346,28 @@ namespace PII_VIII.ElementosVisuais
                     slidehistoricoativo.Controls.Add(card_Historico);
                 }
             }
-            else
+            //slidehistoricoativo.Refresh();
+
+            // Buscar o histórico ativo
+            DataTable antigos = new Historico().BuscarHistoricoAntigo(Program.user.IdUsuario);
+            
+            if (antigos.Rows.Count > 0) // Corrigido: Verifica se há registros
             {
-                // Adiciona uma mensagem quando não há histórico ativo
-                Label noDataLabel = new Label
+                foreach (DataRow row in antigos.Rows)
                 {
-                    Text = "Nenhum plano ativo encontrado.",
-                    AutoSize = true,
-                    ForeColor = chave.Preto,
-                    Font = chave.H3_Font,
-                    Dock = DockStyle.Top
-                };
+                    Historico h = new Historico();
+                    h.PreencherDados(int.Parse(row["id_historico"].ToString()));
 
-                slidehistoricoativo.Controls.Add(noDataLabel);
+                    Card_Historico card_Historico = new Card_Historico
+                    {
+                        historico = h,
+                    };
+
+                    slidehistoricoantigo.Controls.Add(card_Historico);
+                    slidehistoricoantigo.Controls.Add(chave.RetornaEspacoTop(5));
+                }
             }
-
-            // Atualizar a interface
-            slidehistoricoativo.Refresh();
+            //slidehistoricoativo.Refresh();
         }
 
 

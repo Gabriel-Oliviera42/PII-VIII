@@ -28,8 +28,8 @@ namespace PII_VIII.ElementosVisuais
         private void atualizaDados()
         {
             dataInicio.Text = "De: " + _historico.DataInicial.ToString("dd/MM/yyyy");
-            dataFim.Text = "Até : " + _historico.DataFinal?.ToString("dd/MM/UU");
-            descricaoObjetivo.Text = "Objetivo: " + _historico.IdObejetivo.ToString();
+            dataFim.Text = "Até : " + _historico.DataFinal?.ToString("dd/MM/yyyy");
+            descricaoObjetivo.Text = "Objetivo: " + _historico.IdObjetivo.ToString();
         }
         public Historico historico
         {
@@ -48,7 +48,7 @@ namespace PII_VIII.ElementosVisuais
         public Card_Historico()
         {
 
-            Height = 300;
+            Height = 180;
             Radius = 40;
             Dock = DockStyle.Top;
             BackColor = chave.CinzaClaro;
@@ -99,8 +99,8 @@ namespace PII_VIII.ElementosVisuais
                 Font = chave.SubtiruloCard_Font,
                 ForeColor = chave.RoxoCinza
             };
-            espTitulo.Controls.Add(dataInicio);
             espTitulo.Controls.Add(dataFim);
+            espTitulo.Controls.Add(dataInicio);            
             espTitulo.Controls.Add(descricaoObjetivo);           
 
             Controls.Add(espTitulo);
