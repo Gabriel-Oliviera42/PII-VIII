@@ -29,8 +29,7 @@ namespace PII_VIII.ElementosVisuais
         {
             dataInicio.Text = "De: " + _historico.DataInicial.ToString("dd/MM/yyyy");
             dataFim.Text = "Até : " + _historico.DataFinal?.ToString("dd/MM/yyyy");
-            descricaoObjetivo.Text = "Objetivo: " + _historico.IdObjetivo.ToString();
-            
+            descricaoObjetivo.Text = "Objetivo: " + _historico.DescricaoObjetivo;           
 
         }
         public Historico historico

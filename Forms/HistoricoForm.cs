@@ -19,7 +19,7 @@ namespace PII_VIII.ElementosVisuais
         Menu_Principal menu = new Menu_Principal();
         Chave chave = new Chave();
         private TextBox Pesquisa = new TextBox();
-
+        Panel TodosHistoricos = new Panel();
         private Panel slidehistoricoativo;
         private Panel slidehistoricoantigo;
         private void InitializeComponent()
@@ -55,7 +55,7 @@ namespace PII_VIII.ElementosVisuais
             this.Controls.Add(chave.RetornaEspacoLeft(20));
             this.Controls.Add(barra_usuario);
         }
-        private void AdicionarElementos()
+        protected void AdicionarElementos()
         {
             Panel EspInfos = new Panel
             {
@@ -98,12 +98,9 @@ namespace PII_VIII.ElementosVisuais
                 Width = 280
             };
             PesquisaBotao.FlatAppearance.BorderSize = 0;
+            PesquisaBotao.Click += (sender, e) => PesquisaBotao_Click(sender, e);
 
-
-       
-
-            // Criar painel principal para os todos os historicos
-            Panel TodosHistoricos = new Panel();
+            // Criar painel principal para os todos os historicos            
             TodosHistoricos.Dock = DockStyle.Top;
             TodosHistoricos.Height = 760;
             //TodosHistoricos.AutoSize = true;
@@ -184,12 +181,10 @@ namespace PII_VIII.ElementosVisuais
                     slidehistoricoativo.Controls.Add(card_Historico);
                 }
             }
-            //slidehistoricoativo.Refresh();
-
-            // Buscar o histórico ativo
+            
             DataTable antigos = new Historico().BuscarHistoricoAntigo(Program.user.IdUsuario);
             
-            if (antigos.Rows.Count > 0) // Corrigido: Verifica se há registros
+            if (antigos.Rows.Count > 0)
             {
                 foreach (DataRow row in antigos.Rows)
                 {
@@ -205,13 +200,18 @@ namespace PII_VIII.ElementosVisuais
                     slidehistoricoantigo.Controls.Add(chave.RetornaEspacoTop(5));
                 }
             }
-            //slidehistoricoativo.Refresh();
         }
 
+        private void PesquisaBotao_Click(object sender, EventArgs e)
+        {
+            TodosHistoricos.Controls.Clear();
+            Historico historico = new Historico();
+
+            //terminar botao de pesquisa
 
 
-
-
+            //DataTable dt = historico.BuscarHistorico();
+        }
         private Panel retornaCampo(TextBox tx, string nome, int width)
         {
 
