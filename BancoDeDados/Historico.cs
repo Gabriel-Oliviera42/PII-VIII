@@ -18,6 +18,8 @@ namespace PII_VIII
         public DateTime? DataFinal {  get; set; }
         public int IdObjetivo { get; set; }
 
+        public string DescricaoObjetivo { get; set; }
+
         public void PreencherDados(int id_hist)
         {
             string sql = $@"SELECT * FROM historico WHERE id_historico = {id_hist}";
@@ -30,6 +32,9 @@ namespace PII_VIII
                 IdObjetivo = int.Parse(row["id_objetivo"].ToString());
                 DataInicial = (DateTime)row["datainicio"];
                 DataFinal = row["datafinal"] == DBNull.Value ? (DateTime?)null : (DateTime)row["datafinal"];
+                Objetivo obj = new Objetivo();
+                obj.PreencherDados(IdObjetivo);
+                DescricaoObjetivo = obj.Descricao;
             }
             else
             {
