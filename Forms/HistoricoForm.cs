@@ -219,12 +219,12 @@ namespace PII_VIII.ElementosVisuais
                     return;
                 }
 
-                if (mes <= 1 || mes >= 12)
+                if (mes < 1 || mes > 12)
                 {
                     MessageBox.Show("Mês invalido");
                     return;
                 }
-                if (dia <= 1 || dia >= 31)
+                if (dia < 1 || dia > 31)
                 {
                     MessageBox.Show("Dia invalido");
                     return;

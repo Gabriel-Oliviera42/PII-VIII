@@ -128,7 +128,7 @@ namespace PII_VIII
                 $"INNER JOIN faixaetariapeso f ON f.id_faixaetariapeso = tf.id_faixaetariapeso " +
                 $"INNER JOIN objetivo o ON o.id_objetivo = t.id_objetivo " +
                 $"INNER JOIN usuario u ON u.id_faixaetariapeso = tf.id_faixaetariapeso AND u.id_objetivo = t.id_objetivo " +
-                $"LEFT JOIN treino_usuario tu ON t.id_treino = tu.id_treino AND tu.id_usuario = u.id_usuario " +
+                $"LEFT JOIN treino_usuario tu ON t.id_treino = tu.id_treino AND tu.id_usuario = u.id_usuario " +//buscar todos que ainda nao foram incluidos na treino_usuario
                 $"WHERE u.id_usuario = {iduser} AND tu.id_treino IS NULL;";                        
             DataTable dt = con.RetornaTabela(sql);
             return dt;
