@@ -59,6 +59,7 @@ namespace PII_VIII.Elementos_Visuais
             {
                 text.Text = itens[op];
             }
+
         }
 
         private void inicializa()
@@ -95,7 +96,7 @@ namespace PII_VIII.Elementos_Visuais
             ant.FlatStyle = FlatStyle.Flat;
             ant.ForeColor = chave.Branco;
             ant.BackColor = chave.RoxoFluorescente;
-
+            atualizaCor();
 
             next.Click += (s, e) =>
             {
@@ -109,6 +110,7 @@ namespace PII_VIII.Elementos_Visuais
                     op = 0;
                     text.Text = itens[op];
                 }
+                atualizaCor();
             };
             ant.Click += (s, e) =>
             {
@@ -122,8 +124,25 @@ namespace PII_VIII.Elementos_Visuais
                     op = itens.Count-1;
                     text.Text = itens[op];
                 }
+                atualizaCor();
             };
 
+
+        }
+        private void atualizaCor()
+        {
+            if (op == 0)
+            {
+                text.ForeColor = chave.Azul;
+            }
+            else if (op == 1)
+            {
+                text.ForeColor = chave.vermelho;
+            }
+            else if (op == 2)
+            {
+                text.ForeColor = chave.Verde;
+            }
 
         }
     }
