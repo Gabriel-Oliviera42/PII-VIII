@@ -35,6 +35,7 @@ namespace PII_VIII.ElementosVisuais
             this.ResumeLayout(false);
             this.Text = "Histórico";
             this.BackColor = chave.Branco;
+            this.Icon = Properties.Resources.iconeazul;
         }
         public Historico_Form()
         {
@@ -104,7 +105,7 @@ namespace PII_VIII.ElementosVisuais
             // Criar painel principal para os todos os historicos            
             TodosHistoricos.Dock = DockStyle.Top;
             TodosHistoricos.Height = 760;
-            //TodosHistoricos.AutoSize = true;
+            TodosHistoricos.AutoScroll = true;
 
 
             Label planoatual = new Label();
@@ -202,16 +203,32 @@ namespace PII_VIII.ElementosVisuais
             }
         }
         private void PesquisaBotao_Click(object sender, EventArgs e)
-        {
-            
+        {          
 
             if(Pesquisa.Text.Length > 9)
             {
+
                 TodosHistoricos.Controls.Clear();
                 Historico historico = new Historico();
                 int dia = int.Parse(Pesquisa.Text.Substring(0, 2));
                 int mes = int.Parse(Pesquisa.Text.Substring(3, 2));
                 int ano = int.Parse(Pesquisa.Text.Substring(6, 4));
+                if (ano > DateTime.Now.Year || ano < 1924)
+                {
+                    MessageBox.Show("Ano invalido");
+                    return;
+                }
+
+                if (mes <= 1 || mes >= 12)
+                {
+                    MessageBox.Show("Mês invalido");
+                    return;
+                }
+                if (dia <= 1 || dia >= 31)
+                {
+                    MessageBox.Show("Dia invalido");
+                    return;
+                }
 
                 DataTable resultados = historico.BuscarHistorico(Program.user.IdUsuario, dia, mes, ano);
                 PreencherCards(resultados);

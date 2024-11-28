@@ -41,6 +41,7 @@ namespace PII_VIII.Forms
             this.ResumeLayout(false);
             this.Text = "Perfil";
             this.BackColor = chave.Branco;
+            this.Icon = Properties.Resources.iconeazul;
 
         }
 

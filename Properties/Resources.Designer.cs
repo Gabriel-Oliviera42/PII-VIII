@@ -101,6 +101,16 @@ namespace PII_VIII.Properties {
         }
         
         /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Icon semelhante a (Ícone).
+        /// </summary>
+        internal static System.Drawing.Icon iconeazul {
+            get {
+                object obj = ResourceManager.GetObject("iconeazul", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap IconePerfil {
@@ -117,6 +127,16 @@ namespace PII_VIII.Properties {
             get {
                 object obj = ResourceManager.GetObject("Icones_PNG", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Icon semelhante a (Ícone).
+        /// </summary>
+        internal static System.Drawing.Icon IconesConvertido {
+            get {
+                object obj = ResourceManager.GetObject("IconesConvertido", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

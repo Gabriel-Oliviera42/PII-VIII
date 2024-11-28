@@ -195,5 +195,17 @@
   <ItemGroup>
     <None Include="Resources\Historico_Card_icone.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconeconvertido.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconesConvertido.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconeazul.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconeazul.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
