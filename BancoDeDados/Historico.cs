@@ -63,15 +63,15 @@ namespace PII_VIII
     SELECT *, 
         CASE 
             WHEN CONVERT(VARCHAR, datainicio) = '{ano}-{mes}-{dia}' AND CONVERT(VARCHAR, datafinal) = '{ano}-{mes}-{dia}' THEN 10
+            WHEN CONVERT(VARCHAR, datainicio) = '{ano}-{mes}-{dia}' OR CONVERT(VARCHAR, datafinal) = '{ano}-{mes}-{dia}' THEN 9
             WHEN CONVERT(VARCHAR, datainicio) LIKE '{ano}-{mes}%' THEN 8
+            WHEN CONVERT(VARCHAR, datafinal) LIKE '{ano}-{mes}%' THEN 7
             WHEN CONVERT(VARCHAR, datainicio) LIKE '%{mes}-{dia}' THEN 6
+            WHEN CONVERT(VARCHAR, datafinal) LIKE '%{mes}-{dia}' THEN 5
             WHEN CONVERT(VARCHAR, datainicio) LIKE '{ano}%' THEN 4
+            WHEN CONVERT(VARCHAR, datafinal) LIKE '{ano}%' THEN 3
             WHEN CONVERT(VARCHAR, datainicio) LIKE '%{mes}%' THEN 2
             WHEN CONVERT(VARCHAR, datainicio) LIKE '%{dia}' THEN 1
-            WHEN CONVERT(VARCHAR, datainicio) = '{ano}-{mes}-{dia}' AND CONVERT(VARCHAR, datafinal) = '{ano}-{mes}-{dia}' THEN 9
-            WHEN CONVERT(VARCHAR, datafinal) LIKE '{ano}-{mes}%' THEN 7
-            WHEN CONVERT(VARCHAR, datafinal) LIKE '%{mes}-{dia}' THEN 5
-            WHEN CONVERT(VARCHAR, datafinal) LIKE '{ano}%' THEN 3
             ELSE 0
         END AS Similaridade
     FROM historico 

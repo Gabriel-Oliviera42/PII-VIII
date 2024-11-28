@@ -305,6 +305,7 @@ namespace PII_VIII.ElementosVisuais
                 Historico h = new Historico();
                 h.PreencherDados(int.Parse(linha["id_historico"].ToString()));
                 card.historico = h;
+                TodosHistoricos.Controls.Add(chave.RetornaEspacoTop(5));
                 TodosHistoricos.Controls.Add(card);
             }
         }
